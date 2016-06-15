@@ -1,0 +1,44 @@
+
+#logo
+{
+	margin-top: 20px;
+	width: 210px;
+	height: 110px;
+}
+#form
+{
+	margin-top: 20px;
+}
+.fecha
+{
+	margin-top: 16px;
+}
+.filter
+{
+	margin-top: 10px;
+}
+
+@media only screen and (max-width: 800px) {	
+	h3 {
+    	font-size: 30px;
+	}
+}
+.in-bold
+{
+	font-weight: bold;
+}
+main{
+	padding-left: 240px;
+}
+header{
+	height: 0px;
+}
+.activated
+{
+	background-color: #ee6e73 !important;
+}
+
+.activated a
+{
+	color:rgba(255,200,200,0.9) !important;
+}
