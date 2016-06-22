@@ -14,17 +14,27 @@ class ReportController extends Controller
         $clicks = Click::all();
 
         $user_clicks = [];
+        $visitors_clicks = [];
         // January - June
         for ($i=0; $i<6; ++$i) {
             $user_clicks[$i] = 0;
+            $visitors_clicks[$i] = 0;
         }
 
         foreach ($clicks as $click) {
             $month = $click->fecha->month;
-            var_dump($month);
-            // $user_clicks[$month - 1]++;
+            if ($month != 11) {
+                // Add click to users or visitors
+                if ($click->user_name == 'Visitante')
+                    $visitors_clicks[$month - 1]++;
+                else
+                    $user_clicks[$month - 1]++;
+            }
+
         }
 
-        return $user_clicks;
+        $data['users'] = $user_clicks;
+        $data['visitors'] = $visitors_clicks;
+        return $data;
     }
 }
