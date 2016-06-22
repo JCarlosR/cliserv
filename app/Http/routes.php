@@ -8,3 +8,4 @@ Route::get('reporte-otros','ClickController@other');
 
 // Report JSON Data
 Route::get('clicks/user', 'ReportController@byUserType');
+Route::get('clicks/device_type', 'ReportController@byUserType');

@@ -23,9 +23,11 @@
         <br>
         <br>
         <div class="col s12">
+            <button id="showByDevice">Ver por dispositivo</button>
+            <button id="showByUsers">Ver por tipo de usuario</button>
+        </div>
+        <div class="col s12">
             <button id="randomizeData">Randomizar Datos</button>
-            <button id="addDataset">Ver por Productos</button>
-            <button id="showUsers">Ver por Tipo Usuarios</button>
             <button id="removeDataset">Remove Dataset</button>
             <button id="addData">Add Data</button>
             <button id="removeData">Remove Data</button>
@@ -47,7 +49,7 @@
         var ALLMONTHS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Setiembre", "October", "Noviembre", "Diciembre"];
         var FIRSTMONTHS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio"];
         var USER_LABELS = ["Usuarios", "No usuarios"];
-        var NOMBREPRODUCTOS = ["Sistema Inventarios","Lyrics Training","Sistema Directorio"];
+        var DEVICE_LABELS = ["Desktop", "Mobile"];
         var DATAVALUES1 = [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()];
         var DATAVALUES2 = [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()];
         var DATAVALUES3 = [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()];
@@ -141,30 +143,40 @@
             window.myLine.update();
         });
 
-        $('#addDataset').click(function() {
+        $('#showByDevice').click(function() {
             config.data.datasets = [];
-            var i = 0;
-            while(i<NOMBREPRODUCTOS.length)
-            {
-                var newDataset = {
-                    label: NOMBREPRODUCTOS[i],
-                    borderColor: randomColor(0.4),
-                    backgroundColor: randomColor(0.5),
-                    pointBorderColor: randomColor(0.7),
-                    pointBackgroundColor: randomColor(0.5),
-                    pointBorderWidth: 1,
-                    data: []
-                };
-                for (var index = 0; index < config.data.labels.length; ++index) {
-                    newDataset.data.push(randomScalingFactor());
-                }
-                config.data.datasets.push(newDataset);
-                i++;
-            }
-            window.myLine.update();
+
+            var desktopDataSet = {
+                label: USER_LABELS[0],
+                borderColor: randomColor(0.4),
+                backgroundColor: randomColor(0.5),
+                pointBorderColor: randomColor(0.7),
+                pointBackgroundColor: randomColor(0.5),
+                pointBorderWidth: 1,
+                data: []
+            };
+            var mobileDataSet = {
+                label: USER_LABELS[1],
+                borderColor: randomColor(0.4),
+                backgroundColor: randomColor(0.5),
+                pointBorderColor: randomColor(0.7),
+                pointBackgroundColor: randomColor(0.5),
+                pointBorderWidth: 1,
+                data: []
+            };
+
+            $.getJSON('./clicks/device_type', function(data) {
+                desktopDataSet.data = data.desktop;
+                config.data.datasets.push(desktopDataSet);
+
+                mobileDataSet.data = data.mobile;
+                config.data.datasets.push(mobileDataSet);
+
+                window.myLine.update();
+            });
         });
 
-        $('#showUsers').click(function() {
+        $('#showByUsers').click(function() {
             config.data.datasets = [];
 
             var userDataSet = {
