@@ -147,7 +147,7 @@
             config.data.datasets = [];
 
             var desktopDataSet = {
-                label: USER_LABELS[0],
+                label: DEVICE_LABELS[0],
                 borderColor: randomColor(0.4),
                 backgroundColor: randomColor(0.5),
                 pointBorderColor: randomColor(0.7),
@@ -156,7 +156,7 @@
                 data: []
             };
             var mobileDataSet = {
-                label: USER_LABELS[1],
+                label: DEVICE_LABELS[1],
                 borderColor: randomColor(0.4),
                 backgroundColor: randomColor(0.5),
                 pointBorderColor: randomColor(0.7),
