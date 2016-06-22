@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/materialize.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
     @yield('styles')
-    @yield('scriptsh')
 </head>
 <body>
 <header>
@@ -35,13 +34,13 @@
     <div class="row">
         <h4 class="center-align">@yield('title')</h4>
     </div>
-    <div clss="container">
+    <div class="container">
         @yield('content')
     </div>
 </main>
 
 <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/materialize.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
 <script type="text/javascript">
     $('.button-collapse').sideNav();
     $('.collapsible').collapsible();
