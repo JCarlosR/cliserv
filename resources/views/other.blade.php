@@ -82,7 +82,7 @@
             options: {
                 title:{
                     display: true,
-                    text: "Reporte de tráfico de visitas por mes."
+                    text: "REPORTE DE TRÁFICO DE VISITAS"
                 },
                 animation: {
                     duration: 2000,
