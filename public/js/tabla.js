@@ -46,7 +46,7 @@ function show_cards(start_date,end_date)
 {
 	$('.data').html('');
 
-	$.getJSON('../public/'+start_date+'/'+end_date,function(data){
+	$.getJSON('../public/general/'+start_date+'/'+end_date,function(data){
         $.each(data,function(key,value)
         {
             $('.data').append(

@@ -7,6 +7,11 @@ use App\Http\Requests;
 
 class ClickController extends Controller
 {
+
+    public function welcome(){
+        return view('welcome');
+    }
+
     public function general($finicio=null, $ffin=null)
     {
         if ($finicio && $ffin) {

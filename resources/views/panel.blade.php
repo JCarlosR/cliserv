@@ -8,14 +8,14 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/materialize.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
     @yield('styles')
-
+    @yield('scriptsh')
 </head>
 <body>
 <header>
     <ul id="slide-out" class="side-nav fixed">
         <div class="center-align"><img src="{{ asset('img/cstream.jpg') }}" id="logo" class="responsive-img"></div>
         <li @yield('general')>
-            <a href="{{ url('/') }}"><span>Reporte  General</span></a>
+            <a href="{{ url('general') }}"><span>Reporte  General</span></a>
         </li>
         <li @yield('web')>
             <a href="{{ url('reporte-web') }}"><span>Reporte-Sistema web</span></a>
