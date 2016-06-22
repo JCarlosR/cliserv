@@ -21,7 +21,8 @@ class ReportController extends Controller
 
         foreach ($clicks as $click) {
             $month = $click->fecha->month;
-            $user_clicks[$month - 1]++;
+            var_dump($month);
+            // $user_clicks[$month - 1]++;
         }
 
         return $user_clicks;
