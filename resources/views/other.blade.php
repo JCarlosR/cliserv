@@ -166,25 +166,35 @@
 
         $('#showUsers').click(function() {
             config.data.datasets = [];
-            var i = 0;
-            while(i<USER_LABELS.length)
-            {
-                var newDataset = {
-                    label: USER_LABELS[i],
-                    borderColor: randomColor(0.4),
-                    backgroundColor: randomColor(0.5),
-                    pointBorderColor: randomColor(0.7),
-                    pointBackgroundColor: randomColor(0.5),
-                    pointBorderWidth: 1,
-                    data: []
-                };
-                for (var index = 0; index < config.data.labels.length; ++index) {
-                    newDataset.data.push(randomScalingFactor());
-                }
-                config.data.datasets.push(newDataset);
-                i++;
-            }
-            window.myLine.update();
+
+            var userDataSet = {
+                label: USER_LABELS[0],
+                borderColor: randomColor(0.4),
+                backgroundColor: randomColor(0.5),
+                pointBorderColor: randomColor(0.7),
+                pointBackgroundColor: randomColor(0.5),
+                pointBorderWidth: 1,
+                data: []
+            };
+            var visitorDataSet = {
+                label: USER_LABELS[1],
+                borderColor: randomColor(0.4),
+                backgroundColor: randomColor(0.5),
+                pointBorderColor: randomColor(0.7),
+                pointBackgroundColor: randomColor(0.5),
+                pointBorderWidth: 1,
+                data: []
+            };
+
+            $.getJSON('./clicks/user', function(data) {
+                userDataSet.data = data.users;
+                config.data.datasets.push(userDataSet);
+
+                visitorDataSet.data = data.visitors;
+                config.data.datasets.push(visitorDataSet);
+
+                window.myLine.update();
+            });
         });
 
 
