@@ -1,6 +1,6 @@
 @extends('panel')
 
-@section('title','Top 10 de Productos')
+@section('title','Top de Productos')
 
 @section('products','class="activated"')
 
@@ -50,19 +50,16 @@
                 <button type="submit">Generar reporte</button>
             </div>
         </form>
-        <div class="col s12">
-            <canvas id="canvas"></canvas>
-        </div>
         <br>
         <br>
-        <div class="col s12">
-            <button id="randomizeData">Randomize Data</button>
-            <button id="addDataset">Add Dataset</button>
-            <button id="removeDataset">Remove Dataset</button>
-        </div>
-        <div class="col s12">
-            <button id="addData">Add Data</button>
-            <button id="removeData">Remove Data</button>
+        <div class="row">
+            <div class="col s12">
+                <div id="loading" class="center-align" style="display: none;">
+                    <img src="{{ asset('img/loading.svg') }}" alt="Cargando">
+                    <p>Cargando ...</p>
+                </div>
+                <canvas id="canvas" style="display: none;"></canvas>
+            </div>
         </div>
     </div>
 @endsection
@@ -71,8 +68,6 @@
     <script src="{{ asset('chartjs/Chart.bundle.js') }}"></script>
 
     <script>
-
-
         $(document).ready(function() {
             $('select').material_select();
         });
@@ -119,7 +114,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Reporte Top 10 Productos'
+                        text: 'Reporte Top Productos'
                     },
                     scales: {
                         xAxes: [{
@@ -146,6 +141,9 @@
         $('#formFecha').on('submit', function() {
             event.preventDefault();
 
+            $('#loading').show();
+            $('#canvas').slideUp();
+
             var countDataSet = {
                 label: LEGEND_ELEMENTS,
                 borderColor: randomColor(0.4),
@@ -157,69 +155,14 @@
             };
             var params = $(this).serialize();
             $.getJSON('./clicks/products', params, function(data) {
+                $('#loading').hide();
+                $('#canvas').slideDown();
                 barChartData.labels = data.products;
                 barChartData.datasets = [];
                 countDataSet.data = data.quantity;//data.quantity;
                 barChartData.datasets.push(countDataSet);
                 window.myBar.update();
             });
-        });
-
-
-        $('#randomizeData').click(function() {
-            var zero = Math.random() < 0.2 ? true : false;
-            $.each(barChartData.datasets, function(i, dataset) {
-                dataset.backgroundColor = randomColor();
-                dataset.data = dataset.data.map(function() {
-                    return zero ? 0.0 : randomScalingFactor();
-                });
-
-            });
-            window.myBar.update();
-        });
-
-        $('#addDataset').click(function() {
-            var newDataset = {
-                label: 'Dataset ' + barChartData.datasets.length,
-                backgroundColor: randomColor(),
-                data: []
-            };
-
-            for (var index = 0; index < barChartData.labels.length; ++index) {
-                newDataset.data.push(randomScalingFactor());
-            }
-
-            barChartData.datasets.push(newDataset);
-            window.myBar.update();
-        });
-
-        $('#addData').click(function() {
-            if (barChartData.datasets.length > 0) {
-                var month = ALLPRODUCTS[barChartData.labels.length % ALLPRODUCTS.length];
-                barChartData.labels.push(month);
-
-                for (var index = 0; index < barChartData.datasets.length; ++index) {
-                    //window.myBar.addData(randomScalingFactor(), index);
-                    barChartData.datasets[index].data.push(randomScalingFactor());
-                }
-
-                window.myBar.update();
-            }
-        });
-
-        $('#removeDataset').click(function() {
-            barChartData.datasets.splice(0, 1);
-            window.myBar.update();
-        });
-
-        $('#removeData').click(function() {
-            barChartData.labels.splice(-1, 1); // remove the label first
-
-            barChartData.datasets.forEach(function(dataset, datasetIndex) {
-                dataset.data.pop();
-            });
-
-            window.myBar.update();
         });
     </script>
 
