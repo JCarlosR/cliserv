@@ -161,10 +161,45 @@ class ReportController extends Controller
 
         //dd("gbfgrfb");
 
-        $data['dom'] = $dom;
-        $data['quantity'] = $quantity;
+        $copy_doms = $dom; $copy_quantities = $quantity;
+        $result_doms = [];   $result_quantities = [];
+
+        //Ordering data from bigger to smaller
+        for( $i=0;$i<count($quantity);$i++ )
+        {
+            $x = $this->bigger($copy_quantities);
+            $result_quantities[$i] = $copy_quantities[$x];
+            $result_doms[$i] = $copy_doms[$x];
+
+            array_splice($copy_quantities, $x, 1);
+            array_splice($copy_doms, $x, 1);
+        }
+
+        $doms_name = []; $doms_count =[];
+
+        // Getting the x=7 bigger elements
+        for( $i = 0; $i<8;$i++)
+        {
+            $doms_name[] = $result_doms[$i];
+            $doms_count[] = $result_quantities[$i];
+        }
+
+        $data['dom'] = $doms_name;
+        $data['quantity'] = $doms_count;
         //dd($data);
         return $data;
+    }
+
+    public function bigger( $array )
+    {
+        $pos_mayor=0;
+        for( $i=1;$i<count($array);$i++ )
+        {
+            if( $array[$i]>$array[$pos_mayor] )
+                $pos_mayor=$i;
+        }
+
+        return $pos_mayor;
     }
 
     public function encontrado($page, $dom){

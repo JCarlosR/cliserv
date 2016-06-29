@@ -89,7 +89,6 @@ class CategoryController extends Controller
 
     }
 
-
     public function smaller($array)
     {
         $pos_menor=0;
