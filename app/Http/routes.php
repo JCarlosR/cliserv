@@ -12,7 +12,11 @@ Route::get('reporte/trafico','ClickController@traffic');
 // Soles
 Route::get('reporte-categorias','ClickController@bestCategories');
 
+// Gonzales
+Route::get('reporte/pages', 'ClickController@pages');
+
 // Report JSON Data
 Route::get('clicks/user', 'ReportController@byUserType');
 Route::get('clicks/device_type', 'ReportController@byDeviceType');
 Route::get('clicks/hour', 'ReportController@perHour');
+Route::get('clicks/page', 'ReportController@perPages');

@@ -116,6 +116,64 @@ class ReportController extends Controller
         return $data;
     }
 
+    public function perPages(Request $request)
+    {
+        $year = $request->get('anual');
+        $month = $request->get('meses');
+
+        $start_carbon = Carbon::create($year, $month, 1);
+        $end_carbon = Carbon::create($year, $month+1, 1);
+
+        $dom = [];
+        $quantity = [];
+
+        $pages = [];
+
+        $clicks = Click::whereBetween('fecha', [$start_carbon, $end_carbon->subDay()])
+            ->where('referencia', 'not like', '%cliserv%')->get(['referencia']);
+        //$pages = $clicks;
+        //dd($pages);
+
+        foreach ($clicks as $click) {
+            $pagina = $click->referencia;
+            $pagina = str_replace("http://", "", $pagina);
+            $pagina = str_replace("https://", "", $pagina);
+            $pos = strpos($pagina, "/");
+            if($pos !== false)
+                $pagina = substr($pagina, 0, $pos);
+            array_push($pages, $pagina);
+            //var_dump($pagina);
+        }
+
+        for ($i=0; $i<sizeof($pages); ++$i)
+        {
+            $j = $this->encontrado($pages[$i], $dom);
+            if($j != -1)
+                $quantity[$j]++;
+            else{
+                $dom[] = $pages[$i];
+                $quantity[]=1;
+            }
+        }
+
+        //var_dump($dom);
+        //var_dump($quantity);
+
+        //dd("gbfgrfb");
+
+        $data['dom'] = $dom;
+        $data['quantity'] = $quantity;
+        //dd($data);
+        return $data;
+    }
+
+    public function encontrado($page, $dom){
+        for ($i=0; $i<sizeof($dom); ++$i)
+            if($dom[$i] == $page)
+                return $i;
+        return -1;
+    }
+
     public function toDayName($day) {
         $dayName = "";
         switch ($day) {
