@@ -25,6 +25,9 @@
         <li @yield('other')>
             <a href="{{ url('reporte-otros') }}"><span>Reporte-Otros</span></a>
         </li>
+        <li @yield('categories')>
+            <a href="{{ url('reporte-categorias') }}"><span>Categorías más visitadas</span></a>
+        </li>
     </ul>
     <a href="#" data-activates="slide-out" class="button-collapse">
         <i class="large material-icons">menu</i>
