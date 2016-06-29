@@ -11,4 +11,8 @@ class Category extends Model
     // Cuando se usa create
     // protected $fillable = [''];
 
+    public function categoryname()
+    {
+        return $this->belongsTo('App\CategoryName','id_category','id_category');
+    }
 }

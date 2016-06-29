@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\CategoryName;
+use App\CategoryProduct;
+use App\Click;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -11,14 +14,64 @@ class CategoryController extends Controller
 {
     public function bestCategories()
     {
-        $categories = Category::all();
-        dd($categories);
+        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->get();
 
+        // $categories = Category::where('id_category','>','2')->get();
+        // $category_name = CategoryName::where('id_lang',1)->get();
+        /*
+        foreach( $categories as $category  )
+        {
+            var_dump($category->categoryname->name);
+        }
+        */
+
+        $category_array = [];
+
+        foreach( $clicks as $click )
+        {
+             $categories = CategoryProduct::where('id_product',$click->product_id)->get();
+             foreach ( $categories as $category )
+             {
+
+                 $element = $category->id_category;
+                 if( ! $this->repeated_element($category_array,$element) )
+                     $category_array[] = $element;
+             }
+        }
+
+        dd($category_array);
+
+
+        $category_products = CategoryProduct::all();
+
+        foreach ( $category_products as $category_product) {
+            dd($category_product->product->reference );
+        }
+
+
+        $years = []; $years_result = [];
+
+        foreach( $clicks as $click )
+        {
+            dd($click->product->reference);
+        }
+
+        $years_copy = $years;
+
+        //Ordering data from smaller to bigger
+        for( $i=0;$i<count($years);$i++ )
+        {
+            $x = $this->smaller($years_copy);
+            $years_result[$i] = $years_copy[$x];
+            array_splice($years_copy, $x, 1);
+        }
+
+        $years = $years_result;
 
         return view('report_categories');
     }
 
-    public function bigger($array)
+    public function bigger( $array )
     {
         $pos_mayor=0;
         $mayor = $array[0];
@@ -30,6 +83,12 @@ class CategoryController extends Controller
 
         return $pos_mayor;
     }
+
+    public function containedCategory()
+    {
+
+    }
+
 
     public function smaller($array)
     {

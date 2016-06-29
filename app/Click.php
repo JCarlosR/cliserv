@@ -20,4 +20,10 @@ class Click extends Model
         return $this->belongsTo('App\User', 'user_id', 'id_customer');
     }
 
+    public function product()
+    {
+        //                                      ORIGIN      DESTINITY
+        return $this->belongsTo('App\Product','product_id','id_product');
+    }
+
 }

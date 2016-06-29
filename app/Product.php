@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Product
+class Product extends Model
 {
 
     protected $table = 'ps_product';
@@ -13,8 +13,10 @@ class Product
 
     public $timestamps = false;
 
-    public function click()
+    public function category()
     {
-        
+        return $this->hasMany('App\Category','product_id');
     }
+
+
 }
