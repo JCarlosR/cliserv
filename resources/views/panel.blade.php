@@ -22,8 +22,11 @@
         <li @yield('software')>
             <a href="{{ url('reporte-software') }}"><span>Reporte-Software</span></a>
         </li>
+        <li @yield('hours')>
+            <a href="{{ url('reporte/horas') }}"><span>Reporte por horas</span></a>
+        </li>
         <li @yield('other')>
-            <a href="{{ url('reporte-otros') }}"><span>Reporte-Otros</span></a>
+            <a href="{{ url('reporte/trafico') }}"><span>Reporte de tráfico</span></a>
         </li>
     </ul>
     <a href="#" data-activates="slide-out" class="button-collapse">

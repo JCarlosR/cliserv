@@ -4,8 +4,10 @@ Route::get('/','ClickController@welcome');
 Route::get('general/{finicio?}/{ffin?}','ClickController@general');
 Route::get('reporte-software','ClickController@software');
 Route::get('reporte-web','ClickController@web');
-Route::get('reporte-otros','ClickController@other');
+Route::get('reporte/horas','ClickController@hours');
+Route::get('reporte/trafico','ClickController@traffic');
 
 // Report JSON Data
 Route::get('clicks/user', 'ReportController@byUserType');
 Route::get('clicks/device_type', 'ReportController@byDeviceType');
+Route::get('clicks/hour', 'ReportController@perHour');
