@@ -1,6 +1,6 @@
 @extends('panel')
 
-@section('title','Reporte otros')
+@section('title','Reporte tráfico')
 
 @section('other','class="activated"')
 
@@ -50,10 +50,6 @@
         var FIRSTMONTHS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio"];
         var USER_LABELS = ["Usuarios", "No usuarios"];
         var DEVICE_LABELS = ["Desktop", "Mobile"];
-        var DATAVALUES1 = [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()];
-        var DATAVALUES2 = [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()];
-        var DATAVALUES3 = [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()];
-        var DATAVALUES4 = [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()];
 
         // Random color
         var randomColorFactor = function() {
@@ -71,12 +67,12 @@
                 labels: FIRSTMONTHS,
                 datasets: [{
                     label: USER_LABELS[0],
-                    data: DATAVALUES1,
+                    data: [],
                     fill: false,
                     borderDash: [5, 5]
                 }, {
                     label: USER_LABELS[1],
-                    data: DATAVALUES2
+                    data: []
                 }]
             },
             options: {
@@ -165,7 +161,7 @@
                 data: []
             };
 
-            $.getJSON('./clicks/device_type', function(data) {
+            $.getJSON('../clicks/device_type', function(data) {
                 desktopDataSet.data = data.desktop;
                 config.data.datasets.push(desktopDataSet);
 
@@ -198,7 +194,7 @@
                 data: []
             };
 
-            $.getJSON('./clicks/user', function(data) {
+            $.getJSON('../clicks/user', function(data) {
                 userDataSet.data = data.users;
                 config.data.datasets.push(userDataSet);
 
