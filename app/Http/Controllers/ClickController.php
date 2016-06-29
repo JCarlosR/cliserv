@@ -38,4 +38,9 @@ class ClickController extends Controller
     {
         return view('other');
     }
+
+    public function products()
+    {
+        return view('topproducts');
+    }
 }

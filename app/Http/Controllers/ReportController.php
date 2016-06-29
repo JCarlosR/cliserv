@@ -66,4 +66,44 @@ class ReportController extends Controller
         $data['mobile'] = $mobile_clicks;
         return $data;
     }
+
+    public function byProducts()
+    {
+        $clicks = Click::wherenotnull('product_id')->where('product_id','<>',0)->get();
+        $labelproducts = [];
+        $idproducts = [];
+        $arrayproducts = [];
+        $quantity = [];
+
+        foreach($clicks as $click)
+        {
+            $idproducts[] = $click->product->id_product;
+            $labelproducts[] = $click->product->name;
+        }
+
+        for ($i=0; $i<sizeof($idproducts); ++$i)
+        {
+            $j = $this->verOcurrencia($idproducts[$i], $arrayproducts);
+            if($j != -1)
+                $quantity[$j]++;
+            else{
+                $arrayproducts[] = $idproducts[$i];
+                $arraylabels[] = $labelproducts[$i];
+                $quantity[]=1;
+            }
+        }
+
+        $data['products'] = $arraylabels;
+        $data['quantity'] = $quantity;
+        return $data;
+    }
+
+    public function verOcurrencia($producto,$productos){
+        for($i =0 ; $i< sizeof($productos); $i++){
+            if($producto==$productos[$i])
+                return $i;
+        }
+        return -1;
+    }
+
 }
