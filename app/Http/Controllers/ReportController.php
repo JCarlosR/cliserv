@@ -117,14 +117,23 @@ class ReportController extends Controller
     }
 
     public function toDayName($day) {
+        $dayName = "";
         switch ($day) {
-            case 0: return 'Domingo';
-            case 1: return 'Lunes';
-            case 2: return 'Martes';
-            case 3: return 'Miércoles';
-            case 4: return 'Jueves';
-            case 5: return 'Viernes';
-            case 6: return 'Sábado';
+            case 0: $dayName = 'Domingo'; break;
+            case 1: $dayName = 'Lunes'; break;
+            case 2: $dayName = 'Martes'; break;
+            case 3: $dayName = 'Miércoles'; break;
+            case 4: $dayName = 'Jueves'; break;
+            case 5: $dayName = 'Viernes'; break;
+            case 6: $dayName = 'Sábado'; break;
         }
+
+        return $dayName;
+    }
+
+    public function bestCategories()
+    {
+        return view('report_categories');
     }
 }
+
