@@ -66,10 +66,4 @@ class ReportController extends Controller
         $data['mobile'] = $mobile_clicks;
         return $data;
     }
-
-
-    public function bestCategories()
-    {
-        return view('report_categories');
-    }
 }

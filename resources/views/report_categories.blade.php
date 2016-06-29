@@ -2,7 +2,7 @@
 
 @section('title', 'Reporte general')
 
-@section('general', 'class="activated"')
+@section('categories', 'class="activated"')
 
 @section('content')
     <div class="row">
@@ -31,23 +31,6 @@
                 </form>
             </div>
         </div>
-    </div>
-
-    <div class="row data">
-        @foreach($clicks as $click)
-            <div class="col s12 m6">
-                <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
-                        <span class="card-title yellow-text text-darken-2">{{ $click->user_name }}</span>
-                        <div class="card-action">
-                            <p>Coordenada en X: {{ $click->coordX }}</p>
-                            <p>Coordenada en Y: {{ $click->coordY }}</p>
-                            <p>Url: {{ $click->url }}</p>'+
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endforeach
     </div>
 @endsection
 
