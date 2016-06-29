@@ -22,8 +22,17 @@
         <li @yield('software')>
             <a href="{{ url('reporte-software') }}"><span>Reporte-Software</span></a>
         </li>
+        <li @yield('hours')>
+            <a href="{{ url('reporte/horas') }}"><span>Reporte por horas</span></a>
+        </li>
         <li @yield('other')>
-            <a href="{{ url('reporte-otros') }}"><span>Reporte-Otros</span></a>
+            <a href="{{ url('reporte/trafico') }}"><span>Reporte de tráfico</span></a>
+        </li>
+        <li @yield('categories')>
+            <a href="{{ url('reporte-categorias') }}"><span>Categorías más visitadas</span></a>
+        </li>
+        <li @yield('pages')>
+            <a href="{{ url('reporte/pages') }}"><span>Fuentes de visitas</span></a>
         </li>
         <li @yield('products')>
             <a href="{{ url('reporte-top10') }}"><span>Reporte-Productos</span></a>

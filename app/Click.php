@@ -15,6 +15,11 @@ class Click extends Model
 
     public $dates = ['fecha'];
 
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id', 'id_customer');
+    }
+
     public function product()
     {
         return $this->belongsTo('App\Product','product_id','id_product');
