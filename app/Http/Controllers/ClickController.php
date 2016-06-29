@@ -39,6 +39,11 @@ class ClickController extends Controller
         return view('hours');
     }
 
+    public function pages()
+    {
+        return view('pages');
+    }
+
     public function traffic()
     {
         return view('traffic');
