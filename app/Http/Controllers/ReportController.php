@@ -76,11 +76,15 @@ class ReportController extends Controller
         $start_carbon = Carbon::create($year, $month, 1);
         $end_carbon = Carbon::create($year, $month+1, 1);
 
-        $clicks = Click::wherenotnull('product_id')->where('product_id','<>',0)
+        if($year == 1)
+            $clicks = Click::wherenotnull('product_id')->where('product_id','<>',0)->get();
+        else
+            $clicks = Click::wherenotnull('product_id')->where('product_id','<>',0)
             ->whereBetween('fecha', [$start_carbon, $end_carbon->subDay()])->get();
         $labelproducts = [];
         $idproducts = [];
         $arrayproducts = [];
+        $arraylabels = [];
         $quantity = [];
 
         foreach($clicks as $click)
