@@ -14,6 +14,8 @@ Route::get('reporte/trafico','ClickController@traffic');
 
 // Soles
 Route::get('reporte-categorias','CategoryController@bestCategories');
+Route::get('month/{year}', 'CategoryController@months_year');
+Route::get('reporte-barras/{year?}/{month?}','CategoryController@bestCategoriesData');
 
 
 // Gonzales
