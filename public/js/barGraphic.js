@@ -19,8 +19,15 @@ function principal()
 
 function loadCanvas(year,month)
 {
+    $('#loading').show();
+    $('#canvas').slideUp();
+
     var ctx = $("#canvas");
-    $.getJSON('data_bar/'+year+'/'+month, function(data) {
+    $.getJSON('reporte-barras/'+year+'/'+month, function(data) {
+
+        $('#loading').hide();
+        $('#canvas').slideDown();
+
         var myLabels =[];
         var myData =[];
 
@@ -38,7 +45,7 @@ function loadCanvas(year,month)
             labels: myLabels,
             datasets: [
                 {
-                    label: "Cantidad de items",
+                    label: "Cantidad de productos",
                     backgroundColor: [
                         'rgba(145, 162, 235, 0.8)',
                         'rgba(255, 99, 132, 1)',
@@ -88,11 +95,11 @@ function loadMonths()
         $.getJSON('month/'+$year, function(data)
         {
             $('#mes').html('');
-
             $.each(data.name,function(key,value)
             {
                 $("#mes").append(" <option value='" + convert_month_number(value)+"'>" + value + "</option> ");
             });
+            $('#mes').material_select()
         });
     });
 }
@@ -100,29 +107,17 @@ function loadMonths()
 function convert_month_number($month_name )
 {
     switch( $month_name ) {
-        case 'Enero':
-            return 1;
-        case 'Febrero':
-            return 2;
-        case 'Marzo':
-            return 3;
-        case 'Abril':
-            return 4;
-        case 'Mayo':
-            return 5;
-        case  'Junio':
-            return 6;
-        case  'Julio':
-            return 7;
-        case  'Agosto':
-            return 8;
-        case  'Setiembre':
-            return 9;
-        case 'Octubre':
-            return 10;
-        case  'Noviembre':
-            return 11;
-        case 'Diciembre':
-            return 12;
+        case 'Enero':      return 1;
+        case 'Febrero':    return 2;
+        case 'Marzo':      return 3;
+        case 'Abril':      return 4;
+        case 'Mayo':       return 5;
+        case  'Junio':     return 6;
+        case  'Julio':     return 7;
+        case  'Agosto':    return 8;
+        case  'Setiembre': return 9;
+        case 'Octubre':    return 10;
+        case  'Noviembre': return 11;
+        case 'Diciembre':  return 12;
     }
 }
