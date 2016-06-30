@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
 
-    protected $table = 'ps_product';
+    protected $table = 'ps_product_lang';
 
-    protected $fillable = ['id_product','reference'];
+    protected $fillable = ['id_product','name'];
 
     public $timestamps = false;
 
@@ -17,6 +17,5 @@ class Product extends Model
     {
         return $this->hasMany('App\Category','product_id');
     }
-
 
 }

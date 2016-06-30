@@ -9,7 +9,7 @@ class Click extends Model
 
     protected $table = 'ps_clicks';
 
-    protected $fillable = ['user_id','user_name','coordX','coordY','url','fecha','dispositivo'];
+    protected $fillable = ['user_id','user_name','coordX','coordY','url','fecha','dispositivo','product_id'];
 
     public $timestamps = false;
 
@@ -22,7 +22,6 @@ class Click extends Model
 
     public function product()
     {
-        //                                      ORIGIN      DESTINITY
         return $this->belongsTo('App\Product','product_id','id_product');
     }
 

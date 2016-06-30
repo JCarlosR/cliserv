@@ -6,6 +6,8 @@ Route::get('reporte-software','ClickController@software');
 Route::get('reporte-web','ClickController@web');
 
 Route::get('reporte-otros','ClickController@other');
+Route::get('reporte-top10','ClickController@products');
+
 
 
 // Ramos
@@ -24,7 +26,6 @@ Route::get('reporte/pages', 'ClickController@pages');
 // Report JSON Data
 Route::get('clicks/user', 'ReportController@byUserType');
 Route::get('clicks/device_type', 'ReportController@byDeviceType');
-
+Route::get('clicks/products', 'ReportController@byProducts');
 Route::get('clicks/hour', 'ReportController@perHour');
-
 Route::get('clicks/page', 'ReportController@perPages');

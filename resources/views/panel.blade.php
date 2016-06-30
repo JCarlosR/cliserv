@@ -34,6 +34,9 @@
         <li @yield('pages')>
             <a href="{{ url('reporte/pages') }}"><span>Fuentes de visitas</span></a>
         </li>
+        <li @yield('products')>
+            <a href="{{ url('reporte-top10') }}"><span>Reporte-Productos</span></a>
+        </li>
     </ul>
     <a href="#" data-activates="slide-out" class="button-collapse">
         <i class="large material-icons">menu</i>

@@ -68,6 +68,44 @@ class ReportController extends Controller
         return $data;
     }
 
+    public function byProducts(Request $request)
+    {
+        $year = $request->get('cboyear');
+        $month = $request->get('cbomonth');
+
+        $start_carbon = Carbon::create($year, $month, 1);
+        $end_carbon = Carbon::create($year, $month+1, 1);
+
+        $clicks = Click::wherenotnull('product_id')->where('product_id','<>',0)
+            ->whereBetween('fecha', [$start_carbon, $end_carbon->subDay()])->get();
+        $labelproducts = [];
+        $idproducts = [];
+        $arrayproducts = [];
+        $quantity = [];
+
+        foreach($clicks as $click)
+        {
+            $idproducts[] = $click->product->id_product;
+            $labelproducts[] = $click->product->name;
+        }
+
+        for ($i=0; $i<sizeof($idproducts); ++$i)
+        {
+            $j = $this->verOcurrencia($idproducts[$i], $arrayproducts);
+            if($j != -1)
+                $quantity[$j]++;
+            else{
+                $arrayproducts[] = $idproducts[$i];
+                $arraylabels[] = $labelproducts[$i];
+                $quantity[]=1;
+            }
+        }
+
+        $data['products'] = $arraylabels;
+        $data['quantity'] = $quantity;
+        return $data;
+    }
+
     public function perHour(Request $request)
     {
         $start = $request->get('start_hour');
@@ -161,10 +199,53 @@ class ReportController extends Controller
 
         //dd("gbfgrfb");
 
-        $data['dom'] = $dom;
-        $data['quantity'] = $quantity;
+        $copy_doms = $dom; $copy_quantities = $quantity;
+        $result_doms = [];   $result_quantities = [];
+
+        //Ordering data from bigger to smaller
+        for( $i=0;$i<count($quantity);$i++ )
+        {
+            $x = $this->bigger($copy_quantities);
+            $result_quantities[$i] = $copy_quantities[$x];
+            $result_doms[$i] = $copy_doms[$x];
+
+            array_splice($copy_quantities, $x, 1);
+            array_splice($copy_doms, $x, 1);
+        }
+
+        $doms_name = []; $doms_count =[];
+
+        // Getting the x=7 bigger elements
+        for( $i = 0; $i<8;$i++)
+        {
+            $doms_name[] = $result_doms[$i];
+            $doms_count[] = $result_quantities[$i];
+        }
+
+        $data['dom'] = $doms_name;
+        $data['quantity'] = $doms_count;
         //dd($data);
         return $data;
+    }
+
+    public function verOcurrencia($producto,$productos){
+        for($i =0 ; $i< sizeof($productos); $i++){
+            if($producto==$productos[$i])
+                return $i;
+        }
+        return -1;
+    }
+
+    public function bigger( $array )
+    {
+        $pos_mayor=0;
+        for( $i=1;$i<count($array);$i++ )
+        {
+            if( $array[$i]>$array[$pos_mayor] )
+                $pos_mayor=$i;
+        }
+
+        return $pos_mayor;
     }
 
     public function encontrado($page, $dom){
