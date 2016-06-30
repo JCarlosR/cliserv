@@ -34,16 +34,12 @@
                 </div>
             </form>
         </div>
-        <br>
-        <br>
-        <div class="row">
-            <div class="col s12">
-                <div id="loading" class="center-align" style="display: none;">
-                    <img src="{{ asset('img/loading.svg') }}" alt="Cargando">
-                    <p>Cargando ...</p>
-                </div>
-                <canvas id="canvas" style="display: none;"></canvas>
-            </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col s12">
+            <canvas id="canvas"></canvas>
         </div>
     </div>
 @endsection

@@ -4,6 +4,8 @@ function principal()
 {
     loadMonths();
 
+    loadCanvas( 0,0 );
+
     $('#graficar').click(function (event) {
         event.preventDefault();
 

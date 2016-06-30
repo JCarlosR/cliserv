@@ -43,7 +43,10 @@ class CategoryController extends Controller
 
     public function bestCategoriesData( $year, $month )
     {
-        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where(DB::raw('YEAR(fecha)'), $year)->where( DB::raw('MONTH(fecha)'), $month )->get();
+        if( $year == 0 AND $month == 0 )
+            $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->get();
+        else
+            $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where(DB::raw('YEAR(fecha)'), $year)->where( DB::raw('MONTH(fecha)'), $month )->get();
 
         $category_arrays = [];
 
@@ -58,15 +61,14 @@ class CategoryController extends Controller
             }
         }
 
-        $items     = []; $products_ = []; $i=0;
+        $items     = []; $products_ = [];
 
         for( $i=0;$i< count($category_arrays);$i++ )
         {
-            $count = CategoryProduct ::where('id_category',$category_arrays[$i])->count();
-            $category = Category::find($category_arrays[$i])->first();
+            $count = CategoryProduct::where('id_category',$category_arrays[$i])->count();
+            $category = Category::where('id_category',$category_arrays[$i])->first();
             $products_[$i] = $category->categoryname->name;
             $items[$i] = $count;
-            $i++;
         }
 
         $copy_items = $items; $copy_products = $products_;
@@ -83,17 +85,17 @@ class CategoryController extends Controller
             array_splice($copy_products, $x, 1);
         }
 
-        $products_name = []; $products_count =[];
+        $category_name = []; $category_count =[];
 
         // Getting the x=7 bigger elements
-        for( $i = 0; $i<5;$i++)
+        for( $i = 0; $i<4;$i++)
         {
-            $products_name[] = $result_products[$i];
-            $products_count[] = $result_items[$i];
+            $category_name[] = $result_products[$i];
+            $category_count[] = $result_items[$i];
         }
 
-        $data['name']     = $products_name;
-        $data['quantity'] = $products_count;
+        $data['name']     = $category_name;
+        $data['quantity'] = $category_count;
 
         return $data;
     }
@@ -109,7 +111,7 @@ class CategoryController extends Controller
 
         return $pos_mayor;
     }
-    
+
     public function smaller($array)
     {
         $pos_menor=0;
