@@ -19,8 +19,15 @@ function principal()
 
 function loadCanvas(year,month)
 {
+    $('#loading').show();
+    $('#canvas').slideUp();
+
     var ctx = $("#canvas");
     $.getJSON('reporte-barras/'+year+'/'+month, function(data) {
+
+        $('#loading').hide();
+        $('#canvas').slideDown();
+
         var myLabels =[];
         var myData =[];
 
@@ -38,7 +45,7 @@ function loadCanvas(year,month)
             labels: myLabels,
             datasets: [
                 {
-                    label: "Cantidad de items",
+                    label: "Cantidad de productos",
                     backgroundColor: [
                         'rgba(145, 162, 235, 0.8)',
                         'rgba(255, 99, 132, 1)',

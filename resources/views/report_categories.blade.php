@@ -39,17 +39,18 @@
     <br>
     <div class="row">
         <div class="col s12">
-            <canvas id="canvas"></canvas>
+            <div id="loading" class="center-align" style="display: none;">
+                <img src="{{ asset('img/loading.svg') }}" alt="Cargando">
+                <p>Cargando ...</p>
+            </div>
+            <canvas id="canvas" style="display: none;"></canvas>
         </div>
     </div>
 @endsection
 
-
 @section('scripts')
-
     <script src="{{ asset('chartjs/Chart.js') }}"></script>
     <script src="{{ asset('js/barGraphic.js') }}"></script>
-
     <script type="text/javascript">
         $(document).ready(function() {
             $('#anio').material_select();
