@@ -48,7 +48,7 @@ class CategoryController extends Controller
         else
             $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where(DB::raw('YEAR(fecha)'), $year)->where( DB::raw('MONTH(fecha)'), $month )->get();
 
-        $category_arrays = [];
+        $category_arrays = []; // Available categories according to clicks data(product_id)
 
         foreach( $clicks as $click )
         {
@@ -61,42 +61,64 @@ class CategoryController extends Controller
             }
         }
 
-        $items     = []; $products_ = [];
+        $amount_category = []; //Amount of product for every category
 
-        for( $i=0;$i< count($category_arrays);$i++ )
+        for( $i=0;$i<count($category_arrays);$i++ )
+            $amount_category[$i]=0;
+
+        foreach( $clicks as $click )
         {
-            $count = CategoryProduct::where('id_category',$category_arrays[$i])->count();
-            $category = Category::where('id_category',$category_arrays[$i])->first();
-            $products_[$i] = $category->categoryname->name;
-            $items[$i] = $count;
+            $categories = CategoryProduct::where('id_product',$click->product_id)->get();
+            foreach ( $categories as $category )
+            {
+                $element = $category->id_category;
+
+                for( $i=0;$i<count($category_arrays);$i++ )
+                    if( $category_arrays[$i] == $element )
+                        ++$amount_category[$i];
+            }
         }
 
-        $copy_items = $items; $copy_products = $products_;
-        $result_items = [];   $result_products = [];
+        $copy_amount_category = $amount_category; $copy_category_arrays = $category_arrays;
+        $result_categories = [];   $result_amounts = [];
 
         //Ordering data from bigger to smaller
-        for( $i=0;$i<count($items);$i++ )
+        for( $i=0;$i<count($amount_category);$i++ )
         {
-            $x = $this->bigger($copy_items);
-            $result_items[$i] = $copy_items[$x];
-            $result_products[$i] = $copy_products[$x];
+            $x = $this->bigger($copy_amount_category);
+            $result_amounts[$i] = $copy_amount_category[$x];
+            $result_categories[$i] = $copy_category_arrays[$x];
 
-            array_splice($copy_items, $x, 1);
-            array_splice($copy_products, $x, 1);
+            array_splice($copy_amount_category, $x, 1);
+            array_splice($copy_category_arrays, $x, 1);
         }
 
-        $category_name = []; $category_count =[];
+        $category_name_ordered = [];
 
-        // Getting the x=7 bigger elements
-        for( $i = 0; $i<4;$i++)
+        for( $i=0; $i<count($result_categories);$i++ )
         {
-            $category_name[] = $result_products[$i];
-            $category_count[] = $result_items[$i];
+            $category_x = CategoryName::where('id_category',$result_categories[$i])->first();
+            $category_name_ordered[] = $category_x->name;
         }
 
-        $data['name']     = $category_name;
-        $data['quantity'] = $category_count;
+        $category_name = []; $category_amount =[];
 
+        // Getting the x=5 bigger elements
+
+        if(  count($result_amounts )<5 )
+        {
+            $data['name']     = $category_name_ordered;
+            $data['quantity'] = $result_amounts;
+        }else
+        {
+            for( $i = 0; $i<5;$i++)
+            {
+                $category_name[] = $category_name_ordered[$i];
+                $category_amount[] = $result_amounts[$i];
+            }
+            $data['name']     = $category_name;
+            $data['quantity'] = $category_amount;
+        }
         return $data;
     }
 
