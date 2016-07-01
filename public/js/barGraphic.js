@@ -18,6 +18,9 @@ function principal()
 
 function loadCanvas(year,month)
 {
+    $('#loading').show();
+    $('#canvas').slideUp();
+
     var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
     };
@@ -90,8 +93,9 @@ function loadCanvas(year,month)
     window.onload = function() {
         var ctx = document.getElementById("canvas").getContext("2d");
         window.myLine = new Chart(ctx, config);
+        $('#anio').material_select();
+        $('#mes').material_select();
     };
-
 
     var pageDataSet = {
         label: USER_LABELS[0],
@@ -102,9 +106,6 @@ function loadCanvas(year,month)
         pointBorderWidth: 1,
         data: []
     };
-
-    $('#loading').show();
-    $('#canvas').slideUp();
 
     $.getJSON('reporte-barras/'+year+'/'+month, function(data) {
 

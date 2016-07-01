@@ -51,10 +51,4 @@
 @section('scripts')
     <script src="{{ asset('chartjs/Chart.js') }}"></script>
     <script src="{{ asset('js/barGraphic.js') }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#anio').material_select();
-            $('#mes').material_select();
-        });
-    </script>
 @endsection
