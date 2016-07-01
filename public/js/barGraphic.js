@@ -2,25 +2,6 @@ $(document).on('ready', principal);
 
 function principal()
 {
-    loadMonths();
-    //Default data
-    loadCanvas( 0,0 );
-
-    $('#graficar').click(function (event) {
-        event.preventDefault();
-
-        var year = $('#anio').val();
-        var month  = $('#mes').val();
-
-        loadCanvas(  year,month );
-    })
-}
-
-function loadCanvas(year,month)
-{
-    $('#loading').show();
-    $('#canvas').slideUp();
-
     var randomScalingFactor = function() {
         return Math.round(Math.random() * 100);
     };
@@ -93,34 +74,47 @@ function loadCanvas(year,month)
     window.onload = function() {
         var ctx = document.getElementById("canvas").getContext("2d");
         window.myLine = new Chart(ctx, config);
+
         $('#anio').material_select();
         $('#mes').material_select();
+
+        loadMonths();
     };
 
-    var pageDataSet = {
-        label: USER_LABELS[0],
-        borderColor: randomColor(0.4),
-        backgroundColor: randomColor(0.5),
-        pointBorderColor: randomColor(0.7),
-        pointBackgroundColor: randomColor(0.5),
-        pointBorderWidth: 1,
-        data: []
-    };
+    $('#graficar').click(function (event) {
+        event.preventDefault();
 
-    $.getJSON('reporte-barras/'+year+'/'+month, function(data) {
+        var year = $('#anio').val();
+        var month  = $('#mes').val();
 
-        $('#loading').hide();
-        $('#canvas').slideDown();
+        $('#loading').show();
+        $('#canvas').slideUp();
 
-        config.data.labels = data.name;
+        var pageDataSet = {
+            label: USER_LABELS[0],
+            borderColor: randomColor(0.4),
+            backgroundColor: randomColor(0.5),
+            pointBorderColor: randomColor(0.7),
+            pointBackgroundColor: randomColor(0.5),
+            pointBorderWidth: 1,
+            data: []
+        };
 
-        config.data.datasets = [];
+        $.getJSON('reporte-barras/'+year+'/'+month, function(data) {
 
-        pageDataSet.data = data.quantity;
-        config.data.datasets.push(pageDataSet);
+            $('#loading').hide();
+            $('#canvas').slideDown();
 
-        window.myLine.update();
-    });
+            config.data.labels = data.name;
+
+            config.data.datasets = [];
+
+            pageDataSet.data = data.quantity;
+            config.data.datasets.push(pageDataSet);
+
+            window.myLine.update();
+        });
+    })
 }
 
 function loadMonths()
