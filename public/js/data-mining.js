@@ -26,7 +26,7 @@ function filterByDeviceType(data) {
     var device_type;
     if (selected_option==1)
         device_type = 'desktop';
-    else device_type = 'mobile'; // 2
+    else device_type = 'movil'; // 2
 
     var filtered = [];
     for (var i=0; i<data.length; ++i) {
