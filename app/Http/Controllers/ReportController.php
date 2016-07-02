@@ -10,6 +10,11 @@ use App\Http\Requests;
 
 class ReportController extends Controller
 {
+    public function all()
+    {
+        return Click::all();
+    }
+
     public function byUserType()
     {
         $clicks = Click::all();

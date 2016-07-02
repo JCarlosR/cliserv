@@ -18,17 +18,40 @@
 	margin-top: 10px;
 }
 
+a.button-collapse.top-nav {
+    position: absolute;
+    text-align: center;
+    height: 24px;
+    width: 24px;
+    left: 5%;
+    top: 0;
+    float: none;
+    margin-left: 1rem;
+    color: #000;
+    font-size: 36px;
+    z-index: 2;
+}
+a.button-collapse.top-nav.full {
+    line-height: 82px;
+}
+a.button-collapse.top-nav i {
+    font-size: 32px;
+}
 @media only screen and (max-width: 800px) {	
 	h3 {
     	font-size: 30px;
 	}
 }
+
+@media only screen and (min-width: 992px) {
+    main {
+        padding-left: 240px;
+    }
+}
+
 .in-bold
 {
 	font-weight: bold;
-}
-main{
-	padding-left: 240px;
 }
 header{
 	height: 0px;
