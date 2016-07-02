@@ -16,12 +16,6 @@
         <li @yield('general')>
             <a href="{{ url('general') }}"><span>Reporte  General</span></a>
         </li>
-        <li @yield('web')>
-            <a href="{{ url('reporte-web') }}"><span>Reporte-Sistema web</span></a>
-        </li>
-        <li @yield('software')>
-            <a href="{{ url('reporte-software') }}"><span>Reporte-Software</span></a>
-        </li>
         <li @yield('hours')>
             <a href="{{ url('reporte/horas') }}"><span>Reporte por horas</span></a>
         </li>
