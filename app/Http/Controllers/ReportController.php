@@ -68,6 +68,48 @@ class ReportController extends Controller
         return $data;
     }
 
+    public function byProducts(Request $request)
+    {
+        $year = $request->get('cboyear');
+        $month = $request->get('cbomonth');
+
+        $start_carbon = Carbon::create($year, $month, 1);
+        $end_carbon = Carbon::create($year, $month+1, 1);
+
+        if($year == 1)
+            $clicks = Click::wherenotnull('product_id')->where('product_id','<>',0)->get();
+        else
+            $clicks = Click::wherenotnull('product_id')->where('product_id','<>',0)
+            ->whereBetween('fecha', [$start_carbon, $end_carbon->subDay()])->get();
+        $labelproducts = [];
+        $idproducts = [];
+        $arrayproducts = [];
+        $arraylabels = [];
+        $quantity = [];
+
+        foreach($clicks as $click)
+        {
+            $idproducts[] = $click->product->id_product;
+            $labelproducts[] = $click->product->name;
+        }
+
+        for ($i=0; $i<sizeof($idproducts); ++$i)
+        {
+            $j = $this->verOcurrencia($idproducts[$i], $arrayproducts);
+            if($j != -1)
+                $quantity[$j]++;
+            else{
+                $arrayproducts[] = $idproducts[$i];
+                $arraylabels[] = $labelproducts[$i];
+                $quantity[]=1;
+            }
+        }
+
+        $data['products'] = $arraylabels;
+        $data['quantity'] = $quantity;
+        return $data;
+    }
+
     public function perHour(Request $request)
     {
         $start = $request->get('start_hour');
@@ -188,6 +230,14 @@ class ReportController extends Controller
         $data['quantity'] = $doms_count;
         //dd($data);
         return $data;
+    }
+
+    public function verOcurrencia($producto,$productos){
+        for($i =0 ; $i< sizeof($productos); $i++){
+            if($producto==$productos[$i])
+                return $i;
+        }
+        return -1;
     }
 
     public function bigger( $array )
