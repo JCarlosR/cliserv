@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/','ClickController@general');
-Route::get('general/{finicio?}/{ffin?}','ClickController@general');
+Route::get('tendencia','ClickController@tendencia');
 
 Route::get('reporte-otros','ClickController@other');
 Route::get('reporte-top10','ClickController@products');

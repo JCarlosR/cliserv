@@ -55,9 +55,11 @@ class CategoryController extends Controller
             $categories = CategoryProduct::where('id_product',$click->product_id)->get();
             foreach ( $categories as $category )
             {
-                $element = $category->id_category;
-                if( ! $this->repeated_element($category_arrays,$element) )
-                    $category_arrays[] = $element;
+                if( $category->id_category != 2 ) {
+                    $element = $category->id_category;
+                    if (!$this->repeated_element($category_arrays, $element))
+                        $category_arrays[] = $element;
+                }
             }
         }
 
