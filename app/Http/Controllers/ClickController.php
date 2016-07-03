@@ -34,8 +34,24 @@ class ClickController extends Controller
         return view('web');
     }
 
-    public function other()
+    public function hours()
     {
-        return view('other');
+        return view('hours');
     }
+
+    public function products()
+    {
+        return view('topproducts');
+    }
+
+    public function pages()
+    {
+        return view('pages');
+    }
+
+    public function traffic()
+    {
+        return view('traffic');
+    }
+
 }

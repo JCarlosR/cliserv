@@ -16,20 +16,29 @@
         <li @yield('general')>
             <a href="{{ url('general') }}"><span>Reporte  General</span></a>
         </li>
-        <li @yield('web')>
-            <a href="{{ url('reporte-web') }}"><span>Reporte-Sistema web</span></a>
+        <li @yield('mining')>
+            <a href="{{ url('reporte/data-mining') }}"><span>Data mining</span></a>
         </li>
-        <li @yield('software')>
-            <a href="{{ url('reporte-software') }}"><span>Reporte-Software</span></a>
+        <li @yield('hours')>
+            <a href="{{ url('reporte/horas') }}"><span>Reporte por horas</span></a>
         </li>
         <li @yield('other')>
-            <a href="{{ url('reporte-otros') }}"><span>Reporte-Otros</span></a>
+            <a href="{{ url('reporte/trafico') }}"><span>Reporte de tráfico</span></a>
+        </li>
+        <li @yield('categories')>
+            <a href="{{ url('reporte-categorias') }}"><span>Categorías más visitadas</span></a>
+        </li>
+        <li @yield('pages')>
+            <a href="{{ url('reporte/pages') }}"><span>Fuentes de visitas</span></a>
+        </li>
+        <li @yield('products')>
+            <a href="{{ url('reporte-top10') }}"><span>Reporte-Productos</span></a>
         </li>
         <li @yield('page')>
             <a href="{{ url('reporte-page') }}"><span>Reporte-Pages</span></a>
         </li>
     </ul>
-    <a href="#" data-activates="slide-out" class="button-collapse">
+    <a href="#" data-activates="slide-out" class="button-collapse top-nav full hide-on-large-only">
         <i class="large material-icons">menu</i>
     </a>
 </header>
@@ -37,6 +46,7 @@
     <div class="row">
         <h4 class="center-align">@yield('title')</h4>
     </div>
+    @yield('main-content')
     <div class="container">
         @yield('content')
     </div>
