@@ -13,8 +13,8 @@
 <header>
     <ul id="slide-out" class="side-nav fixed">
         <div class="center-align"><img src="{{ asset('img/cstream.jpg') }}" id="logo" class="responsive-img"></div>
-        <li @yield('general')>
-            <a href="{{ url('general') }}"><span>Reporte  General</span></a>
+        <li @yield('tendencia')>
+            <a href="{{ url('tendencia') }}"><span>Tendencia Actual</span></a>
         </li>
         <li @yield('mining')>
             <a href="{{ url('reporte/data-mining') }}"><span>Data mining</span></a>
