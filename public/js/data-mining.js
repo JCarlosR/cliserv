@@ -105,6 +105,14 @@ function mainFunction() {
         filtered_data = filterByRangeDate(filtered_data);
     }
     console.log(filtered_data);
+    filtered_data = filterByGenre(filtered_data);
+    console.log(filtered_data);
+    filtered_data = filterByYear(filtered_data);
+    console.log(filtered_data);
+    filtered_data = filterByMonth(filtered_data);
+    console.log(filtered_data);
+    filtered_data = filterByHour(filtered_data);
+    console.log(filtered_data);
 }
 
 function filterByRangeDate(data) {
@@ -235,6 +243,83 @@ function filterByCategory(data) {
     var filtered = [];
     for (var i=0; i<data.length; ++i) {
         if (convertCategory(data[i].url) == selected_option)
+            filtered.push(data[i]);
+    }
+    return filtered;
+}
+
+function filterByGenre(data) {
+    var selected_option = $('#cboGenre').val();
+
+    if (selected_option==3)
+        return data;
+
+    var filtered = [];
+    if (selected_option==2) {
+        for (var i=0; i<data.length; ++i) {
+            if (data[i].user == null)
+                filtered.push(data[i]);
+        }
+    }
+    else{
+        for (var i=0; i<data.length; ++i) {
+            if (data[i].user == null)
+                continue;
+            if (data[i].user.id_gender == selected_option)
+                filtered.push(data[i]);
+        }
+    }
+
+    return filtered;
+}
+
+function filterByYear(data) {
+
+    var selected_option = $('#cboYear').val();
+    if (selected_option == 0)
+        return data;
+
+    var filtered = [];
+
+    for (var i=0; i<data.length; ++i) {
+        var d = new Date(data[i].fecha);
+        var year = d.getFullYear();
+        if (year == selected_option)
+            filtered.push(data[i]);
+    }
+
+    return filtered;
+}
+
+function filterByMonth(data) {
+    var selected_option = $('#cboMonth').val();
+    if (selected_option == 13)
+        return data;
+
+    var filtered = [];
+
+    for (var i=0; i<data.length; ++i) {
+        var d = new Date(data[i].fecha);
+        var month = d.getMonth();
+        if (month == selected_option)
+            filtered.push(data[i]);
+    }
+    return filtered;
+}
+
+function filterByHour(data) {
+    var start = $('#start_hour').val();
+    var end = $('#end_hour').val();
+    if (start == '' || end == '')
+        return data;
+
+    var filtered = [];
+
+    for (var i=0; i<data.length; ++i) {
+        var d = new Date(data[i].fecha);
+        var hour = d.getHours();
+        console.log(hour);
+        if (hour>= start && hour<=end)
             filtered.push(data[i]);
     }
     return filtered;

@@ -31,11 +31,11 @@
                     <span class="card-title">Cliente</span>
                     <div class="row">
                         <div class="input-field col s6">
-                            <select>
-                                <option value="" selected>Todos</option>
+                            <select id="cboGenre">
+                                <option value="3" selected>Todos</option>
                                 <option value="1">Hombre</option>
-                                <option value="2">Mujer</option>
-                                <option value="3">Desconocido</option>
+                                <option value="0">Mujer</option>
+                                <option value="2">Desconocido</option>
                             </select>
                             <label>Filtro por género</label>
                         </div>
@@ -112,18 +112,28 @@
                         <div id="tab1" class="col s12">
                             <div class="row">
                                 <div class="input-field col s6">
-                                    <select>
-                                        <option value="" selected>Todos</option>
-                                        <option value="1">2016</option>
-                                        <option value="2">2017</option>
+                                    <select id="cboYear">
+                                        <option value="0" selected>Todos</option>
+                                        <option value="2016">2016</option>
+                                        <option value="2017">2017</option>
                                     </select>
                                     <label>Seleccione año</label>
                                 </div>
                                 <div class="input-field col s6">
-                                    <select>
-                                        <option value="" selected>Todos</option>
-                                        <option value="1">Enero</option>
-                                        <option value="2">Febrero</option>
+                                    <select id="cboMonth">
+                                        <option value="13" selected>Todos</option>
+                                        <option value="0">Enero</option>
+                                        <option value="1">Febrero</option>
+                                        <option value="2">Marzo</option>
+                                        <option value="3">Abril</option>
+                                        <option value="4">Mayo</option>
+                                        <option value="5">Junio</option>
+                                        <option value="6">Julio</option>
+                                        <option value="7">Agosto</option>
+                                        <option value="8">Setiembre</option>
+                                        <option value="9">Octubre</option>
+                                        <option value="10">Noviembre</option>
+                                        <option value="11">Diciembre</option>
                                     </select>
                                     <label>Seleccione mes</label>
                                 </div>
