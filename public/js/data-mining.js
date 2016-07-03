@@ -30,12 +30,12 @@ function loadCategoriesSource(data) {
         if (convertCategory(data[i].url) != '')
             categories.push(convertCategory(data[i].referencia));
     }
-    console.log(categories);
+    //console.log(categories);
     var uniqueCategories = [];
     $.each(categories, function(i, el){
         if($.inArray(el, uniqueCategories) === -1) uniqueCategories.push(el);
     });
-    console.log(uniqueCategories);
+    //console.log(uniqueCategories);
     $category_filter.append('<option value="0">Todos</option>');
     for (var j=0; j<uniqueCategories.length; ++j) {
         if (uniqueCategories[j] != '')
@@ -54,7 +54,7 @@ function loadUrlsSource(data) {
     $.each(urls, function(i, el){
         if($.inArray(el, uniqueUrls) === -1) uniqueUrls.push(el);
     });
-    console.log(uniqueUrls);
+    //console.log(uniqueUrls);
     $source_filter.append('<option value="0">Todos</option>');
     for (var j=0; j<uniqueUrls.length; ++j) {
         if (uniqueUrls[j] != '')
@@ -70,7 +70,7 @@ function convertCategory(url) {
     var pos = url_convert.indexOf('-');
     if (pos != -1)
         url_convert = url_convert.substr(pos+1, url_convert.length);
-    console.log(url_convert);
+    //console.log(url_convert);
 
     if (url_convert.indexOf('/')==-1)
         return url_convert;
@@ -90,17 +90,57 @@ function convertUrl(url) {
 
 function mainFunction() {
     var filtered_data = filterByDeviceType(full_data);
-    console.log(filtered_data);
+    //console.log(filtered_data);
     filtered_data = filterByUrlSource(filtered_data);
-    console.log(filtered_data);
+    //console.log(filtered_data);
     filtered_data = filterByCategory(filtered_data);
-    console.log(filtered_data);
+    //console.log(filtered_data);
     if ( $('ul.tabs a[href="#tab3"]').hasClass('active') ) {
         filtered_data = filterByDayName(filtered_data);
     }
-    console.log(filtered_data);
+    //console.log(filtered_data);
     filtered_data = filterByCountry(filtered_data);
+    //console.log(filtered_data);
+    if ( $('ul.tabs a[href="#tab2"]').hasClass('active') ) {
+        filtered_data = filterByRangeDate(filtered_data);
+    }
     console.log(filtered_data);
+}
+
+function filterByRangeDate(data) {
+    var filtered = [];
+    var date_start = convertDate($('#start_date').val());
+    var date_end = convertDate($('#end_date').val());
+
+    for (var i=0; i<data.length; ++i) {
+        console.log('Date inicial '+ date_start);
+        console.log('Date actual '+ new Date(data[i].fecha));
+        console.log('Date final '+ date_end);
+        console.log('===============================');
+
+        if( new Date(date_start).getTime() <= new Date(data[i].fecha).getTime() && new Date(data[i].fecha).getTime() <= new Date(date_end).getTime() )
+            filtered.push(data[i]);
+    }
+
+    return filtered;
+}
+
+function convertDate(fecha) {
+    var y;
+    var m;
+    var d;
+
+    var pos1 = fecha.indexOf('/');
+    d = fecha.substr(0, pos1);
+    fecha = fecha.slice(pos1+1, fecha.length);
+    var pos2 = fecha.indexOf('/');
+    m = fecha.substr(0, pos2);
+    fecha = fecha.slice(pos2+1, fecha.length);
+    y = fecha;
+
+    var date = new Date(y+"-"+m+"-"+d);
+    date.setDate(date.getDate() + 1);
+    return date;
 }
 
 function filterByDayName(data) {
@@ -173,7 +213,6 @@ function filterByCountry(data) {
 
     return filtered;
 }
-
 
 function filterByUrlSource(data) {
     var selected_option = $('#source_filter').val();
