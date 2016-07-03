@@ -16,7 +16,7 @@ class ClickController extends Controller
     public function tendencia()
     {
         $today  = Carbon::today();
-        $clicks = Click::where('fecha','<=',$today)->get();
+        $clicks = Click::where('fecha','>=',$today)->get();
 
         $category_arrays = []; // Available categories according to clicks data(product_id)
 
