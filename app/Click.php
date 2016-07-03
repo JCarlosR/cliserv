@@ -9,7 +9,7 @@ class Click extends Model
 
     protected $table = 'ps_clicks';
 
-    protected $fillable = ['user_id','user_name','coordX','coordY','url','fecha','dispositivo','product_id'];
+    protected $fillable = ['user_id','user_name','coordX','coordY','url','fecha','dispositivo','product_id','ip','country','city'];
 
     public $timestamps = false;
 

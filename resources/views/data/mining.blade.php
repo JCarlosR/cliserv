@@ -43,10 +43,11 @@
                             <label>Filtro por género</label>
                         </div>
                         <div class="input-field col s6">
-                            <select>
-                                <option value="" selected>Todos</option>
-                                <option value="1">País 1</option>
-                                <option value="2">País 2</option>
+                            <select id="cbopaises">
+                                <option value="0" selected>Todos</option>
+                                @foreach($countries as $country)
+                                <option value={{$country}}>{{$country}}</option>
+                                @endforeach
                             </select>
                             <label>Filtro por país</label>
                         </div>
