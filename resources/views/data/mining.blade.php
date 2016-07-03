@@ -15,11 +15,8 @@
                     <span class="card-title">Producto</span>
                     <div class="row">
                         <div class="input-field col s12">
-                            <select>
-                                <option value="" selected>Todas</option>
-                                <option value="1">Categoría 1</option>
-                                <option value="2">Categoría 2</option>
-                                <option value="3">Categoría 3</option>
+                            <select id="category_filter">
+
                             </select>
                             <label>Filtro por categoría</label>
                         </div>
@@ -80,10 +77,8 @@
                     <span class="card-title">Fuente</span>
                     <div class="row">
                         <div class="input-field col s12">
-                            <select>
-                                <option value="" selected>Todos</option>
-                                <option value="1">Sitio 1</option>
-                                <option value="2">Sitio 2</option>
+                            <select id="source_filter">
+
                             </select>
                             <label>Fuente de visita</label>
                         </div>
@@ -148,17 +143,17 @@
                         </div>
                         <div id="tab3" class="col s12">
                             <div class="input-field col s12">
-                                <select>
-                                    <option value="" selected>Todos</option>
+                                <select id="day_filter">
+                                    <option value="9" selected>Todos</option>
                                     <option value="1">Lunes</option>
                                     <option value="2">Martes</option>
                                     <option value="3">Miércoles</option>
                                     <option value="4">Jueves</option>
                                     <option value="5">Viernes</option>
                                     <option value="6">Sábado</option>
-                                    <option value="7">Domingo</option>
-                                    <option value="8">Entre semana</option>
-                                    <option value="9">Fin de semana</option>
+                                    <option value="0">Domingo</option>
+                                    <option value="7">Entre semana</option>
+                                    <option value="8">Fin de semana</option>
                                 </select>
                                 <label>Seleccione día(s)</label>
                             </div>

@@ -34,6 +34,9 @@
         <li @yield('products')>
             <a href="{{ url('reporte-top10') }}"><span>Reporte-Productos</span></a>
         </li>
+        <li @yield('page')>
+            <a href="{{ url('reporte-page') }}"><span>Reporte-Pages</span></a>
+        </li>
     </ul>
     <a href="#" data-activates="slide-out" class="button-collapse top-nav full hide-on-large-only">
         <i class="large material-icons">menu</i>
