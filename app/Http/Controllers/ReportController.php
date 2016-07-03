@@ -22,7 +22,7 @@ class ReportController extends Controller
         $user_clicks = [];
         $visitors_clicks = [];
         // January - June
-        for ($i=0; $i<6; ++$i) {
+        for ($i=0; $i<11; ++$i) {
             $user_clicks[$i] = 0;
             $visitors_clicks[$i] = 0;
         }
@@ -50,8 +50,8 @@ class ReportController extends Controller
 
         $desktop_clicks = [];
         $mobile_clicks = [];
-        // January - June
-        for ($i=0; $i<6; ++$i) {
+        // January - December
+        for ($i=0; $i<11; ++$i) {
             $desktop_clicks[$i] = 0;
             $mobile_clicks[$i] = 0;
         }
