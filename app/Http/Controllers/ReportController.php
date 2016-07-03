@@ -12,7 +12,7 @@ class ReportController extends Controller
     public function byUserType()
     {
         $clicks = Click::all();
-
+ 
         $user_clicks = [];
         $visitors_clicks = [];
         // January - June
