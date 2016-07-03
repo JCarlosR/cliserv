@@ -159,17 +159,21 @@ function filterByDeviceType(data) {
 
 function filterByCountry(data) {
     var selected_option = $('#cbopaises').val();
-    if (selected_option==0)
+    if (selected_option == 0)
         return data;
 
     var country;
     country = selected_option;
 
     var filtered = [];
-    for (var i=0; i<data.length; ++i) {
+    for (var i = 0; i < data.length; ++i) {
         if (data[i].country == country)
             filtered.push(data[i]);
     }
+
+    return filtered;
+}
+
 
 function filterByUrlSource(data) {
     var selected_option = $('#source_filter').val();
