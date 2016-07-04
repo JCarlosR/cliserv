@@ -158,7 +158,52 @@ function generateGraph(filtered_data) {
         new_datasets.push(desktopDataSet);
         new_datasets.push(mobileDataSet);
     } else if ( $('#presentation_genre').is(':checked') ) {
+        new_labels = ['By genre'];
 
+        // Generate my data
+        var myData = getGenresData(filtered_data);
+
+        // New dataSets
+        var desktopDataSet = {
+            label: 'Hombres',
+            borderColor: randomColor(0.4),
+            backgroundColor: randomColor(0.5),
+            pointBorderColor: randomColor(0.7),
+            pointBackgroundColor: randomColor(0.5),
+            pointBorderWidth: 1,
+            data: myData.male
+        };
+        var mobileDataSet = {
+            label: 'Mujeres',
+            borderColor: randomColor(0.4),
+            backgroundColor: randomColor(0.5),
+            pointBorderColor: randomColor(0.7),
+            pointBackgroundColor: randomColor(0.5),
+            pointBorderWidth: 1,
+            data: myData.female
+        };
+
+        new_datasets.push(desktopDataSet);
+        new_datasets.push(mobileDataSet);
+    } else if ( $('#presentation_country').is(':checked')) {
+        new_labels = ['By Country'];
+
+        // Generate my data
+        var myData = getCountryData(filtered_data);
+
+        // New dataSets
+        for(var i=0; i<myData.nombre.length; i++){
+            var countryDataset = {
+                label: myData.nombre[i],
+                borderColor: randomColor(0.4),
+                backgroundColor: randomColor(0.5),
+                pointBorderColor: randomColor(0.7),
+                pointBackgroundColor: randomColor(0.5),
+                pointBorderWidth: 1,
+                data: [myData.cantidad[i]]
+            };
+            new_datasets.push(countryDataset);
+        }
     } else if ( $('#presentation_origin').is(':checked') ) {
         // New labels
         fixedUrls = [];
@@ -186,6 +231,26 @@ function generateGraph(filtered_data) {
             };
 
             new_datasets.push(source);
+        }
+
+    } else if ( $('#presentation_product').is(':checked')) {
+        new_labels = ['By Product'];
+
+        // Generate my data
+        var myData = getProductData(filtered_data);
+
+        // New dataSets
+        for (var i = 0; i < myData.nombre.length; i++) {
+            var countryDataset = {
+                label: myData.nombre[i],
+                borderColor: randomColor(0.4),
+                backgroundColor: randomColor(0.5),
+                pointBorderColor: randomColor(0.7),
+                pointBackgroundColor: randomColor(0.5),
+                pointBorderWidth: 1,
+                data: [myData.cantidad[i]]
+            };
+            new_datasets.push(countryDataset);
         }
 
     } else if ( $('#presentation_month').is(':checked') ) {
@@ -225,6 +290,7 @@ function generateGraph(filtered_data) {
 
             new_datasets.push(source1);
         }
+
     }else if ( $('#presentation_day').is(':checked') ) {
         var new_labels2 = [
             'Domingo',
@@ -262,6 +328,7 @@ function generateGraph(filtered_data) {
     // Pondré de ejemplo la dimensión y el radioButton de cliente Género
 
     // Apply changes
+
     config.data.labels = new_labels;
     config.data.datasets = new_datasets;
 
@@ -318,6 +385,82 @@ function getDeviceTypeData(data) {
     }
 
     return { desktop: [desktop], mobile: [mobile]};
+}
+
+function getGenresData(data){
+    var male = 0;
+    var female = 0;
+
+    for (var i=0; i<data.length; ++i) {
+        if (data[i].user == null)
+            continue;
+        if (data[i].user.id_gender == 1)
+            ++male;
+        else ++female;
+    }
+
+    return { male: [male], female: [female]};
+}
+
+function getCountryData(data){
+    var country = [];
+    var auxArray = [];
+    var quantity = [];
+
+    for (var i=0; i<data.length; ++i) {
+        if (data[i].country == null)
+            continue;
+        else country.push(data[i].country);
+    }
+    var j;
+    for (var i=0; i<country.length; ++i)
+    {
+        j = encontrado(country[i], auxArray);
+        if(j != -1)
+            quantity[j]++;
+        else{
+            auxArray.push(country[i]);
+            quantity.push(1);
+        }
+    }
+    var data = [];
+    data['nombre'] = auxArray;
+    data['cantidad'] = quantity;
+    return data;
+}
+
+function getProductData(data){
+    var product = [];
+    var auxArray = [];
+    var quantity = [];
+
+    for (var i=0; i<data.length; ++i) {
+        if (data[i].product == null)
+            continue;
+        else product.push(data[i].product.name);
+    }
+    var j;
+    for (var i=0; i<product.length; ++i)
+    {
+        j = encontrado(product[i], auxArray);
+        if(j != -1)
+            quantity[j]++;
+        else{
+            auxArray.push(product[i]);
+            quantity.push(1);
+        }
+    }
+    var data = [];
+    data['nombre'] = auxArray;
+    data['cantidad'] = quantity;
+    return data;
+}
+
+function encontrado(page, dom){
+    for (var i=0; i<dom.length; ++i)
+        if(dom[i] == page)
+            return i;
+    return -1;
 }
 
 function filterByRangeDate(data) {
