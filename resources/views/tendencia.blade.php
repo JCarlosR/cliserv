@@ -34,7 +34,7 @@
                     <div class="card-action">
                         <div class="center center-align">
                             <a href="http://cliserv.esy.es/es/{{$category[0]}}-{{$category[2]}}.html" target="_blank">
-                                <img src="http://cliserv.esy.es/c/{{$category[0]}}-category_default/{{$product[2]}}.jpg" class="responsive-img">
+                                <img src="http://cliserv.esy.es/c/{{$category[0]}}-category_default/{{$category[2]}}.jpg" class="responsive-img">
                             </a><br>
                             <a href="http://cliserv.esy.es/es/{{$category[0]}}-{{$category[2]}}.html" target="_blank">
                                 Visitar categoría
