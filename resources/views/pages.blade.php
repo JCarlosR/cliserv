@@ -16,38 +16,32 @@
 
 @section('content')
     <div class="row">
-        <form action="" id="formReport">
-            <div class="input-field col s6">
-                <select name="anual">
-                    <option value="" disabled selected>Escoja una opción</option>
-                    <option value="2014">2014</option>
-                    <option value="2015">2015</option>
-                    <option value="2016">2016</option>
-                </select>
-                <label>Selecione el año:</label>
-            </div>
-            <div class="input-field col s6">
-                <select name="meses">
-                    <option value="" disabled selected>Escoja una opción</option>
-                    <option value="1">Enero</option>
-                    <option value="2">Febrero</option>
-                    <option value="3">Marzo</option>
-                    <option value="4">Abril</option>
-                    <option value="5">Mayo</option>
-                    <option value="6">Junio</option>
-                    <option value="7">Julio</option>
-                    <option value="8">Agosto</option>
-                    <option value="9">Setiembre</option>
-                    <option value="10">Octubre</option>
-                    <option value="11">Noviembre</option>
-                    <option value="12">Diciembre</option>
-                </select>
-                <label>Selecione el mes:</label>
-            </div>
-            <div class="col s12">
-                <button type="submit">Generar reporte</button>
-            </div>
-        </form>
+        <div class="col col s10 offset-s1">
+            <form action="" id="formReport">
+                <div class="col s5">
+                    <div class="input-field">
+                        <select id="anual" name="anual">
+                            <option value="0">Todos</option>
+                            @foreach( $years as $year )
+                                <option value="{{$year}}">{{$year}}</option>
+                            @endforeach
+                        </select>
+                        <label>Selecione el año:</label>
+                    </div>
+                </div>
+                <div class="col s5">
+                    <div class="input-field">
+                        <select id="meses" name="meses">
+                            <option value="0">Todos</option>
+                        </select>
+                        <label>Selecione el mes:</label>
+                    </div>
+                </div>
+                <div class="col s2">
+                    <button type="submit" class="waves-effect waves-light btn filter">Reporte</button>
+                </div>
+            </form>
+        </div>
     </div>
     <br>
     <br>
@@ -136,9 +130,9 @@
             var ctx = document.getElementById("canvas").getContext("2d");
             window.myLine = new Chart(ctx, config);
 
-            $(document).ready(function() {
-                $('select').material_select();
-            });
+            $('#anual').material_select();
+            $('#meses').material_select();
+            loadMonths();
         };
 
         $('#formReport').on('submit', function() {
@@ -173,5 +167,41 @@
                 window.myLine.update();
             });
         });
+
+        function loadMonths()
+        {
+            $('#anual').change(  function(){
+                $year = $(this).val();
+
+                $.getJSON('../month_year/'+$year, function(data)
+                {
+                    $('#meses').html('');
+                    $.each(data.name,function(key,value)
+                    {
+                        $("#meses").append(" <option value='" + convert_month_number(value)+"'>" + value + "</option> ");
+                    });
+                    $('#meses').material_select()
+                });
+            });
+        }
+
+        function convert_month_number($month_name )
+        {
+            switch( $month_name ) {
+                case 'Enero':      return 1;
+                case 'Febrero':    return 2;
+                case 'Marzo':      return 3;
+                case 'Abril':      return 4;
+                case 'Mayo':       return 5;
+                case  'Junio':     return 6;
+                case  'Julio':     return 7;
+                case  'Agosto':    return 8;
+                case  'Setiembre': return 9;
+                case 'Octubre':    return 10;
+                case  'Noviembre': return 11;
+                case 'Diciembre':  return 12;
+            }
+        }
     </script>
 @endsection
+

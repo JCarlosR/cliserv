@@ -16,7 +16,7 @@
                                 <option value="{{ $year  }}">{{ $year  }}</option>
                             @endforeach
                         </select>
-                        <label>Año</label>
+                        <label>Seleccione el año</label>
                     </div>
                 </div>
 
@@ -25,7 +25,7 @@
                         <select name="mes" id="mes">
                             <option value="0">Todos</option>
                         </select>
-                        <label>Mes</label>
+                        <label>Seleccione el mes</label>
                     </div>
                 </div>
 

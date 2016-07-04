@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Picture;
 use App\Product;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ClickController extends Controller
 {
@@ -89,22 +90,42 @@ class ClickController extends Controller
 
     public function pages()
     {
-        return view('pages');
-    }
+        $clicks = Click::where('referencia', 'not like', '%cliserv%')->get();
+        $years = []; $years_result = [];
 
-    public function traffic()
-    {
-        return view('traffic');
-    }
-
-    public function repeated_element( $year,$element )
-    {
-        for( $i=0;$i<count($year);$i++ )
+        foreach( $clicks as $click )
         {
-            if( $year[$i] == $element )
-                return true;
+            $element = $click->fecha->year;
+
+            if( ! $this->repeated_element($years,$element) )
+                $years[] = $element;
         }
-        return false;
+
+        $years_copy = $years;
+
+        //Ordering data from smaller to bigger
+        for( $i=0;$i<count($years);$i++ )
+        {
+            $x = $this->smaller($years_copy);
+            $years_result[$i] = $years_copy[$x];
+            array_splice($years_copy, $x, 1);
+        }
+
+        $years = $years_result;
+
+
+        return view('pages')->with(compact('years'));
+    }
+
+    public function smaller($array)
+    {
+        $pos_menor=0;
+        for( $i=1;$i<count($array);$i++ )
+        {
+            if( $array[$i]<$array[$pos_menor] )
+                $pos_menor=$i;
+        }
+        return $pos_menor;
     }
 
     public function bigger( $array )
@@ -117,6 +138,81 @@ class ClickController extends Controller
         }
 
         return $pos_mayor;
+    }
+
+    public function repeated_element( $year,$element )
+    {
+        for( $i=0;$i<count($year);$i++ )
+        {
+            if( $year[$i] == $element )
+                return true;
+        }
+        return false;
+    }
+
+    public function convert_month_name($months)
+    {
+        $months_name = [];
+        foreach( $months as $month )
+            $months_name[] = $this->month_name($month);
+
+        return $months_name;
+    }
+
+    public function month_name( $month )
+    {
+        switch($month)
+        {
+            case 1: return 'Enero';
+            case 2: return 'Febrero';
+            case 3: return 'Marzo';
+            case 4: return 'Abril';
+            case 5: return 'Mayo';
+            case 6: return 'Junio';
+            case 7: return 'Julio';
+            case 8: return 'Agosto';
+            case 9: return 'Setiembre';
+            case 10: return 'Octubre';
+            case 11: return 'Noviembre';
+            case 12: return 'Diciembre';
+        }
+    }
+
+    public function traffic()
+    {
+        return view('traffic');
+    }
+
+    public function months_year( $year )
+    {
+        $clicks = $clicks = Click::where('referencia', 'not like', '%cliserv%')->where(DB::raw('YEAR(fecha)'), $year)->get();
+
+        $months = []; $months_result = [];
+
+        foreach( $clicks as $click )
+        {
+            $element = $click->fecha->month;
+            if( ! $this->repeated_element($months,$element) )
+                $months[] = $element;
+        }
+
+        $months_copy = $months;
+
+        //Ordering data from smaller to bigger
+        for( $i=0;$i<count($months);$i++ )
+        {
+            $x = $this->smaller($months_copy);
+            $months_result[$i] = $months_copy[$x];
+            array_splice($months_copy, $x, 1);
+        }
+
+        $months_id = $months_result;
+        $months_names = $this->convert_month_name($months_result);
+
+        $data['id'] = $months_id;
+        $data['name'] = $months_names;
+
+        return $data;
     }
 
     public function bestProduct()

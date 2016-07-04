@@ -21,6 +21,7 @@ Route::get('reporte-barras/{year?}/{month?}','CategoryController@bestCategoriesD
 
 // Gonzales
 Route::get('reporte/pages', 'ClickController@pages');
+Route::get('month_year/{year}', 'ClickController@months_year');
 
 // Report JSON Data
 Route::get('clicks/all', 'ReportController@all');

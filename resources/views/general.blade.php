@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="col s12 m12 l2 center-align">
-                        <button class="waves-effect waves-light btn filter">Filtrar</button>
+                        <button class="waves-effect waves-light btn filter">Reporte</button>
                     </div>
                 </form>
             </div>

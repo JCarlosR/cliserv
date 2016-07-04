@@ -225,16 +225,25 @@ class ReportController extends Controller
         $doms_name = []; $doms_count =[];
 
         // Getting the x=7 bigger elements
-        for( $i = 0; $i<8;$i++)
+        if( count($result_doms)>7 )
         {
-            $doms_name[] = $result_doms[$i];
-            $doms_count[] = $result_quantities[$i];
-        }
+            for( $i = 0; $i<7;$i++)
+            {
+                $doms_name[] = $result_doms[$i];
+                $doms_count[] = $result_quantities[$i];
+            }
 
-        $data['dom'] = $doms_name;
-        $data['quantity'] = $doms_count;
-        //dd($data);
-        return $data;
+            $data['dom'] = $doms_name;
+            $data['quantity'] = $doms_count;
+            //dd($data);
+            return $data;
+        }
+        else
+        {
+            $data['dom'] = $result_doms;
+            $data['quantity'] = $result_quantities;
+            return $data;
+        }
     }
 
     public function verOcurrencia($producto,$productos){
