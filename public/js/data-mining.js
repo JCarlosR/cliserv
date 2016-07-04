@@ -18,6 +18,7 @@ $(document).ready(function() {
         loadCategoriesSource(full_data);
     });
 
+    setupGraph();
 });
 
 var full_data;
@@ -89,32 +90,98 @@ function convertUrl(url) {
 }
 
 function mainFunction() {
-    var filtered_data = filterByDeviceType(full_data);
-    //console.log(filtered_data);
-    filtered_data = filterByUrlSource(filtered_data);
-    //console.log(filtered_data);
-    filtered_data = filterByCategory(filtered_data);
-    //console.log(filtered_data);
-    if ( $('ul.tabs a[href="#tab3"]').hasClass('active') ) {
-        filtered_data = filterByDayName(filtered_data);
-    }
-    //console.log(filtered_data);
+    // Product dimension
+    var filtered_data = filterByCategory(full_data);
+
+    // Client dimension
+    filtered_data = filterByGenre(filtered_data);
     filtered_data = filterByCountry(filtered_data);
-    //console.log(filtered_data);
-    if ( $('ul.tabs a[href="#tab2"]').hasClass('active') ) {
-        filtered_data = filterByRangeDate(filtered_data);
-    }
+
+    // Device dimension
+    filtered_data = filterByDeviceType(filtered_data);
+
+    // Source dimension
+    filtered_data = filterByUrlSource(filtered_data);
+
+    // Time dimension
+    filtered_data = filterByHour(filtered_data);
+
     if ( $('ul.tabs a[href="#tab1"]').hasClass('active') ) {
         filtered_data = filterByYear(filtered_data);
-        //console.log(filtered_data);
         filtered_data = filterByMonth(filtered_data);
-        //console.log(filtered_data);
+    } else if ( $('ul.tabs a[href="#tab3"]').hasClass('active') ) {
+        filtered_data = filterByDayName(filtered_data);
+    } else if ( $('ul.tabs a[href="#tab2"]').hasClass('active') ) {
+        filtered_data = filterByRangeDate(filtered_data);
     }
-    //console.log(filtered_data);
-    filtered_data = filterByGenre(filtered_data);
-    //console.log(filtered_data);
-    filtered_data = filterByHour(filtered_data);
-    //console.log(filtered_data);
+
+    generateGraph(filtered_data);
+}
+
+function generateGraph(filtered_data) {
+    // Swap config <-> results
+    $('[data-config]').slideUp();
+    $('[data-results]').slideDown();
+
+    var new_labels;
+    var new_datasets = [];
+
+    if ( $('#presentation_device').is(':checked') ) {
+        // New labels
+        new_labels = ['Desktop', 'Mobile'];
+
+        // Generate my data
+        var myData = getDeviceTypeData(filtered_data);
+
+        // New dataSets
+        var desktopDataSet = {
+            label: new_labels[0],
+            borderColor: randomColor(0.4),
+            backgroundColor: randomColor(0.5),
+            pointBorderColor: randomColor(0.7),
+            pointBackgroundColor: randomColor(0.5),
+            pointBorderWidth: 1,
+            data: myData.desktop
+        };
+        var mobileDataSet = {
+            label: new_labels[1],
+            borderColor: randomColor(0.4),
+            backgroundColor: randomColor(0.5),
+            pointBorderColor: randomColor(0.7),
+            pointBackgroundColor: randomColor(0.5),
+            pointBorderWidth: 1,
+            data: myData.mobile
+        };
+
+        new_datasets.push(desktopDataSet);
+        new_datasets.push(mobileDataSet);
+    } else if ( $('#presentation_genre').is(':checked') ) {
+
+    }/* else if (  ) {
+
+    }*/
+
+    // Aquí arribita deben agregar un(os) radioButton c/u según la dimensión que les toque
+    // Pondré de ejemplo la dimensión y el radioButton de cliente Género
+
+    // Apply changes
+    config.data.labels = new_labels;
+    config.data.datasets = new_datasets;
+
+    window.myLine.update();
+}
+
+function getDeviceTypeData(data) {
+    var desktop = 0;
+    var mobile = 0;
+
+    for (var i=0; i<data.length; ++i) {
+        if (data[i].dispositivo == 'desktop')
+            ++desktop;
+        else ++mobile;
+    }
+
+    return { desktop: [desktop], mobile: [mobile]};
 }
 
 function filterByRangeDate(data) {
@@ -325,4 +392,80 @@ function filterByHour(data) {
             filtered.push(data[i]);
     }
     return filtered;
+}
+
+// Random color
+function randomColorFactor() {
+    return Math.round(Math.random() * 255);
+}
+function randomColor(opacity) {
+    return 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',' + (opacity || '.3') + ')';
+}
+
+// Graphic configuration
+var config;
+
+function setupGraph() {
+    // Variables
+    var BAR_NAMES = ["Bar 0", "Bar 1", "Bar 2", "Bar 3", "Bar 4", "Bar 5", "Bar 6"];
+    var LABELS = ["Datos 1", "Datos 2"];
+
+    config = {
+        type: 'bar',
+        data: {
+            labels: BAR_NAMES,
+            datasets: [{
+                label: LABELS[0],
+                data: [], // [65, 59, 80, 81, 56, 55, 40],
+                fill: false,
+                borderDash: [5, 5]
+            }, {
+                label: LABELS[1],
+                data: [] // [45, 89, 20, 91, 26, 65, 30]
+            }]
+        },
+        options: {
+            title:{
+                display: true,
+                text: "DATA MINING"
+            },
+            animation: {
+                duration: 2000
+            },
+            tooltips: {
+                mode: 'label'
+            },
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        show: true,
+                        labelString: 'Bar'
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        show: true,
+                        labelString: 'Value'
+                    },
+                    ticks: {
+                        suggestedMin: 0 // minimum will be 0, unless there is a lower value.
+                    }
+                }]
+            }
+        }
+    };
+
+    /* $.each(config.data.datasets, function(i, dataset) {
+        dataset.borderColor = randomColor(0.4);
+        dataset.backgroundColor = randomColor(0.5);
+        dataset.pointBorderColor = randomColor(0.7);
+        dataset.pointBackgroundColor = randomColor(0.5);
+        dataset.pointBorderWidth = 1;
+    });*/
+
+    window.onload = function() {
+        var ctx = document.getElementById("canvas").getContext("2d");
+        window.myLine = new Chart(ctx, config);
+    };
+
 }
