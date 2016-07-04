@@ -130,14 +130,14 @@ function generateGraph(filtered_data) {
 
     if ( $('#presentation_device').is(':checked') ) {
         // New labels
-        new_labels = ['Desktop', 'Mobile'];
+        new_labels = ['By device'];
 
         // Generate my data
         var myData = getDeviceTypeData(filtered_data);
 
         // New dataSets
         var desktopDataSet = {
-            label: new_labels[0],
+            label: 'Desktop',
             borderColor: randomColor(0.4),
             backgroundColor: randomColor(0.5),
             pointBorderColor: randomColor(0.7),
@@ -146,7 +146,7 @@ function generateGraph(filtered_data) {
             data: myData.desktop
         };
         var mobileDataSet = {
-            label: new_labels[1],
+            label: 'Mobile',
             borderColor: randomColor(0.4),
             backgroundColor: randomColor(0.5),
             pointBorderColor: randomColor(0.7),
