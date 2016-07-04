@@ -12,7 +12,9 @@ class ReportController extends Controller
 {
     public function all()
     {
-        return Click::with('user')->get();
+        return Click::with('user')->with(array('product'=>function($query)
+        {$query->where('id_lang','<>','2');}))->get();
+
     }
 
     public function byUserType()
