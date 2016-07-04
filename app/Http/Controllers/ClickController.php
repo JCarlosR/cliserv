@@ -21,10 +21,14 @@ class ClickController extends Controller
     {
         $category  = $this->bestCategory();
         $product = $this->bestProduct();
-        $image_test = Picture::where('id_product',$product[0])->first();
-        $image = $image_test->id_image;
 
-        return view('tendencia')->with(compact('product','category','image'));
+        if( count($category)>1 )
+        {
+            $image_test = Picture::where('id_product',$product[0])->first();
+            $image = $image_test->id_image;
+            return view('tendencia')->with(compact('product','category','image'));
+        }else
+            return view('tendencia');
     }
 
     public function general($finicio=null, $ffin=null)
@@ -93,116 +97,133 @@ class ClickController extends Controller
     public function bestProduct()
     {
         $today  = Carbon::today();
-        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','=',$today)->get();
+        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha',$today)->get();
 
-        $products_arrays = [];
-
-        foreach( $clicks as $click )
+        if( count($clicks) != 0 )
         {
-            $element = $click->product_id;
-            if ( !$this->repeated_element( $products_arrays,$element) )
-                $products_arrays[] = $element;
-        }
-        
-        $amount_product = []; // Amount of product for every category
+            $products_arrays = [];
 
-        for( $i=0;$i<count($products_arrays);$i++ )
-            $amount_product[$i]=0;
+            foreach( $clicks as $click )
+            {
+                $element = $click->product_id;
+                if ( !$this->repeated_element( $products_arrays,$element) )
+                    $products_arrays[] = $element;
+            }
 
-        foreach( $clicks as $click )
-        {
-            $element = $click->product_id;
+            $amount_product = []; // Amount of product for every category
+
             for( $i=0;$i<count($products_arrays);$i++ )
-                if( $products_arrays[$i] == $element )
-                    ++$amount_product[$i];
+                $amount_product[$i]=0;
+
+            foreach( $clicks as $click )
+            {
+                $element = $click->product_id;
+                for( $i=0;$i<count($products_arrays);$i++ )
+                    if( $products_arrays[$i] == $element )
+                        ++$amount_product[$i];
+            }
+
+            $copy_amount_product = $amount_product; $copy_product_arrays = $products_arrays;
+            $result_products = [];   $result_amounts = [];
+
+            // Ordering data from bigger to smaller
+            for( $i=0;$i<count($amount_product);$i++ )
+            {
+                $x = $this->bigger($copy_amount_product);
+                $result_amounts[$i] = $copy_amount_product[$x];
+                $result_products[$i] = $copy_product_arrays[$x];
+
+                array_splice($copy_amount_product, $x, 1);
+                array_splice($copy_product_arrays, $x, 1);
+            }
+
+            $product_test = Product::where('id_product',$result_products[0])->where('id_lang',1)->first();
+
+            // The best selling product
+
+            $produt_[0] = $result_products[0];
+            $produt_[1] = $product_test->name;
+            $produt_[2] = $product_test->link_rewrite;
+            return $produt_;
         }
-
-        $copy_amount_product = $amount_product; $copy_product_arrays = $products_arrays;
-        $result_products = [];   $result_amounts = [];
-
-        // Ordering data from bigger to smaller
-        for( $i=0;$i<count($amount_product);$i++ )
+        else
         {
-            $x = $this->bigger($copy_amount_product);
-            $result_amounts[$i] = $copy_amount_product[$x];
-            $result_products[$i] = $copy_product_arrays[$x];
-
-            array_splice($copy_amount_product, $x, 1);
-            array_splice($copy_product_arrays, $x, 1);
+            $messsage[0] = "No hay datos ingresados";
+            return $messsage;
         }
-
-        $product_test = Product::where('id_product',$result_products[0])->where('id_lang',1)->first();
-
-        // The best selling product
-
-        $produt[0] = $result_products[0];
-        $produt[1] = $product_test->name;
-        $produt[2] = $product_test->link_rewrite;
-        return $produt;
     }
 
     public function bestCategory()
     {
         $today  = Carbon::today();
-        $clicks = Click::where('fecha','=',$today)->get();
+        $clicks = Click::where('fecha',$today)->get();
 
-        $category_arrays = []; // Available categories according to clicks data(product_id)
 
-        foreach( $clicks as $click )
+        if( count($clicks) !=0 )
         {
-            $url = $click->url;
-            if( $url !='' )
+            $category_arrays = []; // Available categories according to clicks data(product_id)
+
+            foreach( $clicks as $click )
             {
-                $string = str_ireplace('http://cliserv.esy.es/es/','',$url);
-                if ( is_numeric( substr($string,0,1) ) )
-                    if (!$this->repeated_element($category_arrays, substr($string,0,1)))
-                        $category_arrays[] = substr($string,0,1);
+                $url = $click->url;
+                if( $url !='' )
+                {
+                    $string = str_ireplace('http://cliserv.esy.es/es/','',$url);
+                    if ( is_numeric( substr($string,0,1) ) )
+                        if (!$this->repeated_element($category_arrays, substr($string,0,1)))
+                            $category_arrays[] = substr($string,0,1);
+                }
             }
-        }
 
-        $amount_category = []; // Amount of product for every category
+            $amount_category = []; // Amount of product for every category
 
-        for( $i=0;$i<count($category_arrays);$i++ )
-            $amount_category[$i]=0;
+            for( $i=0;$i<count($category_arrays);$i++ )
+                $amount_category[$i]=0;
 
-        // PROCESS CLICKS, ACCORDING TO PRODUCTS CONTAINED IN EXISTENT CATEGORIES
-        $today  = Carbon::today();
-        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','=',$today)->get();
+            // PROCESS CLICKS, ACCORDING TO PRODUCTS CONTAINED IN EXISTENT CATEGORIES
+            $today  = Carbon::today();
+            $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','<=',$today)->get();
 
-        foreach( $clicks as $click )
-        {
-            $categories = CategoryProduct::where('id_product',$click->product_id)->get();
-            foreach ( $categories as $category )
+            foreach( $clicks as $click )
             {
-                $element = $category->id_category;
+                $categories = CategoryProduct::where('id_product',$click->product_id)->get();
+                foreach ( $categories as $category )
+                {
+                    $element = $category->id_category;
 
-                for( $i=0;$i<count($category_arrays);$i++ )
-                    if( $category_arrays[$i] == $element )
-                        ++$amount_category[$i];
+                    for( $i=0;$i<count($category_arrays);$i++ )
+                        if( $category_arrays[$i] == $element )
+                            ++$amount_category[$i];
+                }
             }
+
+            $copy_amount_category = $amount_category; $copy_category_arrays = $category_arrays;
+            $result_categories = [];   $result_amounts = [];
+
+            // $amount_category = array that contains amount of products inside a category, $category_arrays = array of existent categories
+            // Ordering data from bigger to smaller
+            for( $i=0;$i<count($amount_category);$i++ )
+            {
+                $x = $this->bigger($copy_amount_category);
+                $result_amounts[$i] = $copy_amount_category[$x];
+                $result_categories[$i] = $copy_category_arrays[$x];
+
+                array_splice($copy_amount_category, $x, 1);
+                array_splice($copy_category_arrays, $x, 1);
+            }
+
+            $category_test = CategoryName::where('id_category',$result_categories[0])->first();
+            // The best selling category
+
+            $category_[0] = $result_categories[0];
+            $category_[1] = $category_test->name;
+            $category_[2] = $category_test->link_rewrite ;
+            return $category_;
         }
-
-        $copy_amount_category = $amount_category; $copy_category_arrays = $category_arrays;
-        $result_categories = [];   $result_amounts = [];
-
-        // $amount_category = array that contains amount of products inside a category, $category_arrays = array of existent categories
-        // Ordering data from bigger to smaller
-        for( $i=0;$i<count($amount_category);$i++ )
+        else
         {
-            $x = $this->bigger($copy_amount_category);
-            $result_amounts[$i] = $copy_amount_category[$x];
-            $result_categories[$i] = $copy_category_arrays[$x];
-
-            array_splice($copy_amount_category, $x, 1);
-            array_splice($copy_category_arrays, $x, 1);
+            $message[0] = "No hay datos ingresados";
+            return $message;
         }
-
-        $category_test = CategoryName::where('id_category',$result_categories[0])->first();
-        // The best selling category
-
-        $category[0] = $result_categories[0];
-        $category[1] = $category_test->name;
-        $category[2] = $category_test->link_rewrite ;
-        return $category;
     }
 }
