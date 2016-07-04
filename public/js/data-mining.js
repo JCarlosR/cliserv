@@ -44,14 +44,16 @@ function loadCategoriesSource(data) {
     }
     $category_filter.material_select();
 }
-
+//Variable global del total de urls
+var uniqueUrls;
+var fixedUrls;
 function loadUrlsSource(data) {
     var urls = [];
     for (var i=0; i<data.length; ++i) {
         if (convertUrl(data[i].referencia) != 'cliserv.esy.es')
             urls.push(convertUrl(data[i].referencia));
     }
-    var uniqueUrls = [];
+    uniqueUrls = [];
     $.each(urls, function(i, el){
         if($.inArray(el, uniqueUrls) === -1) uniqueUrls.push(el);
     });
@@ -114,7 +116,7 @@ function mainFunction() {
     } else if ( $('ul.tabs a[href="#tab2"]').hasClass('active') ) {
         filtered_data = filterByRangeDate(filtered_data);
     }
-
+    console.log(filtered_data);
     generateGraph(filtered_data);
 }
 
@@ -157,9 +159,105 @@ function generateGraph(filtered_data) {
         new_datasets.push(mobileDataSet);
     } else if ( $('#presentation_genre').is(':checked') ) {
 
-    }/* else if (  ) {
+    } else if ( $('#presentation_origin').is(':checked') ) {
+        // New labels
+        fixedUrls = [];
+        for (var u=0; u<uniqueUrls.length; ++u) {
+            if (uniqueUrls[u] != '')
+                fixedUrls.push(uniqueUrls[u]);
+        }
 
-    }*/
+        new_labels = ['By source of visits'];
+        console.log(new_labels);
+        // Generate my data
+        var myData2 = getSourceTypeData(filtered_data);
+        console.log(myData2);
+        // New dataSets
+        for (var i=0; i<myData2.length; ++i) {
+            var source = 'sourceDataSet'+i;
+            source = {
+                label: fixedUrls[i],
+                borderColor: randomColor(0.4),
+                backgroundColor: randomColor(0.5),
+                pointBorderColor: randomColor(0.7),
+                pointBackgroundColor: randomColor(0.5),
+                pointBorderWidth: 1,
+                data: [myData2[i]]
+            };
+
+            new_datasets.push(source);
+        }
+
+    } else if ( $('#presentation_month').is(':checked') ) {
+        var new_labels1 = [
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Setiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre'
+        ];
+
+        new_labels = ['By month']
+
+        console.log(new_labels);
+        // Generate my data
+        var myData3 = getMonthTypeData(filtered_data);
+        console.log(myData3);
+        // New dataSets
+        for (var k=0; k<myData3.length; ++k) {
+            var source1 = 'sourceDataSet'+k;
+            source1 = {
+                label: new_labels1[k],
+                borderColor: randomColor(0.4),
+                backgroundColor: randomColor(0.5),
+                pointBorderColor: randomColor(0.7),
+                pointBackgroundColor: randomColor(0.5),
+                pointBorderWidth: 1,
+                data: [myData3[k]]
+            };
+
+            new_datasets.push(source1);
+        }
+    }else if ( $('#presentation_day').is(':checked') ) {
+        var new_labels2 = [
+            'Domingo',
+            'Lunes',
+            'Martes',
+            'Miércoles',
+            'Jueves',
+            'Viernes',
+            'Sabado'
+        ];
+
+        new_labels = ['By day']
+
+        console.log(new_labels);
+        // Generate my data
+        var myData4 = getDayTypeData(filtered_data);
+        console.log(myData4);
+        // New dataSets
+        for (var j=0; j<myData4.length; ++j) {
+            var source2 = 'sourceDataSet'+j;
+            source2 = {
+                label: new_labels2[j],
+                borderColor: randomColor(0.4),
+                backgroundColor: randomColor(0.5),
+                pointBorderColor: randomColor(0.7),
+                pointBackgroundColor: randomColor(0.5),
+                pointBorderWidth: 1,
+                data: [myData4[j]]
+            };
+
+            new_datasets.push(source2);
+        }
+    }
 
     // Aquí arribita deben agregar un(os) radioButton c/u según la dimensión que les toque
     // Pondré de ejemplo la dimensión y el radioButton de cliente Género
@@ -169,6 +267,45 @@ function generateGraph(filtered_data) {
     config.data.datasets = new_datasets;
 
     window.myLine.update();
+}
+
+function getDayTypeData(data) {
+    var quantity = [];
+    for (var d=0; d<7; ++d) {
+        quantity.push(0);
+        for (var i=0; i<data.length; ++i) {
+            var fecha = new Date(data[i].fecha);
+            if ( fecha.getDay() == d )
+                ++quantity[d];
+        }
+    }
+    return quantity;
+}
+
+function getMonthTypeData(data) {
+    var quantity = [];
+    for (var m=0; m<12; ++m) {
+        quantity.push(0);
+        for (var i=0; i<data.length; ++i) {
+            var fecha = new Date(data[i].fecha);
+            if ( fecha.getMonth() == m )
+                ++quantity[m];
+        }
+    }
+
+    return quantity;
+}
+
+function getSourceTypeData(data) {
+    var quantity = [];
+    for (var i=0; i<fixedUrls.length; ++i) {
+        quantity.push(0);
+        for (var j=0; j<data.length; ++j){
+            if ( convertUrl(data[j].referencia) == fixedUrls[i] )
+                ++quantity[i];
+        }
+    }
+    return quantity;
 }
 
 function getDeviceTypeData(data) {
