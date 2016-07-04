@@ -19,8 +19,8 @@ class ClickController extends Controller
 
     public function general()
     {
-        $yesterday = Carbon::yesterday();
-        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','>',$yesterday)->paginate(4);
+        $today = Carbon::today();
+        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','>=',$today)->paginate(4);
         if( count($clicks)>0 )
             return view('general')->with(compact('clicks'));
         else
@@ -121,8 +121,8 @@ class ClickController extends Controller
 
     public function bestProduct()
     {
-        $yesterday  = Carbon::yesterday();
-        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','>',$yesterday)->get();
+        $today  = Carbon::today();
+        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','>=',$today)->get();
 
         if( count($clicks) != 0 )
         {
@@ -180,8 +180,8 @@ class ClickController extends Controller
 
     public function bestCategory()
     {
-        $yesterday  = Carbon::yesterday();
-        $clicks = Click::where('fecha','>',$yesterday)->get();
+        $today  = Carbon::today();
+        $clicks = Click::where('fecha','>=',$today)->get();
 
 
         if( count($clicks) !=0 )
@@ -206,7 +206,7 @@ class ClickController extends Controller
                 $amount_category[$i]=0;
 
             // PROCESS CLICKS, ACCORDING TO PRODUCTS CONTAINED IN EXISTENT CATEGORIES
-            $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','>',$yesterday)->get();
+            $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','>=',$today)->get();
 
             foreach( $clicks as $click )
             {
