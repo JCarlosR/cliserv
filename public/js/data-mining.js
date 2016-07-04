@@ -104,15 +104,17 @@ function mainFunction() {
     if ( $('ul.tabs a[href="#tab2"]').hasClass('active') ) {
         filtered_data = filterByRangeDate(filtered_data);
     }
-    console.log(filtered_data);
+    if ( $('ul.tabs a[href="#tab1"]').hasClass('active') ) {
+        filtered_data = filterByYear(filtered_data);
+        //console.log(filtered_data);
+        filtered_data = filterByMonth(filtered_data);
+        //console.log(filtered_data);
+    }
+    //console.log(filtered_data);
     filtered_data = filterByGenre(filtered_data);
-    console.log(filtered_data);
-    filtered_data = filterByYear(filtered_data);
-    console.log(filtered_data);
-    filtered_data = filterByMonth(filtered_data);
-    console.log(filtered_data);
+    //console.log(filtered_data);
     filtered_data = filterByHour(filtered_data);
-    console.log(filtered_data);
+    //console.log(filtered_data);
 }
 
 function filterByRangeDate(data) {
