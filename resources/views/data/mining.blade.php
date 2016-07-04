@@ -5,7 +5,7 @@
 @section('mining', 'class="activated"')
 
 @section('main-content')
-    <div class="row">
+    <div data-config class="row">
         <div class="col s12">
             <h5>Filtros por dimensión</h5>
         </div>
@@ -175,7 +175,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div data-config class="row">
         <div class="col s12">
             <h5>Presentación de datos</h5>
         </div>
@@ -257,8 +257,15 @@
             </div>
         </div>
     </div>
+
+    <div class="row" data-results style="display: none;">
+        <div class="col s12 m10 offset-m1">
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('chartjs/Chart.bundle.js') }}"></script>
     <script src="{{ asset('/js/data-mining.js') }}"></script>
 @endsection
