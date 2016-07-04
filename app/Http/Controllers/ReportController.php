@@ -170,18 +170,23 @@ class ReportController extends Controller
         $year = $request->get('anual');
         $month = $request->get('meses');
 
-        $start_carbon = Carbon::create($year, $month, 1);
-        $end_carbon = Carbon::create($year, $month+1, 1);
+        if( $year ==0 and $month==0)
+            $clicks = Click::where('referencia', 'not like', '%cliserv%')->get(['referencia']);
+        else
+        {
+            $start_carbon = Carbon::create($year, $month, 1);
+            $end_carbon = Carbon::create($year, $month+1, 1);
+
+            $clicks = Click::whereBetween('fecha', [$start_carbon, $end_carbon->subDay()])
+                ->where('referencia', 'not like', '%cliserv%')->get(['referencia']);
+            //$pages = $clicks;
+            //dd($pages);
+        }
 
         $dom = [];
         $quantity = [];
 
         $pages = [];
-
-        $clicks = Click::whereBetween('fecha', [$start_carbon, $end_carbon->subDay()])
-            ->where('referencia', 'not like', '%cliserv%')->get(['referencia']);
-        //$pages = $clicks;
-        //dd($pages);
 
         foreach ($clicks as $click) {
             $pagina = $click->referencia;
