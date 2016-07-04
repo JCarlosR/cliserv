@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\CategoryName;
 use App\CategoryProduct;
 use App\Click;
-use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Picture;
 use App\Product;
 use Carbon\Carbon;
@@ -15,6 +15,42 @@ class ClickController extends Controller
 
     public function welcome(){
         return view('welcome');
+    }
+
+    public function general()
+    {
+        $yesterday = Carbon::yesterday();
+        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','>',$yesterday)->paginate(4);
+        if( count($clicks)>0 )
+            return view('general')->with(compact('clicks'));
+        else
+            return view('general');
+    }
+
+    public function general_filtered( $inicio,$fin )
+    {
+
+        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->whereBetween('fecha', array($inicio, $fin))->get();
+        $users    = [];
+        $products = [];
+        $devices  = [];
+        $places   = [];
+        $i=0;
+        foreach( $clicks as $click )
+        {
+            $users[$i]    = $click->user_name;
+            $products[$i] = $click->product->name;
+            $devices[$i]  = $click->dispositivo;
+            $places[$i]   = $click->country.'-'.$click->city;
+            $i++;
+        }
+
+        $data['users']    = $users;
+        $data['products'] = $products;
+        $data['devices']  = $devices;
+        $data['places']   = $places;
+
+        return $data;
     }
 
     public function tendencia()
@@ -29,17 +65,6 @@ class ClickController extends Controller
             return view('tendencia')->with(compact('product','category','image'));
         }else
             return view('tendencia');
-    }
-
-    public function general($finicio=null, $ffin=null)
-    {
-        if ($finicio && $ffin) {
-            $clicks = Click::where('fecha','>=',$finicio)->where('fecha','<',$ffin)->get();
-            return response()->json($clicks);
-        }
-
-        $clicks = Click::orderBy('created_at','desc')->take(3);
-        return view('general')->with(compact('clicks'));
     }
 
     public function software()

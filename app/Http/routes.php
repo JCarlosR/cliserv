@@ -1,6 +1,7 @@
 <?php
 
 Route::get('/','ClickController@general');
+Route::get('general/{inicio}/{fin}','ClickController@general_filtered');
 Route::get('tendencia','ClickController@tendencia');
 
 Route::get('reporte-otros','ClickController@other');
