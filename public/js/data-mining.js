@@ -254,7 +254,6 @@ function generateGraph(filtered_data) {
                 pointBorderWidth: 1,
                 data: [myData4[j]]
             };
-
             new_datasets.push(source2);
         }
     }
