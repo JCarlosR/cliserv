@@ -43,23 +43,23 @@ class CategoryController extends Controller
 
     public function bestCategoriesData( $year, $month )
     {
+        // GET EXISTENT CATEGORIES
         if( $year == 0 AND $month == 0 )
-            $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->get();
+            $clicks = Click::all();
         else
-            $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where(DB::raw('YEAR(fecha)'), $year)->where( DB::raw('MONTH(fecha)'), $month )->get();
+            $clicks = Click::where(DB::raw('YEAR(fecha)'), $year)->where( DB::raw('MONTH(fecha)'), $month )->get();
 
         $category_arrays = []; // Available categories according to clicks data(product_id)
 
         foreach( $clicks as $click )
         {
-            $categories = CategoryProduct::where('id_product',$click->product_id)->get();
-            foreach ( $categories as $category )
+            $url = $click->url;
+            if( $url !='' )
             {
-                if( $category->id_category != 2 ) {
-                    $element = $category->id_category;
-                    if (!$this->repeated_element($category_arrays, $element))
-                        $category_arrays[] = $element;
-                }
+                $string = str_ireplace('http://cliserv.esy.es/es/','',$url);
+                if ( is_numeric( substr($string,0,1) ) )
+                    if (!$this->repeated_element($category_arrays, substr($string,0,1)))
+                        $category_arrays[] = substr($string,0,1);
             }
         }
 
@@ -67,6 +67,14 @@ class CategoryController extends Controller
 
         for( $i=0;$i<count($category_arrays);$i++ )
             $amount_category[$i]=0;
+
+
+        // PROCESS CLICKS, ACCORDING TO PRODUCTS CONTAINED IN EXISTENT CATEGORIES
+        if( $year == 0 AND $month == 0 )
+            $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->get();
+        else
+            $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where(DB::raw('YEAR(fecha)'), $year)->where( DB::raw('MONTH(fecha)'), $month )->get();
+
 
         foreach( $clicks as $click )
         {

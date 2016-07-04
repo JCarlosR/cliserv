@@ -26,12 +26,6 @@
             <button id="showByDevice">Ver por dispositivo</button>
             <button id="showByUsers">Ver por tipo de usuario</button>
         </div>
-        <div class="col s12">
-            <button id="randomizeData">Randomizar Datos</button>
-            <button id="removeDataset">Remove Dataset</button>
-            <button id="addData">Add Data</button>
-            <button id="removeData">Remove Data</button>
-        </div>
     </div>
 
 
@@ -128,17 +122,6 @@
             window.myLine = new Chart(ctx, config);
         };
 
-        $('#randomizeData').click(function() {
-            $.each(config.data.datasets, function(i, dataset) {
-                dataset.data = dataset.data.map(function() {
-                    return randomScalingFactor();
-                });
-
-            });
-
-            window.myLine.update();
-        });
-
         $('#showByDevice').click(function() {
             config.data.datasets = [];
 
@@ -205,33 +188,5 @@
             });
         });
 
-
-        $('#removeDataset').click(function() {
-            config.data.datasets.splice(0, 1);
-            window.myLine.update();
-        });
-
-        $('#addData').click(function() {
-            if (config.data.datasets.length > 0) {
-                var month = ALLMONTHS[config.data.labels.length % ALLMONTHS.length];
-                config.data.labels.push(month);
-
-                $.each(config.data.datasets, function(i, dataset) {
-                    dataset.data.push(randomScalingFactor());
-                });
-
-                window.myLine.update();
-            }
-        });
-
-        $('#removeData').click(function() {
-            config.data.labels.splice(-1, 1); // remove the label first
-
-            config.data.datasets.forEach(function(dataset, datasetIndex) {
-                dataset.data.pop();
-            });
-
-            window.myLine.update();
-        });
     </script>
 @endsection
