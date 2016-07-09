@@ -72,7 +72,7 @@ class ClickController extends Controller
     {
         $yesterday = Carbon::yesterday();
         $product = $this->bestProduct();
-        $clicks  = Click::where('fecha','>',$yesterday)->where('product_id',$product)->get();
+        $clicks  = Click::where('fecha','>',$yesterday)->where('product_id',$product[0])->get();
         dd($clicks);
     }
 
