@@ -73,7 +73,7 @@
                 <div class="modal-header">
                     <h4 class="modal-title">Detalle de visitas</h4>
                 </div>
-                <table class="table table-stripped">
+                <table class="striped">
                     <thead>
                         <tr>
                             <th>Usuario</th>
