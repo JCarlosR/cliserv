@@ -6,20 +6,22 @@ function principal()
 {
     $modal = $('#modal');
 
-    $('[data-product]').on('click', mostrarProducto);
+    $('#product').on('click', mostrarProducto);
 }
 
 function mostrarProducto() {
-    $('#data').html('');
+
+    event.preventDefault();
+
     $.ajax({
-        url: 'tendencia/producto/usuarios',
-        dataType: "JSON",
-        method: 'GET'
-    }).done( function(data){
+            url: 'tendencia/producto/usuarios',
+            dataType: "JSON",
+            method: 'GET'
+    })
+     .done( function(data){
         if( data.error )
-        {
             alert('No existen datos');
-        }else {
+        else {
 
             var name = []; var location = []; var gender = []; var email = []; var visits = [];
 
@@ -29,16 +31,18 @@ function mostrarProducto() {
             $.each(data.email,function(key,value) { email.push(value); });
             $.each(data.visits,function(key,value) { visits.push(value); });
 
+            $('#data').html('');
+
             for( var i=0; i< name.length; i++ )
             {
-                $('#data').append('<tr>' + '<td>name[i]</td>'+
-                                           '<td>location[i]</td>'+
-                                           '<td>gender[i]</td>'+
-                                           '<td>email[i]</td>'+
-                                           '<td>visits[i]</td>'+
+                $('#data').append('<tr>' + '<td>'+name[i]+'</td>'+
+                                           '<td>'+location[i]+'</td>'+
+                                           '<td>'+gender[i]+'</td>'+
+                                           '<td>'+email[i]+'</td>'+
+                                           '<td>'+visits[i]+'</td>'+
                     '</tr>');
             }
+            $modal.openModal();
         }
     });
-    $modal.modal('show');
 }

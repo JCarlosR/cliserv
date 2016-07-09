@@ -21,7 +21,7 @@
                             <a href="http://cliserv.esy.es/es/{{$category[2]}}/{{$product[0]}}-{{$product[2]}}.html" target="_blank">
                                 Visitar producto
                             </a>
-                            <button class="waves-effect waves-light btn filter" data-product="{{ $product[0] }}">Detalles</button>
+                            <button class="waves-effect waves-light btn filter" id="product">Detalles</button>
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                             <a href="http://cliserv.esy.es/es/{{$category[0]}}-{{$category[2]}}" target="_blank">
                                 Visitar categoría
                             </a>
-                            <button class="waves-effect waves-light btn filter" data-category="{{ $category[0] }}">Detalles</button>
+                            <button class="waves-effect waves-light btn filter" id="category">Detalles</button>
                         </div>
                     </div>
                 </div>
@@ -80,6 +80,7 @@
                             <th>Ubicación</th>
                             <th>Género</th>
                             <th>Email</th>
+                            <th>Visitas</th>
                         </tr>
                     </thead>
                     <tbody id="data">
