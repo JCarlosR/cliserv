@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CategoryName;
 use App\CategoryProduct;
 use App\Click;
+use App\User;
 use Illuminate\Http\Request;
 use App\Picture;
 use App\Product;
@@ -59,7 +60,7 @@ class ClickController extends Controller
         $category  = $this->bestCategory();
         $product = $this->bestProduct();
 
-        if( count($category)>1 )
+        if( count($category)>1 ) //If = 0 there is no data
         {
             $image_test = Picture::where('id_product',$product[0])->first();
             $image = $image_test->id_image;
@@ -72,8 +73,87 @@ class ClickController extends Controller
     {
         $yesterday = Carbon::yesterday();
         $product = $this->bestProduct();
-        $clicks  = Click::where('fecha','>',$yesterday)->where('product_id',$product[0])->get();
-        dd($clicks);
+
+        // When product_id is ="some text", thast like a product_id = 0
+
+        if( count($product) == 1 ) {
+            $clicks = Click::where('fecha', '<', $yesterday)->where('product_id', $product[0])->get();
+
+            $users = [];
+            $users_clicks = [];
+            foreach ($clicks as $click) {
+                if (!$this->repeated_element($users, $click->user_id))
+                    $users [] = $click->user_id;
+            }
+
+            foreach ($users as $user) {
+                $users_clicks[] = Click::where('fecha', '<', $yesterday)->where('product_id', $product[0])->where('user_id', $user)->count();
+            }
+
+            $users_clone = $users;
+            $users_clicks_clone = $users_clicks;
+
+            $users_result = [];
+            $users_clicks_result = [];
+
+            for ($i = 0; $i < count($users_clicks); $i++) {
+                $x = $this->bigger($users_clicks_clone);
+                $users_clicks_result[$i] = $users_clicks_clone[$x];
+                $users_result[$i] = $users_clone[$x];
+
+                array_splice($users_clicks_clone, $x, 1);
+                array_splice($users_clone, $x, 1);
+            }
+
+            $name = []; $location = []; $gender = []; $email = [];
+
+            for ($i = 0; $i < count($users_result); $i++) {
+
+                $click = Click::where('user_id', $users_result[$i])->first();
+                $name     [$i] = $click->user_name;
+                $location [$i] = $click->country . ' - ' . $click->city;
+                if( $users_result[$i] == 0 )
+                {
+                    $gender   [$i] = 'Desconocido';
+                    $email    [$i] = '';
+                }
+                else
+                {
+                    $gender   [$i] = ($click->user->id_gender ==1)? 'Hombre':'Mujer';
+                    $email    [$i] = $click->user->email;
+                }
+            }
+
+            if(  count( $users_clicks_result )<11 )
+            {
+                $data['error']    = false;
+                $data['name']     = $name;
+                $data['location'] = $location;
+                $data['gender']   = $gender;
+                $data['email']    = $email;
+                $data['visits']   = $users_clicks_result;
+            }else
+            {
+                $names = []; $locations = []; $genders = []; $emails = []; $visits = [];
+                for( $i = 0; $i<10;$i++)
+                {
+                    $names    [] = $name[$i];
+                    $locations[] = $location[$i];
+                    $genders  [] = $gender[$i];
+                    $emails   [] = $email[$i];
+                    $visits   [] = $users_clicks_result[$i];
+                }
+                $data['error']    = false;
+                $data['name']     = $names;
+                $data['location'] = $locations;
+                $data['gender']   = $genders;
+                $data['email']    = $emails;
+                $data['visits']   = $visits;
+            }
+        }
+        else
+            $data['error'] = true;
+        return $data;
     }
 
     public function tendencia_categories()
@@ -231,7 +311,7 @@ class ClickController extends Controller
     public function bestProduct()
     {
         $yesterday  = Carbon::yesterday();
-        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','>',$yesterday)->get();
+        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','<',$yesterday)->get();
 
         if( count($clicks) != 0 )
         {
