@@ -68,6 +68,19 @@ class ClickController extends Controller
             return view('tendencia');
     }
 
+    public function tendencia_users()
+    {
+        $yesterday = Carbon::yesterday();
+        $product = $this->bestProduct();
+        $clicks  = Click::where('fecha','>',$yesterday)->where('product_id',$product)->get();
+        dd($clicks);
+    }
+
+    public function tendencia_categories()
+    {
+        $category = $this->bestCategory();
+    }
+
     public function software()
     {
         return view('software');
