@@ -74,10 +74,10 @@ class ClickController extends Controller
         $yesterday = Carbon::yesterday();
         $product = $this->bestProduct();
 
-        // When product_id is ="some text", thast like a product_id = 0
+        // When product_id is ="some text", that is like product_id = 0
 
-        if( count($product) == 1 ) {
-            $clicks = Click::where('fecha', '<', $yesterday)->where('product_id', $product[0])->get();
+        if( count($product) > 1 ) {
+            $clicks = Click::where('fecha', '>', $yesterday)->where('product_id', $product[0])->get();
 
             $users = [];
             $users_clicks = [];
@@ -87,7 +87,7 @@ class ClickController extends Controller
             }
 
             foreach ($users as $user) {
-                $users_clicks[] = Click::where('fecha', '<', $yesterday)->where('product_id', $product[0])->where('user_id', $user)->count();
+                $users_clicks[] = Click::where('fecha', '>', $yesterday)->where('product_id', $product[0])->where('user_id', $user)->count();
             }
 
             $users_clone = $users;
@@ -311,7 +311,7 @@ class ClickController extends Controller
     public function bestProduct()
     {
         $yesterday  = Carbon::yesterday();
-        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','<',$yesterday)->get();
+        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','>',$yesterday)->get();
 
         if( count($clicks) != 0 )
         {
