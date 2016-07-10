@@ -25,4 +25,9 @@ class Click extends Model
         return $this->belongsTo('App\Product','product_id','id_product');
     }
 
+    public function productCategory()
+    {
+        return $this->belongsTo('App\ProductCategory','product_id','id_product');
+    }
+
 }

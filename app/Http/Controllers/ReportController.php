@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Click;
+use App\ProductCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -293,5 +294,9 @@ class ReportController extends Controller
         }
 
         return $dayName;
+    }
+
+    public function perCategories() {
+        return ProductCategory::All();
     }
 }

@@ -30,3 +30,4 @@ Route::get('clicks/device_type', 'ReportController@byDeviceType');
 Route::get('clicks/products', 'ReportController@byProducts');
 Route::get('clicks/hour', 'ReportController@perHour');
 Route::get('clicks/page', 'ReportController@perPages');
+Route::get('clicks/categories', 'ReportController@perCategories');
