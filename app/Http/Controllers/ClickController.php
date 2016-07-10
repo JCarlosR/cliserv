@@ -407,7 +407,6 @@ class ClickController extends Controller
             foreach( $product_link_rewrite as $link )
                 $products_quantity[] = Click::where('url','<>','')->whereBetween('fecha',[$today,$tomorrow])->where('url','like','%'.$link.'%')->count();
 
-            dd($products_quantity,$product_link_rewrite);
             $products_quantity_copy = $products_quantity; $product_link_rewrite_copy = $product_link_rewrite;
             $result_products = [];   $result_quantity = [];
 
