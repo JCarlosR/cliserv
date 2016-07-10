@@ -405,7 +405,7 @@ class ClickController extends Controller
             $products_quantity = [];
 
             foreach( $product_link_rewrite as $link )
-                $products_quantity[] = $clicks->where('url','like','%'.$link.'%')->count();
+                $products_quantity[] = Click::where('url','<>','')->whereBetween('fecha',[$today,$tomorrow])->where('url','like','%'.$link.'%')->count();
 
             dd($products_quantity,$product_link_rewrite);
             $products_quantity_copy = $products_quantity; $product_link_rewrite_copy = $product_link_rewrite;
@@ -465,10 +465,8 @@ class ClickController extends Controller
 
             $category_quantity =[];
             foreach ($category_names as $category_name) {
-                $category_quantity[] = $clicks->where('url','like','%'.$category_name.'%')->count();
+                $category_quantity[] = Click::where('url','<>','')->whereBetween('fecha',[$today,$tomorrow])->where('url','like','%'.$category_name.'%')->count();
             }
-
-            dd($category_names,$category_quantity);
 
             $category_names_copy = $category_names; $category_quantity_copy = $category_quantity;
             $result_categories = [];   $result_quantity = [];
