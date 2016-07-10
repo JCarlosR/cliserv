@@ -158,7 +158,15 @@ class ClickController extends Controller
 
     public function tendencia_categories()
     {
+        $yesterday = Carbon::yesterday();
         $category = $this->bestCategory();
+
+        // When product_id is ="some text", that is like product_id = 0
+
+        $clicks = Click::where('fecha','>',$yesterday)->where('url','<>','')->where('url', 'like', '%'.$category[0].'-'.$category[2].'%')->get();
+
+        
+
     }
 
     public function software()
@@ -383,7 +391,7 @@ class ClickController extends Controller
                 if( $url !='' )
                 {
                     $string = str_ireplace('http://cliserv.esy.es/es/','',$url);
-                    if ( is_numeric( substr($string,0,1) ) )
+                    if ( is_numeric( substr($string,0,1) ) AND  substr($string,1,1)=='-' )
                         if (!$this->repeated_element($category_arrays, substr($string,0,1)))
                             $category_arrays[] = substr($string,0,1);
                 }
