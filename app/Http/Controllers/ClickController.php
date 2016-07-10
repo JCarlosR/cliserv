@@ -468,6 +468,7 @@ class ClickController extends Controller
                 $category_quantity[] = $clicks->where('url','like','%'.$category_name.'%')->count();
             }
 
+            dd($category_names,$category_quantity);
 
             $category_names_copy = $category_names; $category_quantity_copy = $category_quantity;
             $result_categories = [];   $result_quantity = [];
