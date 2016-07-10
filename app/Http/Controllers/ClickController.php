@@ -170,6 +170,7 @@ class ClickController extends Controller
         // When product_id is ="some text", that is like product_id = 0
 
         $clicks = Click::whereBetween('fecha',[$today,$tomorrow])->where('url','<>','')->where('url', 'like', '%'.$category[0].'-'.$category[2].'%')->get();
+        dd($clicks);
 
     }
 
