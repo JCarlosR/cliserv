@@ -22,7 +22,9 @@ class ClickController extends Controller
     public function general()
     {
         $today = Carbon::today();
-        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','>=',$today)->paginate(4);
+        $tomorrow = Carbon::tomorrow();
+
+        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->whereBetween('fecha',[$today,$tomorrow])->paginate(4);
         if( count($clicks)>0 )
             return view('general')->with(compact('clicks'));
         else
@@ -31,8 +33,10 @@ class ClickController extends Controller
 
     public function general_filtered( $inicio,$fin )
     {
+        $today = Carbon::today();
+        $tomorrow = Carbon::tomorrow();
 
-        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->whereBetween('fecha', array($inicio, $fin))->get();
+        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->whereBetween('fecha',[$today,$tomorrow])->get();
         $users    = [];
         $products = [];
         $devices  = [];
@@ -71,13 +75,14 @@ class ClickController extends Controller
 
     public function tendencia_users()
     {
-        $yesterday = Carbon::yesterday();
+        $today = Carbon::today();
+        $tomorrow = Carbon::tomorrow();
         $product = $this->bestProduct();
 
         // When product_id is ="some text", that is like product_id = 0
 
         if( count($product) > 1 ) {
-            $clicks = Click::where('fecha', '>', $yesterday)->where('product_id', $product[0])->get();
+            $clicks = Click::whereBetween('fecha',[$today,$tomorrow])->where('product_id', $product[0])->get();
 
             $users = [];
             $users_clicks = [];
@@ -87,7 +92,7 @@ class ClickController extends Controller
             }
 
             foreach ($users as $user) {
-                $users_clicks[] = Click::where('fecha', '>', $yesterday)->where('product_id', $product[0])->where('user_id', $user)->count();
+                $users_clicks[] = Click::whereBetween('fecha',[$today,$tomorrow])->where('product_id', $product[0])->where('user_id', $user)->count();
             }
 
             $users_clone = $users;
@@ -158,14 +163,13 @@ class ClickController extends Controller
 
     public function tendencia_categories()
     {
-        $yesterday = Carbon::yesterday();
+        $today = Carbon::today();
+        $tomorrow = Carbon::tomorrow();
         $category = $this->bestCategory();
 
         // When product_id is ="some text", that is like product_id = 0
 
-        $clicks = Click::where('fecha','>',$yesterday)->where('url','<>','')->where('url', 'like', '%'.$category[0].'-'.$category[2].'%')->get();
-
-        
+        $clicks = Click::whereBetween('fecha',[$today,$tomorrow])->where('url','<>','')->where('url', 'like', '%'.$category[0].'-'.$category[2].'%')->get();
 
     }
 
@@ -318,8 +322,10 @@ class ClickController extends Controller
 
     public function bestProduct()
     {
-        $yesterday  = Carbon::yesterday();
-        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','>',$yesterday)->get();
+        $today  = Carbon::today();
+        $tomorrow   = Carbon::tomorrow();
+
+        $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->whereBetween('fecha',[$today,$tomorrow])->get();
 
         if( count($clicks) != 0 )
         {
@@ -377,8 +383,9 @@ class ClickController extends Controller
 
     public function bestCategory()
     {
-        $yesterday  = Carbon::yesterday();
-        $clicks = Click::where('fecha','>',$yesterday)->get();
+        $today  = Carbon::today();
+        $tomorrow  = Carbon::tomorrow();
+        $clicks = Click::whereBetween('fecha',[$today,$tomorrow])->get();
 
 
         if( count($clicks) !=0 )
@@ -403,7 +410,7 @@ class ClickController extends Controller
                 $amount_category[$i]=0;
 
             // PROCESS CLICKS, ACCORDING TO PRODUCTS CONTAINED IN EXISTENT CATEGORIES
-            $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where('fecha','>',$yesterday)->get();
+            $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->whereBetween('fecha',[$today,$tomorrow])->get();
 
             foreach( $clicks as $click )
             {
