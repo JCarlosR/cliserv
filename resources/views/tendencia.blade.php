@@ -1,6 +1,6 @@
 @extends('panel')
 
-@section('title', 'El producto y categoría más vendidos')
+@section('title', 'El producto y categoría más visitados')
 
 @section('tendencia', 'class="activated"')
 
@@ -21,6 +21,7 @@
                             <a href="http://cliserv.esy.es/es/{{$category[2]}}/{{$product[0]}}-{{$product[2]}}.html" target="_blank">
                                 Visitar producto
                             </a>
+                            <button class="waves-effect waves-light btn filter" id="product">Detalles</button>
                         </div>
                     </div>
                 </div>
@@ -39,6 +40,7 @@
                             <a href="http://cliserv.esy.es/es/{{$category[0]}}-{{$category[2]}}" target="_blank">
                                 Visitar categoría
                             </a>
+                            <button class="waves-effect waves-light btn filter" id="category">Detalles</button>
                         </div>
                     </div>
                 </div>
@@ -64,4 +66,32 @@
             </div>
         @endif
     </div>
+
+    <div id="modal" class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Detalle de visitas</h4>
+                </div>
+                <table class="striped">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Ubicación</th>
+                            <th>Género</th>
+                            <th>Email</th>
+                            <th>Visitas</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/product_category_details.js') }} "></script>
 @endsection

@@ -3,6 +3,8 @@
 Route::get('/','ClickController@general');
 Route::get('general/{inicio}/{fin}','ClickController@general_filtered');
 Route::get('tendencia','ClickController@tendencia');
+Route::get('tendencia/producto/usuarios','ClickController@tendencia_users');
+Route::get('tendencia/producto/categorias','ClickController@tendencia_categories');
 
 Route::get('reporte-otros','ClickController@other');
 Route::get('reporte-top10','ClickController@products');
