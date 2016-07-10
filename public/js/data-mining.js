@@ -18,10 +18,15 @@ $(document).ready(function() {
         loadCategoriesSource(full_data);
     });
 
+    $.getJSON('../clicks/categories', function (data) {
+        categoryProduct = data;
+    });
+
     setupGraph();
 });
 
 var full_data;
+var categoryProduct = [];
 var $source_filter;
 var $category_filter;
 
@@ -194,7 +199,7 @@ function generateGraph(filtered_data) {
         // New dataSets
         for(var i=0; i<myData.nombre.length; i++){
             var countryDataset = {
-                label: myData.nombre[i],
+                label: getName(myData.nombre[i]),
                 borderColor: randomColor(0.4),
                 backgroundColor: randomColor(0.5),
                 pointBorderColor: randomColor(0.7),
@@ -251,6 +256,25 @@ function generateGraph(filtered_data) {
                 data: [myData.cantidad[i]]
             };
             new_datasets.push(countryDataset);
+        }
+    } else if ( $('#presentation_category').is(':checked')) {
+            new_labels = ['By Category'];
+
+            // Generate my data
+            var myData = getCategoryData(filtered_data);
+            // New dataSets
+            for (var i = 0; i < myData.nombre.length; i++) {
+
+                var categoryDataset = {
+                    label: getName(myData.nombre[i]),
+                    borderColor: randomColor(0.4),
+                    backgroundColor: randomColor(0.5),
+                    pointBorderColor: randomColor(0.7),
+                    pointBackgroundColor: randomColor(0.5),
+                    pointBorderWidth: 1,
+                    data: [myData.cantidad[i]]
+                };
+                new_datasets.push(categoryDataset);
         }
 
     } else if ( $('#presentation_month').is(':checked') ) {
@@ -454,6 +478,41 @@ function getProductData(data){
     data['nombre'] = auxArray;
     data['cantidad'] = quantity;
     return data;
+}
+
+function getCategoryData(data){
+    var product = [];
+    var auxArray = [];
+    var quantity = [];
+
+    for (var i=0; i<data.length; ++i) {
+        if (data[i].product == null)
+            continue;
+        else product.push(data[i].product_id);
+    }
+    console.log(product);
+    var j;
+    for (var i=0; i<product.length; ++i)
+    {
+        j = encontrado(product[i], auxArray);
+        if(j != -1)
+            quantity[j]++;
+        else{
+            auxArray.push(product[i]);
+            quantity.push(1);
+        }
+    }
+
+    var data = [];
+    data['nombre'] = auxArray;
+    data['cantidad'] = quantity;
+    return data;
+}
+
+function getName(element) {
+    for(var i=0; i<categoryProduct.length; i++)
+        if(categoryProduct[i].id_product == element)
+            return categoryProduct[i].reference;
 }
 
 function encontrado(page, dom){
