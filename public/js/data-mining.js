@@ -73,6 +73,7 @@ function loadUrlsSource(data) {
 }
 
 function convertCategory(url) {
+    
     var url_convert;
     url_convert = url.replace('http://cliserv.esy.es/es/', '');
     var pos = url_convert.indexOf('-');
