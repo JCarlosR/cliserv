@@ -29,14 +29,14 @@ function loadCategoriesSource(data) {
     var categories = [];
     for (var i=0; i<data.length; ++i) {
         if (convertCategory(data[i].url) != '')
-            categories.push(convertCategory(data[i].referencia));
+            categories.push(convertCategory(data[i].url));
     }
     //console.log(categories);
     var uniqueCategories = [];
     $.each(categories, function(i, el){
         if($.inArray(el, uniqueCategories) === -1) uniqueCategories.push(el);
     });
-    //console.log(uniqueCategories);
+    console.log(uniqueCategories);
     $category_filter.append('<option value="0">Todos</option>');
     for (var j=0; j<uniqueCategories.length; ++j) {
         if (uniqueCategories[j] != '')
@@ -75,8 +75,10 @@ function convertCategory(url) {
         url_convert = url_convert.substr(pos+1, url_convert.length);
     //console.log(url_convert);
 
-    if (url_convert.indexOf('/')==-1)
+    if (url_convert.indexOf('/')==-1 && url_convert.indexOf('?')==-1 && url_convert.indexOf('html')==-1 && url_convert.indexOf('#')==-1 && url_convert.indexOf('pedido')==-1 && url_convert.indexOf('contraseña')==-1 && url_convert.indexOf('cuenta')==-1 && url_convert.indexOf('contactanos')==-1 && url_convert.indexOf('terminos')==-1) {
         return url_convert;
+    }
+
     return '';
 }
 
