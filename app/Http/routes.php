@@ -1,7 +1,10 @@
 <?php
 
 Route::get('/','ClickController@general');
+Route::get('general/{inicio}/{fin}','ClickController@general_filtered');
 Route::get('tendencia','ClickController@tendencia');
+Route::get('tendencia/producto/usuarios','ClickController@tendencia_users');
+Route::get('tendencia/categorias/usuarios','ClickController@tendencia_categories');
 
 Route::get('reporte-otros','ClickController@other');
 Route::get('reporte-top10','ClickController@products');
@@ -20,6 +23,7 @@ Route::get('reporte-barras/{year?}/{month?}','CategoryController@bestCategoriesD
 
 // Gonzales
 Route::get('reporte/pages', 'ClickController@pages');
+Route::get('month_year/{year}', 'ClickController@months_year');
 
 // Report JSON Data
 Route::get('clicks/all', 'ReportController@all');
@@ -28,3 +32,4 @@ Route::get('clicks/device_type', 'ReportController@byDeviceType');
 Route::get('clicks/products', 'ReportController@byProducts');
 Route::get('clicks/hour', 'ReportController@perHour');
 Route::get('clicks/page', 'ReportController@perPages');
+Route::get('clicks/categories', 'ReportController@perCategories');

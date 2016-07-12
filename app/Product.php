@@ -9,7 +9,7 @@ class Product extends Model
 
     protected $table = 'ps_product_lang';
 
-    protected $fillable = ['id_product','name'];
+    protected $fillable = ['id_product','name','id_lang'];
 
     public $timestamps = false;
 

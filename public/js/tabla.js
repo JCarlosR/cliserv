@@ -4,27 +4,66 @@ function principal()
 {
 	datepicker("#finicio");
 	datepicker("#ffinal");
-	
-	$('#finicio').val( today_date(new Date())    );
-	$('#ffinal' ).val( tomorrow_date(new Date()) );
-	
-	show_cards( today_date(new Date()), tomorrow_date(new Date()) );
 
-	$('form').on('submit', function(event) {
+	$('#finicio').val( today_date(new Date()) );
+	$('#ffinal' ).val( today_date(new Date()) );
+
+	$('#form').on('submit',function()
+	{
 		event.preventDefault();
+		var inicio = $('#finicio').val();
+		var fin    = $('#ffinal').val();
+		if( fin>=inicio)
+		{
+			$('.data').html('');
 
-		var finicio = $('#finicio').val();
-		var ffinal  = $('#ffinal').val();
-		show_cards( finicio, ffinal );
+			$.getJSON('../public/general/'+inicio+'/'+fin,function(data){
+				var users   = [];
+				var products = [];
+				var devices  = [];
+				var places   = [];
+
+				$.each(data.users,function(key,value){
+					users.push(value);
+				});
+				$.each(data.products,function(key,value){
+					products.push(value);
+				});
+				$.each(data.devices,function(key,value){
+					devices.push(value);
+				});
+				$.each(data.places,function(key,value){
+					places.push(value);
+				});
+
+				for(var i=0;i<users.length;i++)
+				{
+					$('.data').append(
+							'<div class="col s12 m6"><div class="card blue-grey darken-1">'+
+							'<div class="card-content white-text">'+
+							'<span class="card-title yellow-text text-darken-2">'+users[i]+'</span>'+
+							'<div class="card-action">'+
+							'<p>Producto:'+products[i]+'</p>'+
+							'<p>Dispositivo: '+devices[i]+'</p>'+
+							'<p>Procedencia: '+places[i]+'</p>'+
+							'</div>'+
+							'</div>'+
+							'</div></div>'
+					);
+				}
+			});
+		}
+		else
+			alert('La fecha de inicio no puede ser mayor que la fecha final');
 	});
-} 
+}
 
 function datepicker(name)
 {
 	$(name).pickadate({
 	    selectMonths: true,
 	    selectYears: 15,
-	    format: 'yyyy-mm-dd' 
+	    format: 'yyyy-mm-dd'
 	});
 }
 
@@ -34,33 +73,4 @@ function today_date(date)
 	var month = date.getMonth()+1<10?('0'+(date.getMonth()+1)):date.getMonth()+1;
 	var year  = date.getFullYear();
 	return year+'-'+month+'-'+day;
-}
-
-function tomorrow_date(date)
-{
-	date.setDate(date.getDate()+1);
-	return today_date( date );
-}
-
-function show_cards(start_date,end_date) 
-{
-	$('.data').html('');
-
-	$.getJSON('../public/general/'+start_date+'/'+end_date,function(data){
-        $.each(data,function(key,value)
-        {
-            $('.data').append(
-            	'<div class="col s12 m6"><div class="card blue-grey darken-1">'+
-					'<div class="card-content white-text">'+
-						'<span class="card-title yellow-text text-darken-2">'+value.user_name+'</span>'+
-							'<div class="card-action">'+
-								'<p>Coordenada en X: ' + value.coordX +'</p>'+
-		              			 '<p>Coordenada en Y: '+ value.coordY +'</p>'+
-		              			 '<p>Url: '+value.url+'</p>'+
-		              		'</div>'+
-					'</div>'+
-				'</div></div>'
-            );
-        });
-	});
 }

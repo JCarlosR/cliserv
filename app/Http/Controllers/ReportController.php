@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Click;
+use App\ProductCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class ReportController extends Controller
 {
     public function all()
     {
-        return Click::with('user')->get();
+        return Click::with('user')->with(array('product'=>function($query)
+        {$query->where('id_lang','<>','2');}))->get();
+
     }
 
     public function byUserType()
@@ -168,18 +171,23 @@ class ReportController extends Controller
         $year = $request->get('anual');
         $month = $request->get('meses');
 
-        $start_carbon = Carbon::create($year, $month, 1);
-        $end_carbon = Carbon::create($year, $month+1, 1);
+        if( $year ==0 and $month==0)
+            $clicks = Click::where('referencia', 'not like', '%cliserv%')->get(['referencia']);
+        else
+        {
+            $start_carbon = Carbon::create($year, $month, 1);
+            $end_carbon = Carbon::create($year, $month+1, 1);
+
+            $clicks = Click::whereBetween('fecha', [$start_carbon, $end_carbon->subDay()])
+                ->where('referencia', 'not like', '%cliserv%')->get(['referencia']);
+            //$pages = $clicks;
+            //dd($pages);
+        }
 
         $dom = [];
         $quantity = [];
 
         $pages = [];
-
-        $clicks = Click::whereBetween('fecha', [$start_carbon, $end_carbon->subDay()])
-            ->where('referencia', 'not like', '%cliserv%')->get(['referencia']);
-        //$pages = $clicks;
-        //dd($pages);
 
         foreach ($clicks as $click) {
             $pagina = $click->referencia;
@@ -225,16 +233,25 @@ class ReportController extends Controller
         $doms_name = []; $doms_count =[];
 
         // Getting the x=7 bigger elements
-        for( $i = 0; $i<8;$i++)
+        if( count($result_doms)>7 )
         {
-            $doms_name[] = $result_doms[$i];
-            $doms_count[] = $result_quantities[$i];
-        }
+            for( $i = 0; $i<7;$i++)
+            {
+                $doms_name[] = $result_doms[$i];
+                $doms_count[] = $result_quantities[$i];
+            }
 
-        $data['dom'] = $doms_name;
-        $data['quantity'] = $doms_count;
-        //dd($data);
-        return $data;
+            $data['dom'] = $doms_name;
+            $data['quantity'] = $doms_count;
+            //dd($data);
+            return $data;
+        }
+        else
+        {
+            $data['dom'] = $result_doms;
+            $data['quantity'] = $result_quantities;
+            return $data;
+        }
     }
 
     public function verOcurrencia($producto,$productos){
@@ -277,5 +294,9 @@ class ReportController extends Controller
         }
 
         return $dayName;
+    }
+
+    public function perCategories() {
+        return ProductCategory::All();
     }
 }
