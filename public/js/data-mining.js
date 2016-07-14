@@ -202,7 +202,7 @@ function generateGraph(filtered_data) {
         // New dataSets
         for(var i=0; i<myData.nombre.length; i++){
             var countryDataset = {
-                label: getName(myData.nombre[i]),
+                label: myData.nombre[i],
                 borderColor: randomColor(0.4),
                 backgroundColor: randomColor(0.5),
                 pointBorderColor: randomColor(0.7),
@@ -513,6 +513,12 @@ function getCategoryData(data){
 }
 
 function getName(element) {
+    for(var i=0; i<categoryProduct.length; i++)
+        if(categoryProduct[i].id_product == element)
+            return categoryProduct[i].reference;
+}
+
+function getNameCountry(element) {
     for(var i=0; i<categoryProduct.length; i++)
         if(categoryProduct[i].id_product == element)
             return categoryProduct[i].reference;
