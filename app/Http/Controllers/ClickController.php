@@ -500,6 +500,7 @@ class ClickController extends Controller
 
         $data['error'] = false;
         $data['message'] = 'Meta modificada correctamente';
-        return $data;
+        return $data;h
+    
     }
 }
