@@ -496,8 +496,12 @@ class ClickController extends Controller
     public function update_metas($grade,$phone)
     {
         $meta = Meta::all();
-        $meta->cantidad = $grade;
-        $meta->celular = $phone;
+        foreach ( $meta as $item) {
+            $meta->cantidad = $grade;
+            $meta->celular = $phone;
+        }
+        $meta->save();
+
         $data['error'] = false;
         $data['message'] = 'Meta modificada correctamente';
         return $data;
