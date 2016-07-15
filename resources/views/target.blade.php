@@ -41,8 +41,8 @@
                 </div>
                 <div class="card-action" id="metas">
                     <div class="center center-align">
-                        <h4>Meta: {{$meta}}</h4>
-                        <h4>Meta: {{$celular}}</h4>
+                        <p>Meta: {{$meta}}</p>
+                        <p>Meta: {{$celular}}</p>
                     </div>
                 </div>
             </div>
