@@ -34,14 +34,14 @@ function loadCategoriesSource(data) {
     var categories = [];
     for (var i=0; i<data.length; ++i) {
         if (convertCategory(data[i].url) != '')
-            categories.push(convertCategory(data[i].referencia));
+            categories.push(convertCategory(data[i].url));
     }
     //console.log(categories);
     var uniqueCategories = [];
     $.each(categories, function(i, el){
         if($.inArray(el, uniqueCategories) === -1) uniqueCategories.push(el);
     });
-    //console.log(uniqueCategories);
+    console.log(uniqueCategories);
     $category_filter.append('<option value="0">Todos</option>');
     for (var j=0; j<uniqueCategories.length; ++j) {
         if (uniqueCategories[j] != '')
@@ -73,6 +73,7 @@ function loadUrlsSource(data) {
 }
 
 function convertCategory(url) {
+    
     var url_convert;
     url_convert = url.replace('http://cliserv.esy.es/es/', '');
     var pos = url_convert.indexOf('-');
@@ -80,8 +81,10 @@ function convertCategory(url) {
         url_convert = url_convert.substr(pos+1, url_convert.length);
     //console.log(url_convert);
 
-    if (url_convert.indexOf('/')==-1)
+    if (url_convert.indexOf('/')==-1 && url_convert.indexOf('?')==-1 && url_convert.indexOf('html')==-1 && url_convert.indexOf('#')==-1 && url_convert.indexOf('pedido')==-1 && url_convert.indexOf('contraseña')==-1 && url_convert.indexOf('cuenta')==-1 && url_convert.indexOf('contactanos')==-1 && url_convert.indexOf('terminos')==-1) {
         return url_convert;
+    }
+
     return '';
 }
 
@@ -199,7 +202,7 @@ function generateGraph(filtered_data) {
         // New dataSets
         for(var i=0; i<myData.nombre.length; i++){
             var countryDataset = {
-                label: getName(myData.nombre[i]),
+                label: myData.nombre[i],
                 borderColor: randomColor(0.4),
                 backgroundColor: randomColor(0.5),
                 pointBorderColor: randomColor(0.7),
@@ -510,6 +513,12 @@ function getCategoryData(data){
 }
 
 function getName(element) {
+    for(var i=0; i<categoryProduct.length; i++)
+        if(categoryProduct[i].id_product == element)
+            return categoryProduct[i].reference;
+}
+
+function getNameCountry(element) {
     for(var i=0; i<categoryProduct.length; i++)
         if(categoryProduct[i].id_product == element)
             return categoryProduct[i].reference;
