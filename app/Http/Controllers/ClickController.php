@@ -485,7 +485,7 @@ class ClickController extends Controller
 
     public function metas()
     {
-        $metas    = Meta::find(1);
+        $metas    = Meta::select('cantidad,celular')->get();
         $meta     = $metas->cantidad;
         $celular  = $metas->celular;
         return view('target')->with(compact('meta','celular'));
@@ -493,7 +493,7 @@ class ClickController extends Controller
 
     public function update_metas($grade,$phone)
     {
-        $meta = Meta::find(1);
+        $meta = Meta::select('cantidad,celular')->get();
         $meta->cantidad = $grade;
         $meta->celular = $phone;
         $data['error'] = false;
