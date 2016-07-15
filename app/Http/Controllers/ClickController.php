@@ -486,8 +486,10 @@ class ClickController extends Controller
     public function metas()
     {
         $metas    = Meta::all();
-        $meta     = $metas->cantidad;
-        $celular  = $metas->celular;
+        foreach ($metas as $item) {
+            $meta = $item->cantidad;
+            $celular = $item->celular;
+        }
         return view('target')->with(compact('meta','celular'));
     }
 
