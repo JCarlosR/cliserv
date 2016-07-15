@@ -485,19 +485,21 @@ class ClickController extends Controller
 
     public function metas()
     {
-        $metas    = Meta::all();
-        foreach ($metas as $item) {
-            $meta = $item->cantidad;
-            $celular = $item->celular;
-        }
+        $metas   = Meta::find(0);
+
+        $meta    = $metas->cantidad;
+        $celular = $metas->celular;
+
         return view('target')->with(compact('meta','celular'));
     }
 
     public function update_metas($grade,$phone)
     {
-        $metas = Meta::all();
-        Meta::update(array('cantidad' =>$grade,'celular'=>$phone ));
-
+        $meta   = Meta::find(0);
+        $meta->cantidad = $grade;
+        $meta->celular = $phone;
+        $meta->save();
+        
         $data['error'] = false;
         $data['message'] = 'Meta modificada correctamente';
         return $data;
