@@ -21,8 +21,8 @@ class ClickController extends Controller
 
     public function general()
     {
-        $today = Carbon::today();
-        $tomorrow = Carbon::tomorrow();
+        $today = Carbon::today('America/Lima');
+        $tomorrow = Carbon::tomorrow('America/Lima');
 
         $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->whereBetween('fecha',[$today,$tomorrow])->paginate(4);
         if( count($clicks)>0 )
@@ -33,8 +33,8 @@ class ClickController extends Controller
 
     public function general_filtered( $inicio,$fin )
     {
-        $today = Carbon::today();
-        $tomorrow = Carbon::tomorrow();
+        $today = Carbon::today('America/Lima');
+        $tomorrow = Carbon::tomorrow('America/Lima');
 
         $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->whereBetween('fecha',[$today,$tomorrow])->get();
         $users    = [];
@@ -75,8 +75,8 @@ class ClickController extends Controller
 
     public function tendencia_users()
     {
-        $today = Carbon::today();
-        $tomorrow = Carbon::tomorrow();
+        $today = Carbon::today('America/Lima');
+        $tomorrow = Carbon::tomorrow('America/Lima');
         $product = $this->bestProduct();
 
         // When product_id is ="some text", that is like product_id = 0
@@ -159,8 +159,8 @@ class ClickController extends Controller
 
     public function tendencia_categories()
     {
-        $today = Carbon::today();
-        $tomorrow = Carbon::tomorrow();
+        $today = Carbon::today('America/Lima');
+        $tomorrow = Carbon::tomorrow('America/Lima');
         $category = $this->bestCategory();
 
         if( count($category) > 1 ) {
@@ -389,8 +389,8 @@ class ClickController extends Controller
 
     public function bestProduct()
     {
-        $today  = Carbon::today();
-        $tomorrow   = Carbon::tomorrow();
+        $today  = Carbon::today('America/Lima');
+        $tomorrow   = Carbon::tomorrow('America/Lima');
 
         $clicks = Click::where('url','<>','')->whereBetween('fecha',[$today,$tomorrow])->get();
         $products = Product::where('id_lang',1)->get();
@@ -424,7 +424,6 @@ class ClickController extends Controller
             $product_test = Product::where('link_rewrite',$result_products[0])->where('id_lang',1)->first();
 
             // The best selling product
-
             $produt_[0] = $product_test->id_product;
             $produt_[1] = $product_test->name;
             $produt_[2] = $product_test->link_rewrite;
@@ -439,33 +438,21 @@ class ClickController extends Controller
 
     public function bestCategory()
     {
-        $today  = Carbon::today();
-        $tomorrow  = Carbon::tomorrow();
+        $today  = Carbon::today('America/Lima');
+        $tomorrow  = Carbon::tomorrow('America/Lima');
         $clicks = Click::where('url','<>','')->whereBetween('fecha',[$today,$tomorrow])->get();
 
         if( count($clicks) !=0 )
         {
-            $category_arrays = []; // Available categories according to clicks data(product_id)
-
-            foreach( $clicks as $click )
-            {
-                $url = $click->url;
-                $string = str_ireplace('http://cliserv.esy.es/es/','',$url);
-                if ( is_numeric( substr($string,0,1) ) AND  substr($string,1,1)=='-' )
-                    if (!$this->repeated_element($category_arrays, substr($string,0,1)))
-                        $category_arrays[] = substr($string,0,1);
-            }
-
+            $categories = CategoryName::where('id_lang',1)->get();
             $category_names = [];
-            foreach ($category_arrays as $category_array) {
-                $category = CategoryName::where('id_category',$category_array)->where('id_lang',1)->first();
+
+            foreach ($categories as $category)
                 $category_names[] = $category->link_rewrite;
-            }
 
             $category_quantity =[];
-            foreach ($category_names as $category_name) {
+            foreach ($category_names as $category_name)
                 $category_quantity[] = Click::where('url','<>','')->whereBetween('fecha',[$today,$tomorrow])->where('url','like','%'.$category_name.'%')->count();
-            }
 
             $category_names_copy = $category_names; $category_quantity_copy = $category_quantity;
             $result_categories = [];   $result_quantity = [];
@@ -485,6 +472,7 @@ class ClickController extends Controller
             $category_[0] = $category_test->id_category;
             $category_[1] = $category_test->name;
             $category_[2] = $category_test->link_rewrite ;
+
             return $category_;
         }
         else
