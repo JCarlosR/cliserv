@@ -37,11 +37,13 @@
         <div class="col s6 offset-s3">
             <div class="card blue-grey darken-1">
                 <div class="card-content white-text">
-                    <span class="card-title yellow-text text-darken-2">Metas</span>
+                    <span class="card-title yellow-text text-darken-2">Meta según tendencia!</span>
                 </div>
                 <div class="card-action" id="metas">
-                    <p>Meta: {{$meta}}</p>
-                    <p>Meta: {{$celular}}</p>
+                    <div class="center center-align">
+                        <h4>Meta: {{$meta}}</h4>
+                        <h4>Meta: {{$celular}}</h4>
+                    </div>
                 </div>
             </div>
         </div>
