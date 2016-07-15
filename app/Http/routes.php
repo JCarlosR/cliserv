@@ -8,6 +8,8 @@ Route::get('tendencia/categorias/usuarios','ClickController@tendencia_categories
 
 Route::get('reporte-otros','ClickController@other');
 Route::get('reporte-top10','ClickController@products');
+Route::get('metas','ClickController@metas');
+Route::get('get_metas/{grade}/{phone}','ClickController@update_metas');
 
 // General
 Route::get('reporte/data-mining', 'DataController@mining');

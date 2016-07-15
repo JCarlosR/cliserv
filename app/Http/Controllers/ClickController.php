@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CategoryName;
 use App\CategoryProduct;
 use App\Click;
+use App\Meta;
 use App\User;
 use Illuminate\Http\Request;
 use App\Picture;
@@ -480,5 +481,23 @@ class ClickController extends Controller
             $message[0] = "No hay datos ingresados";
             return $message;
         }
+    }
+
+    public function metas()
+    {
+        $metas    = Meta::find(1);
+        $meta     = $metas->cantidad;
+        $celular  = $metas->celular;
+        return view('target')->with(compact('meta','celular'));
+    }
+
+    public function update_metas($grade,$phone)
+    {
+        $meta = Meta::find(1);
+        $meta->cantidad = $grade;
+        $meta->celular = $phone;
+        $data['error'] = false;
+        $data['message'] = 'Meta modificada correctamente';
+        return $data;
     }
 }
