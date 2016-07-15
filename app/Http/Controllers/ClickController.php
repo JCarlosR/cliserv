@@ -485,7 +485,7 @@ class ClickController extends Controller
 
     public function metas()
     {
-        $metas   = Meta::find(0);
+        $metas   = Meta::find(1);
 
         $meta    = $metas->cantidad;
         $celular = $metas->celular;
@@ -495,11 +495,11 @@ class ClickController extends Controller
 
     public function update_metas($grade,$phone)
     {
-        $meta   = Meta::find(0);
+        $meta   = Meta::find(1);
         $meta->cantidad = $grade;
         $meta->celular = $phone;
         $meta->save();
-        
+
         $data['error'] = false;
         $data['message'] = 'Meta modificada correctamente';
         return $data;
