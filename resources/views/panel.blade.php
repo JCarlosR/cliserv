@@ -63,8 +63,8 @@
     </a>
 </header>
 <main>
-    <div class="row">
-        <h4 class="center-align">@yield('title')</h4>
+    <div class="row teal lighten-2 white-text">
+        <h4 class="center-align" id="title">@yield('title')</h4>
     </div>
     @yield('main-content')
     <div class="container">

@@ -1,6 +1,6 @@
 @extends('panel')
 
-@section('title','Reporte tráfico')
+@section('title','Reporte de tráfico')
 
 @section('other','class="activated"')
 

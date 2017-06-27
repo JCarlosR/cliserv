@@ -1,3 +1,8 @@
+#title {
+    margin: 0;
+    padding: 1em;
+    text-transform: uppercase;
+}
 #logo
 {
 	margin-top: 20px;
@@ -14,7 +19,17 @@
 {
 	margin-top: 10px;
 }
-
+#slide-out::after {
+    content: "";
+    background: url('/img/bg-sidebar.jpg');
+    opacity: 0.35;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
 a.button-collapse.top-nav {
     position: absolute;
     text-align: center;
