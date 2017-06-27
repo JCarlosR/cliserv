@@ -1,9 +1,6 @@
-
 #logo
 {
 	margin-top: 20px;
-	width: 210px;
-	height: 110px;
 }
 #form
 {
@@ -54,14 +51,14 @@ a.button-collapse.top-nav i {
 	font-weight: bold;
 }
 header{
-	height: 0px;
+	height: 0;
 }
 .activated
 {
-	background-color: #ee6e73 !important;
+	background-color: #2bbbad;
 }
 
-.activated a
+.activated a span
 {
-	color:rgba(255,200,200,0.9) !important;
+	color: white !important;
 }

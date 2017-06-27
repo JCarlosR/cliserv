@@ -13,7 +13,7 @@ function principal()
 		event.preventDefault();
 		var inicio = $('#finicio').val();
 		var fin    = $('#ffinal').val();
-		if( fin>=inicio)
+		if (fin >= inicio)
 		{
 			$('.data').html('');
 

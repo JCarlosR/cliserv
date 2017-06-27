@@ -26,13 +26,13 @@ class ClickController extends Controller
         $tomorrow = Carbon::tomorrow('America/Lima');
 
         $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->whereBetween('fecha',[$today,$tomorrow])->paginate(4);
-        if( count($clicks)>0 )
+        if (count($clicks) > 0)
             return view('general')->with(compact('clicks'));
         else
             return view('general');
     }
 
-    public function general_filtered( $inicio,$fin )
+    public function general_filtered($inicio, $fin)
     {
         $today = Carbon::today('America/Lima');
         $tomorrow = Carbon::tomorrow('America/Lima');
@@ -43,7 +43,7 @@ class ClickController extends Controller
         $devices  = [];
         $places   = [];
         $i=0;
-        foreach( $clicks as $click )
+        foreach ($clicks as $click)
         {
             $users[$i]    = $click->user_name;
             $products[$i] = $click->product->name;

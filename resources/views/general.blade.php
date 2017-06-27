@@ -1,6 +1,7 @@
 @extends('panel')
 
 @section('title', 'Reporte general')
+@section('general','activated')
 
 @section('content')
     <div class="row">
@@ -49,7 +50,7 @@
         @endforeach
         {!! $clicks->render() !!}
     @else
-        <div class="col s12 m6">
+        <div class="col s12">
             <h3>Lamentablemente no se encontraron datos :(</h3>
         </div>
     @endif
@@ -58,5 +59,5 @@
 
 
 @section('scripts')
-    <script type="text/javascript" src="{{ asset('/js/tabla.js') }}"></script>
+    <script src="{{ asset('/js/tabla.js') }}"></script>
 @endsection
