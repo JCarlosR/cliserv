@@ -304,7 +304,7 @@ class ClickController extends Controller
     public function bigger( $array )
     {
         $pos_mayor=0;
-        for( $i=1;$i<count($array);$i++ )
+        for ($i=1;$i<count($array);$i++)
         {
             if( $array[$i]>$array[$pos_mayor] )
                 $pos_mayor=$i;

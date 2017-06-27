@@ -50,13 +50,7 @@
         {!! $clicks->render() !!}
     @else
         <div class="col s12 m6">
-            <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                    <span class="card-title yellow-text text-darken-2">No existen datos!</span>
-                    <div class="card-action">
-                    </div>
-                </div>
-            </div>
+            <h3>Lamentablemente no se encontraron datos :(</h3>
         </div>
     @endif
 </div>
@@ -64,5 +58,5 @@
 
 
 @section('scripts')
-    <script type="text/javascript" src="{{ asset('js/tabla.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/tabla.js') }}"></script>
 @endsection

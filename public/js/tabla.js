@@ -17,7 +17,7 @@ function principal()
 		{
 			$('.data').html('');
 
-			$.getJSON('../public/general/'+inicio+'/'+fin,function(data){
+			$.getJSON('/general/'+inicio+'/'+fin,function(data){
 				var users   = [];
 				var products = [];
 				var devices  = [];
