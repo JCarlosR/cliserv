@@ -62,6 +62,8 @@ class CategoryController extends Controller
             }
         }
 
+        dd($category_arrays);
+
         $amount_category = []; // Amount of product for every category
 
         for ($i=0; $i<count($category_arrays); $i++)
