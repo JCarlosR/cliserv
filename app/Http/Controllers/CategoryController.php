@@ -47,7 +47,9 @@ class CategoryController extends Controller
         if ($year == 0 AND $month == 0)
             $clicks = Click::all();
         else
-            $clicks = Click::where(DB::raw('YEAR(fecha)'), $year)->where( DB::raw('MONTH(fecha)'), $month )->get();
+            $clicks = Click::where(DB::raw('YEAR(fecha)'), $year)
+                ->where( DB::raw('MONTH(fecha)'), $month )
+                ->get();
 
         $category_arrays = []; // Available categories according to clicks data(product_id)
 
@@ -56,6 +58,7 @@ class CategoryController extends Controller
             if ($url !='')
             {
                 $string = str_ireplace('http://clickstream.store/es/', '', $url);
+                echo $string;
                 if (is_numeric( explode("-", $string)[0] ))
                     if (!$this->repeated_element($category_arrays, substr($string,0,1)))
                         $category_arrays[] = substr($string,0,1);
