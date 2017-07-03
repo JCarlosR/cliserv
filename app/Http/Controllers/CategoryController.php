@@ -59,14 +59,13 @@ class CategoryController extends Controller
             {
                 $string = str_ireplace('http://clickstream.store/', '', $url);
                 $string = str_ireplace('es/', '', $string); // sometimes it appears
-                var_dump($string);
+                // var_dump($string);
                 if (is_numeric( explode("-", $string)[0] ))
                     if (!$this->repeated_element($category_arrays, substr($string,0,1)))
                         $category_arrays[] = substr($string,0,1);
             }
         }
-
-        dd($category_arrays);
+        // dd($category_arrays);
 
         $amount_category = []; // Amount of product for every category
 
