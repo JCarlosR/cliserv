@@ -56,7 +56,7 @@ class CategoryController extends Controller
             $url = $click->url;
             if( $url !='' )
             {
-                $string = str_ireplace('http://cliserv.esy.es/es/','',$url);
+                $string = str_ireplace('http://clickstream.store/es/','',$url);
                 if ( is_numeric( substr($string,0,1) ) )
                     if (!$this->repeated_element($category_arrays, substr($string,0,1)))
                         $category_arrays[] = substr($string,0,1);

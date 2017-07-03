@@ -33,7 +33,7 @@
         </div>
     </div>
 <div class="row data">
-    @if( isset($clicks))
+    @if (isset($clicks))
         @foreach($clicks as $click)
             <div class="col s12 m6">
                 <div class="card blue-grey darken-1">
