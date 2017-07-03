@@ -44,42 +44,40 @@ class CategoryController extends Controller
     public function bestCategoriesData( $year, $month )
     {
         // GET EXISTENT CATEGORIES
-        if( $year == 0 AND $month == 0 )
+        if ($year == 0 AND $month == 0)
             $clicks = Click::all();
         else
             $clicks = Click::where(DB::raw('YEAR(fecha)'), $year)->where( DB::raw('MONTH(fecha)'), $month )->get();
 
         $category_arrays = []; // Available categories according to clicks data(product_id)
 
-        foreach( $clicks as $click )
-        {
+        foreach ($clicks as $click) {
             $url = $click->url;
-            if( $url !='' )
+            if ($url !='')
             {
-                $string = str_ireplace('http://clickstream.store/es/','',$url);
-                if ( is_numeric( substr($string,0,1) ) )
+                $string = str_ireplace('http://clickstream.store/es/', '', $url);
+                if (is_numeric( explode("-", $string)[0] ))
                     if (!$this->repeated_element($category_arrays, substr($string,0,1)))
                         $category_arrays[] = substr($string,0,1);
             }
         }
 
-        $amount_category = []; //Amount of product for every category
+        $amount_category = []; // Amount of product for every category
 
-        for( $i=0;$i<count($category_arrays);$i++ )
-            $amount_category[$i]=0;
+        for ($i=0; $i<count($category_arrays); $i++)
+            $amount_category[$i] = 0;
 
 
         // PROCESS CLICKS, ACCORDING TO PRODUCTS CONTAINED IN EXISTENT CATEGORIES
-        if( $year == 0 AND $month == 0 )
+        if ($year == 0 AND $month == 0)
             $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->get();
         else
             $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where(DB::raw('YEAR(fecha)'), $year)->where( DB::raw('MONTH(fecha)'), $month )->get();
 
 
-        foreach( $clicks as $click )
-        {
-            $categories = CategoryProduct::where('id_product',$click->product_id)->get();
-            foreach ( $categories as $category )
+        foreach ($clicks as $click) {
+            $categories = CategoryProduct::where('id_product', $click->product_id)->get();
+            foreach ($categories as $category)
             {
                 $element = $category->id_category;
 
@@ -90,9 +88,9 @@ class CategoryController extends Controller
         }
 
         $copy_amount_category = $amount_category; $copy_category_arrays = $category_arrays;
-        $result_categories = [];   $result_amounts = [];
+        $result_categories = []; $result_amounts = [];
 
-        //Ordering data from bigger to smaller
+        // Ordering data from bigger to smaller
         for( $i=0;$i<count($amount_category);$i++ )
         {
             $x = $this->bigger($copy_amount_category);
@@ -115,12 +113,12 @@ class CategoryController extends Controller
 
         // Getting the x=5 bigger elements
 
-        if(  count($result_amounts )<5 )
+        if ( count($result_amounts ) < 5)
         {
             $data['name']     = $category_name_ordered;
             $data['quantity'] = $result_amounts;
-        }else
-        {
+        } else {
+
             for( $i = 0; $i<5;$i++)
             {
                 $category_name[] = $category_name_ordered[$i];
@@ -135,7 +133,7 @@ class CategoryController extends Controller
     public function bigger( $array )
     {
         $pos_mayor=0;
-        for( $i=1;$i<count($array);$i++ )
+        for ($i=1; $i<count($array); $i++)
         {
             if( $array[$i]>$array[$pos_mayor] )
                 $pos_mayor=$i;
@@ -174,7 +172,7 @@ class CategoryController extends Controller
         return $months_name;
     }
 
-    public function month_name( $month )
+    public function month_name($month)
     {
         switch($month)
         {
@@ -190,10 +188,11 @@ class CategoryController extends Controller
             case 10: return 'Octubre';
             case 11: return 'Noviembre';
             case 12: return 'Diciembre';
+            default: return '(Desconocido)';
         }
     }
 
-    public function months_year( $year )
+    public function months_year($year)
     {
         $clicks = Click::whereNotNull('product_id')->where('product_id','!=',0)->where(DB::raw('YEAR(fecha)'), $year)->get();
 
