@@ -7,9 +7,9 @@
 @section('content')
     <div class="row">
         <form id="form">
-            <div class="col s5">
+            <div class="col s4">
                 <div class="input-field">
-                    <select name="cboyear">
+                    <select name="year">
                         <option value="" disabled selected>Seleccionar Año</option>
                         <option value="1">Todos</option>
                         <option value="2017">2017</option>
@@ -17,9 +17,9 @@
                     <label>Fecha Año</label>
                 </div>
             </div>
-            <div class="col s5">
+            <div class="col s4">
                 <div class="input-field">
-                    <select name="cbomonth">
+                    <select name="month">
                         <option value="" disabled selected>Seleccionar Mes</option>
                         <option value="0">Todos</option>
                         <option value="1">Enero</option>
@@ -36,6 +36,14 @@
                         <option value="12">Diciembre</option>
                     </select>
                     <label>Fecha Mes</label>
+                </div>
+            </div>
+            <div class="col s2">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input placeholder="TOP" type="number" required min="1" name="top">
+                        <label for="top">TOP</label>
+                    </div>
                 </div>
             </div>
             <div class="col s2">
@@ -65,12 +73,10 @@
         $('#form').on('submit', function() {
             event.preventDefault();
 
-
             var params = $(this).serialize();
-            $.getJSON('./clicks/products', params, function(data) {
-
+            $.getJSON('/clicks/products', params, function(data) {
+                console.log(data);
             });
         });
     </script>
-
 @endsection
