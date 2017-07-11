@@ -9,39 +9,21 @@
         <form id="form">
             <div class="col s4">
                 <div class="input-field">
-                    <select name="year">
-                        <option value="" disabled selected>Seleccionar Año</option>
-                        <option value="1">Todos</option>
-                        <option value="2017">2017</option>
-                    </select>
-                    <label>Fecha Año</label>
+                    <input type="date" class="datepicker" name="start_date">
+                    <label>Fecha inicio</label>
                 </div>
             </div>
             <div class="col s4">
                 <div class="input-field">
-                    <select name="month">
-                        <option value="" disabled selected>Seleccionar Mes</option>
-                        <option value="0">Todos</option>
-                        <option value="1">Enero</option>
-                        <option value="2">Febrero</option>
-                        <option value="3">Marzo</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Mayo</option>
-                        <option value="6">Junio</option>
-                        <option value="7">Julio</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Setiembre</option>
-                        <option value="10">Octubre</option>
-                        <option value="11">Noviembre</option>
-                        <option value="12">Diciembre</option>
-                    </select>
-                    <label>Fecha Mes</label>
+                    <input type="date" class="datepicker" name="end_date">
+                    <label>Fecha fin</label>
                 </div>
             </div>
             <div class="col s2">
                 <div class="row">
                     <div class="input-field col s12">
-                        <input placeholder="TOP" type="number" required min="1" name="top">
+                        <input type="number" required min="1" name="top" class="tooltiped"
+                            data-position="top" data-delay="20" data-tooltip="Nro de productos en el TOP">
                         <label for="top">TOP</label>
                     </div>
                 </div>
@@ -68,6 +50,11 @@
     <script>
         $(document).ready(function() {
             $('select').material_select();
+            $('.datepicker').pickadate({
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 5 // Creates a dropdown of 15 years to control year
+            });
+            $('.tooltipped').tooltip();
         });
 
         $('#form').on('submit', function() {
