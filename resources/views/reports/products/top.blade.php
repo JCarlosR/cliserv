@@ -9,13 +9,13 @@
         <form id="form">
             <div class="col s4">
                 <div class="input-field">
-                    <input type="date" class="datepicker" name="start_date">
+                    <input type="date" class="datepicker" name="start_date" required>
                     <label>Fecha inicio</label>
                 </div>
             </div>
             <div class="col s4">
                 <div class="input-field">
-                    <input type="date" class="datepicker" name="end_date">
+                    <input type="date" class="datepicker" name="end_date" required>
                     <label>Fecha fin</label>
                 </div>
             </div>
