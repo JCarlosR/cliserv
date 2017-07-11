@@ -12,6 +12,7 @@ class TopController extends Controller
     public function clicksAndPercentage()
     {
         $products = Click::whereNotNull('product_id')->get();
-        dd($products);
+        // dd($products);
+        return view('reports.products.top');
     }
 }

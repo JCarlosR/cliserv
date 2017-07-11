@@ -49,7 +49,12 @@
         </li>
         <li @yield('products')>
             <a href="{{ url('reporte-top10') }}">
-                <span>Reporte-Productos</span>
+                <span>Top productos (Barras)</span>
+            </a>
+        </li>
+        <li @yield('top-productos')>
+            <a href="{{ url('/top/productos') }}">
+                <span>Top productos (# y %)</span>
             </a>
         </li>
         {{--<li @yield('page')>--}}
