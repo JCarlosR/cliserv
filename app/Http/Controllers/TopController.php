@@ -33,8 +33,8 @@ class TopController extends Controller
         $allLabels = [];
         $allProductIds = [];
         $productIds = [];
-        $labels = [];
-        $quantity = [];
+        $pairs = []; // product, quantity
+        $tickPercent = 100 / sizeof($clicks);
 
         foreach ($clicks as $click) {
             $allProductIds[] = $click->product->id_product;
@@ -46,17 +46,23 @@ class TopController extends Controller
             $j = $this->getPositionIn($allProductIds[$i], $productIds);
             if ($j == -1) {
                 $productIds[] = $allProductIds[$i];
-                $labels[] = $allLabels[$i];
-                $quantity[] = 1;
 
-                if (sizeof($quantity) >= $topLimit) // ==
+                $newItem = [];
+                $newItem['product'] = $allLabels[$i];
+                $newItem['quantity'] = 1;
+                $newItem['percent'] = $tickPercent;
+
+                $pairs[] = $newItem;
+
+                if (sizeof($pairs) >= $topLimit) // ==
                     break;
-            } else
-                $quantity[$j]++;
+            } else {
+                $pairs[$j]['quantity'] += 1;
+                $pairs[$j]['percent'] += $tickPercent;
+            }
         }
 
-        $data['products'] = $labels;
-        $data['quantities'] = $quantity;
+        $data['pairs'] = $pairs;
         return $data;
     }
 

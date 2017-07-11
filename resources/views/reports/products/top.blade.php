@@ -40,7 +40,19 @@
                     <img src="{{ asset('img/loading.svg') }}" alt="Cargando">
                     <p>Cargando ...</p>
                 </div>
-                <canvas id="canvas" style="display: none;"></canvas>
+
+                <table class="striped" id="productsTable">
+                    <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th># Clics</th>
+                        <th>Porcentaje</th>
+                    </tr>
+                    </thead>
+                    <tbody id="productsTop">
+
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -48,7 +60,12 @@
 
 @section('scripts')
     <script>
+        var $loading, $productsTop, $productsTable;
         $(document).ready(function() {
+            $loading = $('#loading');
+            $productsTop = $('#productsTop');
+            $productsTable = $('#productsTable');
+
             $('select').material_select();
             $('.datepicker').pickadate({
                 selectMonths: false, // Creates a dropdown to control month
@@ -60,9 +77,25 @@
 
         $('#form').on('submit', function() {
             event.preventDefault();
+            $loading.slideUp('slow');
+            $productsTable.hide();
 
             var params = $(this).serialize();
             $.getJSON('/top/productos/data', params, function(data) {
+                $loading.slideDown('slow');
+
+                var htmlRows = '';
+                var pairs = data.pairs;
+                for (var i=0; i<pairs.length; ++i) {
+                    htmlRows += '<tr>' +
+                        '<td>'+pairs[i].product+'</td>' +
+                        '<td>'+pairs[i].quantity+'</td>' +
+                        '<td>'+pairs[i].percent+'</td>' +
+                    '</tr>';
+                }
+                $productsTop.html(htmlRows);
+                $productsTable.show();
+
                 console.log(data);
             });
         });
