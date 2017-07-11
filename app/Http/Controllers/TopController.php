@@ -62,8 +62,7 @@ class TopController extends Controller
             }
         }
 
-
-
+        $this->bubbleSortPairs($pairs);
         $data['pairs'] = $pairs;
         return $data;
     }
