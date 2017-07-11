@@ -18,7 +18,7 @@ class TopController extends Controller
     {
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
-        $topLimit = $request->input('top');
+        $topLimit = $request->input('top') ?: 5;
 
         if ($start_date && $end_date) {
             $clicks = Click::whereNotNull('product_id')

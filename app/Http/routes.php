@@ -16,7 +16,7 @@ Route::get('reporte/data-mining', 'DataController@mining');
 
 // Ramos
 Route::get('top/productos','TopController@clicksAndPercentage');
-Route::get('top/productos/data', 'ReportController@productTopData');
+Route::get('top/productos/data', 'TopController@productTopData');
 
 Route::get('reporte/horas','ClickController@hours');
 Route::get('reporte/trafico','ClickController@traffic');
