@@ -37,21 +37,21 @@
                 <span>Reporte de tráfico</span>
             </a>
         </li>
-        {{--<li @yield('categories')>--}}
-            {{--<a href="{{ url('reporte-categorias') }}">--}}
-                {{--<span>Categorías más visitadas</span>--}}
-            {{--</a>--}}
-        {{--</li>--}}
+        <li @yield('categories')>
+            <a href="{{ url('reporte-categorias') }}">
+                <span>Categorías más visitadas</span>
+            </a>
+        </li>
         <li @yield('pages')>
             <a href="{{ url('reporte/pages') }}">
                 <span>Fuentes de visitas</span>
             </a>
         </li>
-        {{--<li @yield('products')>--}}
-            {{--<a href="{{ url('reporte-top10') }}">--}}
-                {{--<span>Reporte-Productos</span>--}}
-            {{--</a>--}}
-        {{--</li>--}}
+        <li @yield('products')>
+            <a href="{{ url('reporte-top10') }}">
+                <span>Reporte-Productos</span>
+            </a>
+        </li>
         {{--<li @yield('page')>--}}
             {{--<a href="{{ url('metas') }}">--}}
                 {{--<span>Meta</span>--}}
