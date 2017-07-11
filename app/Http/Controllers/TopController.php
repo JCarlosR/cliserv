@@ -81,7 +81,7 @@ class TopController extends Controller
         for ($x=0; $x<$array_count; $x++){
             for($a=0;  $a<$array_count-1; $a++){
                 if ($a<$array_count) {
-                    if ($pairs[$a]['quantity'] > $pairs[$a + 1]['quantity']) {
+                    if ($pairs[$a]['quantity'] < $pairs[$a + 1]['quantity']) {
                         $this->swap($pairs, $a, $a+1);
                     }
                 }
