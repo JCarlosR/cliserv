@@ -62,8 +62,7 @@ class TopController extends Controller
             }
         }
 
-        $this->bubbleSortPairs($pairs);
-        $data['pairs'] = $pairs;
+        $data['pairs'] = $this->bubbleSortPairs($pairs);
         return $data;
     }
 
@@ -92,7 +91,8 @@ class TopController extends Controller
         return $pairs;
     }
 
-    function swap(&$arr, $a, $b) {
+    function swap(&$arr, $a, $b)
+    {
         $tmp = $arr[$a];
         $arr[$a] = $arr[$b];
         $arr[$b] = $tmp;
