@@ -62,6 +62,8 @@ class TopController extends Controller
             }
         }
 
+
+
         $data['pairs'] = $pairs;
         return $data;
     }
@@ -72,5 +74,28 @@ class TopController extends Controller
                 return $i;
         }
         return -1;
+    }
+
+    function bubbleSortPairs($pairs)
+    {
+        $array_count = count($pairs);
+
+        for ($x=0; $x<$array_count; $x++){
+            for($a=0;  $a<$array_count-1; $a++){
+                if ($a<$array_count) {
+                    if ($pairs[$a]['quantity'] > $pairs[$a + 1]['quantity']) {
+                        $this->swap($pairs, $a, $a+1);
+                    }
+                }
+            }
+        }
+
+        return $pairs;
+    }
+
+    function swap(&$arr, $a, $b) {
+        $tmp = $arr[$a];
+        $arr[$a] = $arr[$b];
+        $arr[$b] = $tmp;
     }
 }
