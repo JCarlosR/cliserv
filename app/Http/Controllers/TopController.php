@@ -36,7 +36,7 @@ class TopController extends Controller
         $labels = [];
         $quantity = [];
 
-        foreach($clicks as $click) {
+        foreach ($clicks as $click) {
             $allProductIds[] = $click->product->id_product;
             $allLabels[] = $click->product->name;
         }
@@ -58,5 +58,13 @@ class TopController extends Controller
         $data['products'] = $labels;
         $data['quantities'] = $quantity;
         return $data;
+    }
+
+    public function getPositionIn($product, $products) {
+        for ($i=0; $i < sizeof($products); $i++) {
+            if ($product == $products[$i])
+                return $i;
+        }
+        return -1;
     }
 }
