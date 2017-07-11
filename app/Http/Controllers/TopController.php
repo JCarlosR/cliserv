@@ -18,7 +18,7 @@ class TopController extends Controller
     {
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
-        $topLimit = $request->input('top') ?: 5;
+        $topLimit = $request->input('top');
 
         if ($start_date && $end_date) {
             $clicks = Click::whereNotNull('product_id')
@@ -54,7 +54,7 @@ class TopController extends Controller
 
                 $pairs[] = $newItem;
 
-                if (sizeof($pairs) >= $topLimit) // ==
+                if ($topLimit && sizeof($pairs) >= $topLimit) // if there is a limit
                     break;
             } else {
                 $pairs[$j]['quantity'] += 1;

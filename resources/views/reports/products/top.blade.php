@@ -77,12 +77,12 @@
 
         $('#form').on('submit', function() {
             event.preventDefault();
-            $loading.slideUp('slow');
+            $loading.slideDown('slow');
             $productsTable.hide();
 
             var params = $(this).serialize();
             $.getJSON('/top/productos/data', params, function(data) {
-                $loading.slideDown('slow');
+                $loading.slideUp('slow');
 
                 var htmlRows = '';
                 var pairs = data.pairs;
@@ -95,8 +95,7 @@
                 }
                 $productsTop.html(htmlRows);
                 $productsTable.show();
-
-                console.log(data);
+                // console.log(data);
             });
         });
     </script>
