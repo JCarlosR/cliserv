@@ -15,6 +15,7 @@ Route::get('get_metas/{grade}/{phone}','ClickController@update_metas');
 Route::get('reporte/data-mining', 'DataController@mining');
 
 // Ramos
+Route::get('top/productos','TopController@clicksAndPercentage');
 Route::get('reporte/horas','ClickController@hours');
 Route::get('reporte/trafico','ClickController@traffic');
 
