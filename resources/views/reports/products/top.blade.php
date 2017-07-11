@@ -61,7 +61,7 @@
             event.preventDefault();
 
             var params = $(this).serialize();
-            $.getJSON('/clicks/products', params, function(data) {
+            $.getJSON('/top/productos/data', params, function(data) {
                 console.log(data);
             });
         });

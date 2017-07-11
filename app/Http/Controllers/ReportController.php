@@ -85,35 +85,35 @@ class ReportController extends Controller
         $end_carbon = Carbon::create($year, $month+1, 1);
 
         if($year == 1)
-            $clicks = Click::wherenotnull('product_id')->where('product_id','<>',0)->get();
+            $clicks = Click::whereNotNull('product_id')->where('product_id','<>',0)->get();
         else
-            $clicks = Click::wherenotnull('product_id')->where('product_id','<>',0)
-            ->whereBetween('fecha', [$start_carbon, $end_carbon->subDay()])->get();
-        $labelproducts = [];
-        $idproducts = [];
-        $arrayproducts = [];
-        $arraylabels = [];
+            $clicks = Click::whereNotNull('product_id')->where('product_id','<>',0)
+                ->whereBetween('fecha', [$start_carbon, $end_carbon->subDay()])->get();
+
+        $allLabels = [];
+        $allProductIds = [];
+        $productIds = [];
+        $labels = [];
         $quantity = [];
 
         foreach($clicks as $click)
         {
-            $idproducts[] = $click->product->id_product;
-            $labelproducts[] = $click->product->name;
+            $allProductIds[] = $click->product->id_product;
+            $allLabels[] = $click->product->name;
         }
 
-        for ($i=0; $i<sizeof($idproducts); ++$i)
+        for ($i=0; $i<sizeof($allProductIds); ++$i)
         {
-            $j = $this->verOcurrencia($idproducts[$i], $arrayproducts);
-            if($j != -1)
+            $j = $this->getPositionIn($allProductIds[$i], $productIds);
+            if ($j == -1) {
+                $productIds[] = $allProductIds[$i];
+                $labels[] = $allLabels[$i];
+                $quantity[] = 1;
+            } else
                 $quantity[$j]++;
-            else{
-                $arrayproducts[] = $idproducts[$i];
-                $arraylabels[] = $labelproducts[$i];
-                $quantity[]=1;
-            }
         }
 
-        $data['products'] = $arraylabels;
+        $data['products'] = $labels;
         $data['quantity'] = $quantity;
         return $data;
     }
@@ -254,9 +254,9 @@ class ReportController extends Controller
         }
     }
 
-    public function verOcurrencia($producto,$productos){
-        for($i =0 ; $i< sizeof($productos); $i++){
-            if($producto==$productos[$i])
+    public function getPositionIn($product, $products) {
+        for ($i=0; $i < sizeof($products); $i++) {
+            if ($product == $products[$i])
                 return $i;
         }
         return -1;
