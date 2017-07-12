@@ -34,7 +34,12 @@ class TopController extends Controller
         $allProductIds = [];
         $productIds = [];
         $pairs = []; // product, quantity
-        $tickPercent = 100 / sizeof($clicks);
+
+        $nClicks = sizeof($clicks);
+        if ($nClicks > 0)
+            $tickPercent = 100 / $nClicks;
+        else
+            $tickPercent = 0;
 
         foreach ($clicks as $click) {
             $allProductIds[] = $click->product->id_product;
@@ -55,7 +60,7 @@ class TopController extends Controller
                 $pairs[] = $newItem;
 
                 if ($topLimit && sizeof($pairs) >= $topLimit) // if there is a limit
-                    break;
+                    break; // (?) we should find the last pair in the next clicks
             } else {
                 $pairs[$j]['quantity'] += 1;
                 $pairs[$j]['percent'] += $tickPercent;
@@ -130,7 +135,7 @@ class TopController extends Controller
         $peaks = [];
         for ($i=0; $i<7; ++$i) {
             $peakHour = 0;
-            for ($h=0; $h<=23; ++$h) {
+            for ($h=1; $h<=23; ++$h) {
                 if ($data[$i][$h] > $data[$i][$peakHour])
                     $peakHour = $h;
             }

@@ -108,7 +108,7 @@
 
             $.getJSON('/top/horas/data', params, function (data) {
                 drawLineChart(data);
-                console.log(data);
+                // console.log(data);
             });
         });
 
