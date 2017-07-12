@@ -14,7 +14,7 @@ Route::get('get_metas/{grade}/{phone}','ClickController@update_metas');
 // General
 Route::get('reporte/data-mining', 'DataController@mining');
 
-// Ramos
+// R
 Route::get('top/productos','TopController@clicksAndPercentage');
 Route::get('top/productos/data', 'TopController@productTopData');
 Route::get('top/horas/data', 'TopController@peakHoursData');
@@ -22,12 +22,12 @@ Route::get('top/horas/data', 'TopController@peakHoursData');
 Route::get('reporte/horas','ClickController@hours');
 Route::get('reporte/trafico','ClickController@traffic');
 
-// Soles
+// S
 Route::get('reporte-categorias','CategoryController@bestCategories');
 Route::get('month/{year}', 'CategoryController@months_year');
 Route::get('reporte-barras/{year?}/{month?}','CategoryController@bestCategoriesData');
 
-// Gonzales
+// G
 Route::get('reporte/pages', 'ClickController@pages');
 Route::get('month_year/{year}', 'ClickController@months_year');
 
