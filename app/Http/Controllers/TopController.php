@@ -74,7 +74,7 @@ class TopController extends Controller
         return -1;
     }
 
-    function bubbleSortPairs($pairs)
+    public function bubbleSortPairs($pairs)
     {
         $array_count = count($pairs);
 
@@ -91,10 +91,40 @@ class TopController extends Controller
         return $pairs;
     }
 
-    function swap(&$arr, $a, $b)
+    public function swap(&$arr, $a, $b)
     {
         $tmp = $arr[$a];
         $arr[$a] = $arr[$b];
         $arr[$b] = $tmp;
+    }
+
+    public function peakHoursData(Request $request)
+    {
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+
+        if ($start_date && $end_date) {
+            $clicks = Click::whereNotNull('product_id')
+                ->where('product_id', '<>', 0)
+                ->whereBetween('fecha', [$start_date, $end_date])
+                ->get();
+        } else {
+            $clicks = Click::whereNotNull('product_id')
+                ->where('product_id', '<>', 0)->get();
+        }
+
+        $data = []; // $i -> day of week from 0 to 6
+        for ($i=0; $i<7; ++$i) {
+            $data[$i]['total'] = 0;
+            for ($h=0; $h<=23; ++$h)
+                $data[$i][$h] = 0;
+        }
+
+        foreach ($clicks as $click) {
+            $data[$click->fecha->dayOfWeek]['total'] += 1;
+            $data[$click->fecha->dayOfWeek][$click->fecha->hour] += 1;
+        }
+
+        return $data;
     }
 }

@@ -32,8 +32,9 @@
                 <button type="submit" class="waves-effect waves-light btn filter">Reporte</button>
             </div>
         </form>
+
         <br>
-        <br>
+
         <div class="row">
             <div class="col s12">
                 <div id="loading" class="center-align" style="display: none;">
@@ -55,10 +56,17 @@
                 </table>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col s12">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
     </div>
 @endsection
 
 @section('scripts')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js" />
     <script>
         var $loading, $productsTop, $productsTable;
         $(document).ready(function() {
@@ -97,6 +105,31 @@
                 $productsTable.show();
                 // console.log(data);
             });
+
+            $.getJSON('/top/horas/data', params, function (data) {
+                drawLineChart();
+                console.log(data);
+            });
         });
+
+        function drawLineChart() {
+            var ctx = document.getElementById('myChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'line',
+
+                data: {
+                    labels: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sáb", "Dom"],
+                    datasets: [{
+                        label: "Horas pico",
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [14, 10, 5, 2, 20, 30, 45],
+                    }]
+                },
+
+                options: {}
+            });
+        }
     </script>
 @endsection
