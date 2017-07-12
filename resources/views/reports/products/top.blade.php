@@ -66,7 +66,7 @@
 @endsection
 
 @section('scripts')
-    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script>
         var $loading, $productsTop, $productsTable;
         $(document).ready(function() {
@@ -74,7 +74,7 @@
             $productsTop = $('#productsTop');
             $productsTable = $('#productsTable');
 
-            $('select').material_select();
+            // $('select').material_select();
             $('.datepicker').pickadate({
                 selectMonths: false, // Creates a dropdown to control month
                 selectYears: 3, // Creates a dropdown of 15 years to control year
@@ -124,7 +124,7 @@
                         label: "Horas pico",
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
-                        data: [14, 10, 5, 2, 20, 30, 45],
+                        data: [14, 10, 5, 2, 20, 30, 45]
                     }]
                 },
 
