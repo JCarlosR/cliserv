@@ -119,12 +119,13 @@
                 type: 'line',
 
                 data: {
-                    labels: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sáb", "Dom"],
+                    labels: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sáb"], // dom is ZERO (Carbon PHP library)
                     datasets: [{
                         label: "Horas pico",
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
-                        data: peaksHour
+                        data: peaksHour,
+                        fill: false
                     }]
                 },
 
