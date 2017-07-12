@@ -50,6 +50,10 @@ class TopController extends Controller
         {
             $j = $this->getPositionIn($allProductIds[$i], $productIds);
             if ($j == -1) {
+                // we should find the last taken product in the remaining clicks
+                if ($topLimit && sizeof($pairs) >= $topLimit) // top limit
+                    continue;
+
                 $productIds[] = $allProductIds[$i];
 
                 $newItem = [];
@@ -59,8 +63,6 @@ class TopController extends Controller
 
                 $pairs[] = $newItem;
 
-                if ($topLimit && sizeof($pairs) >= $topLimit) // if there is a limit
-                    break; // (?) we should find the last pair in the next clicks
             } else {
                 $pairs[$j]['quantity'] += 1;
                 $pairs[$j]['percent'] += $tickPercent;
