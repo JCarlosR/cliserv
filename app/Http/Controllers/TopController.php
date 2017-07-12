@@ -115,16 +115,29 @@ class TopController extends Controller
 
         $data = []; // $i -> day of week from 0 to 6
         for ($i=0; $i<7; ++$i) {
-            $data[$i]['total'] = 0;
+            // $data[$i]['total'] = 0;
             for ($h=0; $h<=23; ++$h)
                 $data[$i][$h] = 0;
         }
 
         foreach ($clicks as $click) {
-            $data[$click->fecha->dayOfWeek]['total'] += 1;
+            // $data[$click->fecha->dayOfWeek]['total'] += 1;
             $data[$click->fecha->dayOfWeek][$click->fecha->hour] += 1;
         }
 
-        return $data;
+        // iterate each dayOfWeek
+        // and determine the peak hour
+        $peaks = [];
+        for ($i=0; $i<7; ++$i) {
+            $peakHour = 0;
+            for ($h=0; $h<=23; ++$h) {
+                if ($data[$i][$h] > $data[$i][$peakHour])
+                    $peakHour = $h;
+            }
+
+            $peaks[$i] = $peakHour;
+        }
+
+        return $peaks;
     }
 }
