@@ -20,7 +20,7 @@ Route::get('top/productos/data', 'TopController@productTopData');
 Route::get('top/horas/data', 'TopController@peakHoursData');
 
 Route::get('top/matriz','TopController@matrix');
-Route::get('top/horas/data', 'TopController@peakHoursMatrix');
+Route::get('top/horas/matriz', 'TopController@peakHoursMatrix');
 
 Route::get('reporte/horas','ClickController@hours');
 Route::get('reporte/trafico','ClickController@traffic');

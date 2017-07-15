@@ -97,56 +97,5 @@
                 $productsTable.show();
             });
         });
-
-        function drawLineChart(peaksHour) {
-            var ctx = document.getElementById('myChart').getContext('2d');
-
-            new Chart(ctx, {
-                type: 'line',
-
-                data: {
-                    labels: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sáb"], // dom is ZERO (Carbon PHP library)
-                    datasets: [{
-                        label: "Horas pico",
-                        backgroundColor: 'rgb(255, 99, 132)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        data: peaksHour,
-                        fill: false
-                    }]
-                },
-
-                options: {
-                    responsive: true,
-                    title: {
-                        display: true,
-                        text: 'Horas de mayor tráfico en cada día'
-                    },
-                    tooltips: {
-                        mode: 'index',
-                        intersect: false
-                    },
-                    hover: {
-                        mode: 'nearest',
-                        intersect: true
-                    },
-                    scales: {
-                        xAxes: [{
-                            display: true,
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'Día de la semana'
-                            }
-                        }],
-                        yAxes: [{
-                            display: true,
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'Hora pico'
-                            }
-                        }]
-                    }
-                }
-            });
-        }
     </script>
 @endsection
