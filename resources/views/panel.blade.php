@@ -57,6 +57,11 @@
                 <span>Top productos (# y %)</span>
             </a>
         </li>
+        <li @yield('top-matriz')>
+            <a href="{{ url('/top/matriz') }}">
+                <span>Matriz de horas pico</span>
+            </a>
+        </li>
         {{--<li @yield('page')>--}}
             {{--<a href="{{ url('metas') }}">--}}
                 {{--<span>Meta</span>--}}
