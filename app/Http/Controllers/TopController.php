@@ -18,7 +18,7 @@ class TopController extends Controller
     {
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
-        $topLimit = $request->input('top');
+        $topLimit = $request->input('top') ?: 3;
 
         if ($start_date && $end_date) {
             $clicks = Click::whereNotNull('product_id')
@@ -50,10 +50,6 @@ class TopController extends Controller
         {
             $j = $this->getPositionIn($allProductIds[$i], $productIds);
             if ($j == -1) {
-                // we should find the last taken product in the remaining clicks
-                if ($topLimit && sizeof($pairs) >= $topLimit) // top limit
-                    continue;
-
                 $productIds[] = $allProductIds[$i];
 
                 $newItem = [];
@@ -69,7 +65,9 @@ class TopController extends Controller
             }
         }
 
-        $data['pairs'] = $this->bubbleSortPairs($pairs);
+        $orderedPairs = $this->bubbleSortPairs($pairs);
+        $data['pairs'] = array_slice($orderedPairs, 0, $topLimit);
+
         return $data;
     }
 
