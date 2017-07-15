@@ -87,8 +87,12 @@
                 for (var h=0; h<24; ++h) { // 24 hours
                     htmlRows += '<tr>' +
                         '<td>'+h+' - '+(h+1)+'</td>';
-                    for (var d=0; d<7; ++d) // 7 days
-                        htmlRows += '<td>'+mt[d][h].q+' ('+mt[d][h].p+' %)</td>';
+                    for (var d=0; d<7; ++d) { // 7 days
+                        var cell = mt[d][h];
+                        var quantity = cell.q;
+                        var percentage = Math.round(cell.p*100)/100; // round to 2 decimals
+                        htmlRows += '<td>' + quantity + ' (' + percentage + ' %)</td>';
+                    }
 
                     htmlRows += '</tr>';
                 }
