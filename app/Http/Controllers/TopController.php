@@ -145,4 +145,63 @@ class TopController extends Controller
 
         return $peaks;
     }
+
+    public function matrix()
+    {
+        return view('reports.products.matrix');
+    }
+
+    public function peakHoursMatrix(Request $request)
+    {
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+
+        if ($start_date && $end_date) {
+            $clicks = Click::whereNotNull('product_id')
+                ->where('product_id', '<>', 0)
+                ->whereBetween('fecha', [$start_date, $end_date])
+                ->get();
+        } else {
+            $clicks = Click::whereNotNull('product_id')
+                ->where('product_id', '<>', 0)->get();
+        }
+
+        $tickPercentage = 100 / sizeof($clicks);
+
+        $data = []; // $i -> day of week from 0 to 6
+        for ($i=0; $i<7; ++$i) {
+            // $data[$i]['total'] = 0;
+            for ($h=0; $h<=23; ++$h) {
+                $cell = [];
+                $cell['q'] = 0; // quantity
+                $cell['p'] = 0; // percentage
+                $data[$i][$h] = $cell;
+            }
+
+        }
+
+        foreach ($clicks as $click) {
+            // $data[$click->fecha->dayOfWeek]['total'] += 1;
+            $cell = $data[$click->fecha->dayOfWeek][$click->fecha->hour];
+            $cell['q'] += 1;
+            $cell['p'] += $tickPercentage;
+
+            $data[$click->fecha->dayOfWeek][$click->fecha->hour] = $cell;
+        }
+
+        // iterate each dayOfWeek
+        // and determine the peak hour
+        /*$peaks = [];
+        for ($i=0; $i<7; ++$i) {
+            $peakHour = 0;
+            for ($h=1; $h<=23; ++$h) {
+                if ($data[$i][$h] > $data[$i][$peakHour])
+                    $peakHour = $h;
+            }
+
+            $peaks[$i] = $peakHour;
+        }*/
+
+        return $data;
+    }
 }
