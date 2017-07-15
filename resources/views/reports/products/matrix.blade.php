@@ -1,6 +1,6 @@
 @extends('panel')
 
-@section('title', 'Top de productos (%)')
+@section('title', 'Matriz de horas pico')
 
 @section('top-products','class="activated"')
 
