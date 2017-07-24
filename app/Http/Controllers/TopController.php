@@ -13,7 +13,7 @@ class TopController extends Controller
     {
         if ($request->input('simple'))
             return view('reports.products.top-simple');
-        
+
         return view('reports.products.top');
     }
 
@@ -149,8 +149,11 @@ class TopController extends Controller
         return $peaks;
     }
 
-    public function matrix()
+    public function matrix(Request $request)
     {
+        if ($request->input('simple'))
+            return view('reports.products.matrix-simple');
+
         return view('reports.products.matrix');
     }
 
