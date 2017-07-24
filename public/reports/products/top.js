@@ -1,3 +1,4 @@
+var $form;
 var $loading, $productsTop, $productsTable, $btnToExcel;
 
 $(document).ready(function() {
@@ -6,7 +7,6 @@ $(document).ready(function() {
     $productsTable = $('#productsTable');
     $btnToExcel = $('#btnToExcel');
 
-    // $('select').material_select();
     $('.datepicker').pickadate({
         selectMonths: false, // Creates a dropdown to control month
         selectYears: 3, // Creates a dropdown of 15 years to control year
@@ -19,10 +19,12 @@ $(document).ready(function() {
 });
 
 function onClickToExcel() {
-    tableToExcel('productsTable', 'Top de productos');
+    // tableToExcel('productsTable', 'Top de productos');
+    var params = $form.serialize();
+    location.href = '/excel/top/productos?'+params;
 }
 
-$('#form').on('submit', function() {
+$form.on('submit', function() {
     event.preventDefault();
     $loading.slideDown('slow');
     $productsTable.hide();
