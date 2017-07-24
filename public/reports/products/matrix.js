@@ -4,6 +4,7 @@ $(document).ready(function() {
     $loading = $('#loading');
     $productsTop = $('#productsTop');
     $productsTable = $('#productsTable');
+    $btnToExcel = $('#btnToExcel');
 
     // $('select').material_select();
     $('.datepicker').pickadate({
