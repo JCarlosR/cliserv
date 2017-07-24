@@ -2,10 +2,13 @@ var $form;
 var $loading, $productsTop, $productsTable, $btnToExcel;
 
 $(document).ready(function() {
+    $form = $('#form');
     $loading = $('#loading');
     $productsTop = $('#productsTop');
     $productsTable = $('#productsTable');
     $btnToExcel = $('#btnToExcel');
+
+    $form.on('submit', onSubmitFormReport);
 
     $('.datepicker').pickadate({
         selectMonths: false, // Creates a dropdown to control month
@@ -24,7 +27,7 @@ function onClickToExcel() {
     location.href = '/excel/top/productos?'+params;
 }
 
-$form.on('submit', function() {
+function onSubmitFormReport() {
     event.preventDefault();
     $loading.slideDown('slow');
     $productsTable.hide();
@@ -51,7 +54,7 @@ $form.on('submit', function() {
         drawLineChart(data);
         // console.log(data);
     });
-});
+}
 
 function drawLineChart(peaksHour) {
     var ctx = document.getElementById('myChart').getContext('2d');
