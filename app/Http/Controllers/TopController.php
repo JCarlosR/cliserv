@@ -9,8 +9,11 @@ use App\Http\Requests;
 
 class TopController extends Controller
 {
-    public function clicksAndPercentage()
+    public function clicksAndPercentage(Request $request)
     {
+        if ($request->input('simple'))
+            return view('reports.products.top-simple');
+        
         return view('reports.products.top');
     }
 
