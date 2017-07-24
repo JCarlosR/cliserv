@@ -29,6 +29,9 @@ function onClickToExcel() {
 
 function onSubmitFormReport() {
     event.preventDefault();
+
+    $btnToExcel.prop('disable', false);
+
     $loading.slideDown('slow');
     $productsTable.hide();
 

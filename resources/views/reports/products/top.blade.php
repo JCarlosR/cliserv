@@ -30,7 +30,7 @@
             </div>
             <div class="col s6 m4">
                 <button type="submit" class="waves-effect waves-light btn filter">Reporte</button>
-                <button type="button" class="waves-effect waves-light btn filter" title="Exportar a Excel" id="btnToExcel">
+                <button type="button" class="waves-effect waves-light btn filter" title="Exportar a Excel" id="btnToExcel" disabled>
                     <i class="material-icons">&#xE2C0;</i>
                 </button>
             </div>
@@ -70,6 +70,5 @@
 
 @section('scripts')
     <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-    <script src="/table-to-excel/index.js"></script>
     <script src="/reports/products/top.js"></script>
 @endsection
