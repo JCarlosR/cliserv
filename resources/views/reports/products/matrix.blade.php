@@ -22,7 +22,7 @@
             <div class="col s4">
                 <button type="submit" class="waves-effect waves-light btn filter">Generar</button>
                 <button type="button" class="waves-effect waves-light btn filter" title="Exportar a Excel" id="btnToExcel">
-                    <i class="material-icons">cloud_download</i>
+                    <i class="material-icons">&#xE2C0;</i>
                 </button>
             </div>
         </form>
