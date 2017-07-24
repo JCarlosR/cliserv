@@ -30,7 +30,7 @@
             </div>
             <div class="col s2">
                 <button type="submit" class="waves-effect waves-light btn filter">Reporte</button>
-                <button type="submit" class="waves-effect waves-light btn filter" title="Exportar a Excel" id="btnToExcel">
+                <button type="button" class="waves-effect waves-light btn filter" title="Exportar a Excel" id="btnToExcel">
                     <span class="glyphicon glyphicon-export"></span>
                 </button>
             </div>
