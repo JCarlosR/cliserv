@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Excel;
+
 class ExcelController extends Controller
 {
     public function topProductos(Request $request)
