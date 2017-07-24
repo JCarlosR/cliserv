@@ -46,7 +46,7 @@ class ExcelController extends Controller
                     $newRow = [];
                     $newRow[] = $h . ' - ' . ($h+1);
                     for ($d=0; $d<7; ++$d) {
-                        $cell = $data[d][h];
+                        $cell = $data[$d][$h];
                         $quantity = $cell['q'];
                         $percentage = $cell['p'];
 
