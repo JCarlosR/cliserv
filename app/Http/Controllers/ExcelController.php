@@ -42,7 +42,7 @@ class ExcelController extends Controller
                     'Hora', 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'
                 ]);
 
-                for ($h=0; $h<24; ++h) {
+                for ($h=0; $h<24; ++$h) {
                     $newRow = [];
                     $newRow[] = $h . ' - ' . ($h+1);
                     for ($d=0; $d<7; ++$d) {
@@ -54,20 +54,6 @@ class ExcelController extends Controller
                     }
                     $sheet->appendRow($newRow);
                 }
-
-/* Javascript code
-for (var h=0; h<24; ++h) { // 24 hours
-    htmlRows += '<tr>' +
-        '<td>'+h+' - '+(h+1)+'</td>';
-    for (var d=0; d<7; ++d) { // 7 days
-        var cell = mt[d][h];
-        var quantity = cell.q;
-        var percentage = Math.round(cell.p*100)/100; // round to 2 decimals
-        htmlRows += '<td>' + quantity + ' (' + percentage + ' %)</td>';
-    }
-
-    htmlRows += '</tr>';
-}*/
 
             });
         })->export('xls');    	
