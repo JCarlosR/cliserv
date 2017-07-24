@@ -22,7 +22,7 @@ class ExcelController extends Controller
 
 		        foreach ($data['pairs'] as $product) {
 		        	$sheet->appendRow([
-		                $product->product, $product->quantity, $product->percent
+		                $product['product'], $product['quantity'], $product['percent']
 		            ]);
 		        }
 
