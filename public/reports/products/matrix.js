@@ -72,5 +72,5 @@ function onSubmitMatrixForm() {
 function fillWithBackground(cell, color) {
     var tr = $productsTable.find('tr')[cell.h +1];
     var td = $(tr).find('td')[cell.d +1];
-    $(td)..css('background', color);
+    $(td).css('background', color);
 }
