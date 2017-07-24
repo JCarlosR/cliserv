@@ -45,7 +45,7 @@
                     <button type="submit" class="waves-effect waves-light btn filter">
                         Ver
                     </button>
-                    <button type="button" class="waves-effect waves-light btn filter" title="Exportar a Excel" id="btnToExcel">
+                    <button type="button" class="waves-effect waves-light btn filter" title="Exportar a Excel" id="btnToExcel" disabled>
                         Descargar
                     </button>
                 </div>

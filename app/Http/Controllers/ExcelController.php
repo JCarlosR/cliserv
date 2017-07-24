@@ -30,8 +30,46 @@ class ExcelController extends Controller
 		})->export('xls');
     }
 
-    public function topMatrizHoras()
+    public function topMatrizHoras(Request $request)
     {
-    	
+        $topController = new TopController();
+        $data = $topController->peakHoursMatrix($request);
+
+        Excel::create('Matriz de horas pico', function($excel) use ($data) {
+            $excel->sheet('Matriz de horas pico', function($sheet) use ($data) {
+
+                $sheet->appendRow([
+                    'Hora', 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'
+                ]);
+
+                for ($h=0; $h<24; ++h) {
+                    $newRow = [];
+                    $newRow[] = $h . ' - ' . ($h+1);
+                    for ($d=0; $d<7; ++$d) {
+                        $cell = $data[d][h];
+                        $quantity = $cell['q'];
+                        $percentage = $cell['p'];
+
+                        $newRow[] = $quantity . '(' . $percentage . ')';
+                    }
+                    $sheet->appendRow($newRow);
+                }
+
+/* Javascript code
+for (var h=0; h<24; ++h) { // 24 hours
+    htmlRows += '<tr>' +
+        '<td>'+h+' - '+(h+1)+'</td>';
+    for (var d=0; d<7; ++d) { // 7 days
+        var cell = mt[d][h];
+        var quantity = cell.q;
+        var percentage = Math.round(cell.p*100)/100; // round to 2 decimals
+        htmlRows += '<td>' + quantity + ' (' + percentage + ' %)</td>';
+    }
+
+    htmlRows += '</tr>';
+}*/
+
+            });
+        })->export('xls');    	
     }
 }

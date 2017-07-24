@@ -30,7 +30,7 @@ function onClickToExcel() {
 function onSubmitFormReport() {
     event.preventDefault();
 
-    $btnToExcel.prop('disable', false);
+    $btnToExcel.removeAttr('disabled');
 
     $loading.slideDown('slow');
     $productsTable.hide();

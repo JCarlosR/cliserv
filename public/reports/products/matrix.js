@@ -1,12 +1,15 @@
+var $form;
 var $loading, $productsTop, $productsTable, $btnToExcel;
 
 $(document).ready(function() {
+    $form = $('#form');
     $loading = $('#loading');
     $productsTop = $('#productsTop');
     $productsTable = $('#productsTable');
     $btnToExcel = $('#btnToExcel');
 
-    // $('select').material_select();
+    $form.on('submit', onSubmitMatrixForm);
+
     $('.datepicker').pickadate({
         selectMonths: false, // Creates a dropdown to control month
         selectYears: 3, // Creates a dropdown of 15 years to control year
@@ -19,11 +22,16 @@ $(document).ready(function() {
 });
 
 function onClickToExcel() {
-    tableToExcel('productsTable', 'Matriz de horas pico');
+    // tableToExcel('productsTable', 'Matriz de horas pico');
+    var params = $form.serialize();
+    location.href = '/excel/top/matriz?'+params;
 }
 
-$('#form').on('submit', function() {
+function onSubmitMatrixForm() {
     event.preventDefault();
+
+    $btnToExcel.removeAttr('disabled');
+
     $loading.slideDown('slow');
     $productsTable.hide();
 
@@ -50,4 +58,4 @@ $('#form').on('submit', function() {
         $productsTop.html(htmlRows);
         $productsTable.show();
     });
-});
+}
