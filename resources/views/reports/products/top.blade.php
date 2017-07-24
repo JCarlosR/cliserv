@@ -19,7 +19,7 @@
                     <label>Fecha fin</label>
                 </div>
             </div>
-            <div class="col s2">
+            <div class="col s1">
                 <div class="row">
                     <div class="input-field col s12">
                         <input type="number" required min="1" name="top" class="tooltiped"
@@ -28,10 +28,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col s2">
+            <div class="col s3">
                 <button type="submit" class="waves-effect waves-light btn filter">Reporte</button>
                 <button type="button" class="waves-effect waves-light btn filter" title="Exportar a Excel" id="btnToExcel">
-                    <span class="glyphicon glyphicon-export"></span>
+                    <i class="material-icons">cloud_download</i>
                 </button>
             </div>
         </form>

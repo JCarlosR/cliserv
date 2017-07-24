@@ -7,20 +7,23 @@
 @section('content')
     <div class="row">
         <form id="form">
-            <div class="col s5">
+            <div class="col s4">
                 <div class="input-field">
                     <input type="date" class="datepicker" name="start_date" required>
                     <label>Fecha inicio</label>
                 </div>
             </div>
-            <div class="col s5">
+            <div class="col s4">
                 <div class="input-field">
                     <input type="date" class="datepicker" name="end_date" required>
                     <label>Fecha fin</label>
                 </div>
             </div>
-            <div class="col s2">
+            <div class="col s4">
                 <button type="submit" class="waves-effect waves-light btn filter">Generar</button>
+                <button type="button" class="waves-effect waves-light btn filter" title="Exportar a Excel" id="btnToExcel">
+                    <i class="material-icons">cloud_download</i>
+                </button>
             </div>
         </form>
 
@@ -56,50 +59,6 @@
 @endsection
 
 @section('scripts')
-    <script>
-        var $loading, $productsTop, $productsTable;
-        $(document).ready(function() {
-            $loading = $('#loading');
-            $productsTop = $('#productsTop');
-            $productsTable = $('#productsTable');
-
-            // $('select').material_select();
-            $('.datepicker').pickadate({
-                selectMonths: false, // Creates a dropdown to control month
-                selectYears: 3, // Creates a dropdown of 15 years to control year
-                format: 'yyyy-mm-dd'
-            });
-            $('.tooltipped').tooltip();
-        });
-
-        $('#form').on('submit', function() {
-            event.preventDefault();
-            $loading.slideDown('slow');
-            $productsTable.hide();
-
-            var params = $(this).serialize();
-
-            $.getJSON('/top/horas/matriz', params, function (mt) {
-                $loading.slideUp('slow');
-
-                var htmlRows = '';
-                // iterate the days for each hour interval
-                for (var h=0; h<24; ++h) { // 24 hours
-                    htmlRows += '<tr>' +
-                        '<td>'+h+' - '+(h+1)+'</td>';
-                    for (var d=0; d<7; ++d) { // 7 days
-                        var cell = mt[d][h];
-                        var quantity = cell.q;
-                        var percentage = Math.round(cell.p*100)/100; // round to 2 decimals
-                        htmlRows += '<td>' + quantity + ' (' + percentage + ' %)</td>';
-                    }
-
-                    htmlRows += '</tr>';
-                }
-
-                $productsTop.html(htmlRows);
-                $productsTable.show();
-            });
-        });
-    </script>
+    <script src="/table-to-excel/index.js"></script>
+    <script src="/reports/products/matrix.js"></script>
 @endsection
