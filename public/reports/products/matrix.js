@@ -1,5 +1,5 @@
 var $form;
-var $loading, $productsTop, $productsTable, $btnToExcel;
+var $loading, $productsTop, $productsTable, $btnToExcel, $btnToPdf;
 
 $(document).ready(function() {
     $form = $('#form');
@@ -7,6 +7,7 @@ $(document).ready(function() {
     $productsTop = $('#productsTop');
     $productsTable = $('#productsTable');
     $btnToExcel = $('#btnToExcel');
+    $btnToPdf = $('#btnToPdf');
 
     $form.on('submit', onSubmitMatrixForm);
 
@@ -17,8 +18,9 @@ $(document).ready(function() {
     });
     $('.tooltipped').tooltip();
 
-    // export table to excel
+    // export table
     $btnToExcel.on('click', onClickToExcel);
+    $btnToPdf.on('click', onClickToPdf);
 });
 
 function onClickToExcel() {
@@ -27,10 +29,16 @@ function onClickToExcel() {
     location.href = '/excel/top/matriz?'+params;
 }
 
+function onClickToPdf() {
+    var params = $form.serialize();
+    location.href = '/pdf/top/matriz?'+params;
+}
+
 function onSubmitMatrixForm() {
     event.preventDefault();
 
     $btnToExcel.removeAttr('disabled');
+    $btnToPdf.removeAttr('disabled');
 
     $loading.slideDown('slow');
     $productsTable.hide();

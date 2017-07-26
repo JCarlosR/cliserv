@@ -21,23 +21,30 @@
 
         <div class="row">
             <form id="form">
-                <div class="col s4">
-                    <div class="input-field">
-                        <input type="date" class="datepicker" name="start_date" required>
-                        <label>Fecha inicio</label>
+                <div class="row">
+                    <div class="col s12 m6">
+                        <div class="input-field">
+                            <input type="date" class="datepicker" name="start_date" required>
+                            <label>Fecha inicio</label>
+                        </div>
+                    </div>
+                    <div class="col s12 m6">
+                        <div class="input-field">
+                            <input type="date" class="datepicker" name="end_date" required>
+                            <label>Fecha fin</label>
+                        </div>
                     </div>
                 </div>
-                <div class="col s4">
-                    <div class="input-field">
-                        <input type="date" class="datepicker" name="end_date" required>
-                        <label>Fecha fin</label>
+                <div class="row">
+                    <div class="col s12 m12">
+                        <button type="submit" class="waves-effect waves-light btn filter">Generar</button>
+                        <button type="button" class="waves-effect waves-light btn filter" title="Exportar a Excel" id="btnToExcel" disabled>
+                            Excel
+                        </button>
+                        <button type="button" class="waves-effect waves-light btn filter" title="Exportar a PDF" id="btnToPdf" disabled>
+                            PDF
+                        </button>
                     </div>
-                </div>
-                <div class="col s4">
-                    <button type="submit" class="waves-effect waves-light btn filter">Generar</button>
-                    <button type="button" class="waves-effect waves-light btn filter" title="Exportar a Excel" id="btnToExcel" disabled>
-                        <i class="material-icons">&#xE2C0;</i>
-                    </button>
                 </div>
             </form>
 
