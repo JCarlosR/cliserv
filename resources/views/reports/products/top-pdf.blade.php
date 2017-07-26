@@ -18,7 +18,7 @@
             <h4 class="center-align">Top de productos</h4>
         </div>
 
-        <div class="row">
+        <div class="row black-text">
             <table border="2" cellspacing="2" cellpadding="2">
                 <thead>
                 <tr>
