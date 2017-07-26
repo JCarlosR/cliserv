@@ -7,9 +7,7 @@
     <style>
         <?php
             include public_path().'/css/materialize.min.css';
-            include public_path().'/css/styles.css';
         ?>
-        main { padding-left: 0; }
     </style>
 </head>
 <body>
@@ -20,7 +18,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <table border="0" cellspacing="0" cellpadding="0">
+            <table border="2" cellspacing="2" cellpadding="2">
                 <thead>
                 <tr>
                     <th>Producto</th>
