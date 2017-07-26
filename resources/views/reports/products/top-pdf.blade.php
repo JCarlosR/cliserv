@@ -13,10 +13,11 @@
 <body>
 
 <main>
-    <div class="row teal lighten-2 white-text">
-        <h4 class="center-align" id="title">Top de productos</h4>
-    </div>
     <div class="container">
+        <div class="row teal lighten-2 white-text">
+            <h4 class="center-align">Top de productos</h4>
+        </div>
+
         <div class="row">
             <table border="2" cellspacing="2" cellpadding="2">
                 <thead>
