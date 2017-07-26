@@ -17,6 +17,8 @@ Route::get('reporte/data-mining', 'DataController@mining');
 // R
 Route::get('excel/top/productos', 'ExcelController@topProductos');
 Route::get('excel/top/matriz', 'ExcelController@topMatrizHoras');
+Route::get('pdf/top/productos', 'PdfController@topProductos');
+Route::get('pdf/top/matriz', 'PdfController@topMatrizHoras');
 
 Route::get('top/productos','TopController@clicksAndPercentage');
 Route::get('top/productos/data', 'TopController@productTopData');

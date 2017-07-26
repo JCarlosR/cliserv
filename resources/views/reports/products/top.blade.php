@@ -33,6 +33,9 @@
                 <button type="button" class="waves-effect waves-light btn filter" title="Exportar a Excel" id="btnToExcel" disabled>
                     <i class="material-icons">&#xE2C0;</i>
                 </button>
+                <button type="button" class="waves-effect waves-light btn filter" title="Exportar a PDF" id="btnToPdf" disabled>
+                    <i class="material-icons">&#xE2C0;</i>
+                </button>
             </div>
         </form>
 
