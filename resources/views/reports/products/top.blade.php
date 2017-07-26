@@ -7,19 +7,19 @@
 @section('content')
     <div class="row">
         <form id="form">
-            <div class="col s6 m3">
+            <div class="col s6 m4">
                 <div class="input-field">
                     <input type="date" class="datepicker" name="start_date" required>
                     <label>Fecha inicio</label>
                 </div>
             </div>
-            <div class="col s6 m3">
+            <div class="col s6 m4">
                 <div class="input-field">
                     <input type="date" class="datepicker" name="end_date" required>
                     <label>Fecha fin</label>
                 </div>
             </div>
-            <div class="col s6 m2">
+            <div class="col s6 m4">
                 <div class="row">
                     <div class="input-field col s12">
                         <input type="number" required min="1" name="top" class="tooltiped"
@@ -28,13 +28,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col s6 m4">
+            <div class="col s6 m12">
                 <button type="submit" class="waves-effect waves-light btn filter">Reporte</button>
                 <button type="button" class="waves-effect waves-light btn filter" title="Exportar a Excel" id="btnToExcel" disabled>
-                    <i class="material-icons">&#xE2C0;</i>
+                    <i class="material-icons">&#xE2C0;</i> Excel
                 </button>
                 <button type="button" class="waves-effect waves-light btn filter" title="Exportar a PDF" id="btnToPdf" disabled>
-                    <i class="material-icons">&#xE2C0;</i>
+                    <i class="material-icons">&#xE2C0;</i> PDF
                 </button>
             </div>
         </form>
