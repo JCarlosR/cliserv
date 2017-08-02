@@ -27,8 +27,8 @@ class PrestashopController extends Controller
         $products = Product::whereIn('id_product', $productIds)
             ->where('id_lang', 1)
             ->get();
-        dd($products);
+        // dd($products);
 
-        return view('prestashop.index')->with(compact('customerName'));
+        return view('prestashop.index')->with(compact('customerName', 'products'));
     }
 }
