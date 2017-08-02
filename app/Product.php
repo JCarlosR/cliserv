@@ -29,7 +29,7 @@ class Product extends Model
 
     public function categoryNames()
     {
-        return $this->hasMany('App\categoryName','id_product','id_product');
+        return $this->hasMany('App\CategoryName','id_product','id_product');
     }
 
     public function getCategoryNameAttribute()
