@@ -18,7 +18,9 @@ class PrestashopController extends Controller
         // get the most viewed products for the specified user
         $productIds = Click::where('user_id', $customerId)
             ->whereNotNull('product_id')->where('product_id','!=',0)
-            ->groupBy('product_id')->pluck('product_id');
+            ->groupBy('product_id')->select('product_id, count(1) as total')
+            ->orderBy('total', 'desc')
+            ->pluck('product_id');
 
         $products = Product::whereIn('id_product', $productIds)
             ->where('id_lang', 1)
