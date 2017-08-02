@@ -27,13 +27,10 @@ class Product extends Model
         return $this->pictures()->first();
     }
 
-    public function categoryNames()
-    {
-        return $this->hasMany('App\CategoryName','id_product','id_product');
-    }
-
     public function getCategoryNameAttribute()
     {
-        return $this->categoryNames()->first();
+        return CategoryName::where('id_lang',1)
+            ->where('id_category', $this->category()->first()->id_category)
+            ->first();
     }
 }
