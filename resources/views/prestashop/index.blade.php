@@ -9,7 +9,7 @@
             <div class="thumbnail-container">
 
                 <a href="http://clickstream.store/es/inicio/{{ $product->id_product }}-{{ $product->link_rewrite }}.html" class="thumbnail product-thumbnail">
-                    <img src="http://clickstream.store/{{ $product->picture->id_image }}-home_default/{{ $product->link_rewrite }}.jpg" alt=""
+                    <img src="http://clickstream.store/{{ $product->picture }}-home_default/{{ $product->link_rewrite }}.jpg" alt=""
                          data-full-size-image-url="http://clickstream.store/{{ $product->picture->id_image }}-large_default/{{ $product->link_rewrite }}.jpg">
                 </a>
 
