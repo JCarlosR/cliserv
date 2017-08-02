@@ -19,7 +19,7 @@ class Product extends Model
 
     public function picture()
     {
-        return $this->hasMany('App\Picture','product_id');
+        return $this->hasMany('App\Picture','id_product');
     }
 
 }
