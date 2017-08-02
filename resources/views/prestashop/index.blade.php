@@ -1,6 +1,6 @@
 <section class="featured-products clearfix">
     <h1 class="h1 products-section-title text-uppercase">
-        Productos Destacados
+        Productos destacados para {{ $customerName }}
     </h1>
     <div class="products">
 
