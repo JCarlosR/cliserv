@@ -4,55 +4,40 @@
     </h1>
     <div class="products">
 
-        <article class="product-miniature js-product-miniature" data-id-product="1" data-id-product-attribute="0" itemscope="" itemtype="http://schema.org/Product">
+        @foreach ($products as $product)
+        <article class="product-miniature js-product-miniature" data-id-product="{{ $product->id_product }}" data-id-product-attribute="0" itemscope="" itemtype="http://schema.org/Product">
             <div class="thumbnail-container">
 
-                <a href="http://clickstream.store/es/inicio/1-camiseta-destenida-manga-corta.html" class="thumbnail product-thumbnail">
-                    <img src="http://clickstream.store/72-home_default/camiseta-destenida-manga-corta.jpg" alt="" data-full-size-image-url="http://clickstream.store/72-large_default/camiseta-destenida-manga-corta.jpg">
+                <a href="http://clickstream.store/es/inicio/{{ $product->id_product }}-{{ $product->link_rewrite }}.html" class="thumbnail product-thumbnail">
+                    <img src="http://clickstream.store/{{ $product->picture->id_image }}-home_default/{{ $product->link_rewrite }}.jpg" alt=""
+                         data-full-size-image-url="http://clickstream.store/{{ $product->picture->id_image }}-large_default/{{ $product->link_rewrite }}.jpg">
                 </a>
 
 
                 <div class="product-description">
-
-                    <h1 class="h3 product-title" itemprop="name"><a href="http://clickstream.store/es/inicio/1-camiseta-destenida-manga-corta.html">Camiseta efecto desteñido...</a></h1>
-
-
+                    <h1 class="h3 product-title" itemprop="name">
+                        <a href="http://clickstream.store/es/inicio/{{ $product->id_product }}-{{ $product->link_rewrite }}.html">
+                            {{ $product->name }}
+                        </a>
+                    </h1>
 
                     <div class="product-price-and-shipping">
-
-
-
                         <span itemprop="price" class="price">19,81&nbsp;PEN</span>
-
-
-
-
                     </div>
-
-
-
-
 
                 </div>
 
 
                 <ul class="product-flags">
                 </ul>
-
-
                 <div class="highlighted-informations no-variants hidden-sm-down">
-
                     <a class="quick-view" href="#" data-link-action="quickview">
                         <i class="material-icons search"></i> Vista rápida
                     </a>
-
-
-
-
                 </div>
-
             </div>
         </article>
+        @endforeach
 
     </div>
     <a class="all-product-link pull-xs-left pull-md-right h4" href="http://clickstream.store/es/2-inicio">
