@@ -29,10 +29,10 @@ class Product extends Model
 
     public function getCategoryNameAttribute()
     {
-        $id_category = CategoryProduct::where('id_product', $this->id_product)->first()->id_category;
+        $id_category = CategoryProduct::where('id_product', $this->id_product)
+            ->orderBy('position', 'asc')->first()->id_category;
         return CategoryName::where('id_lang',1)
             ->where('id_category', $id_category)
-            ->orderBy('position', 'asc')
             ->first();
     }
 }
