@@ -20,7 +20,9 @@ class PrestashopController extends Controller
             ->whereNotNull('product_id')->where('product_id','!=',0)
             ->groupBy('product_id')->pluck('product_id');
 
-        $products = Product::find($productIds);
+        $products = Product::whereIn('id_product', $productIds)
+            ->where('id_lang', 1)
+            ->get();
         dd($products);
 
         return view('prestashop.index')->with(compact('customerName'));
