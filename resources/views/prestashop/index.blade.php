@@ -8,7 +8,7 @@
         <article class="product-miniature js-product-miniature" data-id-product="{{ $product->id_product }}" data-id-product-attribute="0" itemscope="" itemtype="http://schema.org/Product">
             <div class="thumbnail-container">
 
-                <a href="http://clickstream.store/es/inicio/{{ $product->id_product }}-{{ $product->link_rewrite }}.html" class="thumbnail product-thumbnail">
+                <a href="http://clickstream.store/es/{{ $product->category->link_rewrite }}/{{ $product->id_product }}-{{ $product->link_rewrite }}.html" class="thumbnail product-thumbnail">
                     <img src="http://clickstream.store/{{ $product->picture->id_image }}-home_default/{{ $product->link_rewrite }}.jpg" alt=""
                          data-full-size-image-url="http://clickstream.store/{{ $product->picture->id_image }}-large_default/{{ $product->link_rewrite }}.jpg">
                 </a>
