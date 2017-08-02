@@ -14,7 +14,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->hasMany('App\Category','product_id','id_product'); // (?)
+        return $this->hasMany('App\Category','product_id');
     }
 
     public function pictures()
@@ -25,5 +25,15 @@ class Product extends Model
     public function getPictureAttribute()
     {
         return $this->pictures()->first();
+    }
+
+    public function categoryNames()
+    {
+        return $this->hasMany('App\categoryName','id_product','id_product');
+    }
+
+    public function getCategoryNameAttribute()
+    {
+        return $this->categoryNames()->first();
     }
 }
