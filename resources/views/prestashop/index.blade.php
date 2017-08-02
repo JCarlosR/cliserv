@@ -16,7 +16,7 @@
 
                 <div class="product-description">
                     <h1 class="h3 product-title" itemprop="name">
-                        <a href="http://clickstream.store/es/inicio/{{ $product->id_product }}-{{ $product->link_rewrite }}.html">
+                        <a href="http://clickstream.store/es/{{ $product->categoryName->link_rewrite }}/{{ $product->id_product }}-{{ $product->link_rewrite }}.html">
                             {{ $product->name }}
                         </a>
                     </h1>
