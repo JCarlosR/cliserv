@@ -17,7 +17,7 @@ class PrestashopController extends Controller
         $customerName = $request->input('name');
 
         // get the most viewed products for the specified user
-        $productIds = Click::select(['product_id', DB::raw('COUNT(1) as total')
+        $productIds = Click::select(['product_id', DB::raw('COUNT(1) as total')])
             ->where('user_id', $customerId)
             ->whereNotNull('product_id')->where('product_id','!=',0)
             ->groupBy('product_id')
