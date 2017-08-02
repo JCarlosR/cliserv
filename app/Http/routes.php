@@ -15,6 +15,8 @@ Route::get('get_metas/{grade}/{phone}','ClickController@update_metas');
 Route::get('reporte/data-mining', 'DataController@mining');
 
 // R
+Route::get('prestashop/products', 'PrestashopController@index');
+
 Route::get('excel/top/productos', 'ExcelController@topProductos');
 Route::get('excel/top/matriz', 'ExcelController@topMatrizHoras');
 Route::get('pdf/top/productos', 'PdfController@topProductos');
