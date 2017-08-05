@@ -80,6 +80,11 @@ class TopController extends Controller
                 $topProducts[] = $newItem;
 
             } else {
+                if ($deviceTypes[$i] == 'desktop') {
+                    $topProducts[$j]['desktop'] += 1;
+                } else {
+                    $topProducts[$j]['mobile'] += 1;
+                }
                 $topProducts[$j]['quantity'] += 1;
                 $topProducts[$j]['percent'] += $tickPercent;
             }
