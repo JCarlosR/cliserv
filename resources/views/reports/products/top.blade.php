@@ -100,9 +100,12 @@
             $desktop = $('#spanDesktop');
         });
         $(document).on('click', '[data-desktop]', function () {
-            $total = $(this).data('total');
-            $mobile = $(this).data('mobile');
-            $desktop = $(this).data('desktop');
+            var total = $(this).text();
+            var mobile = $(this).data('mobile');
+            var desktop = $(this).data('desktop');
+            $total.text(total);
+            $mobile.text(mobile);
+            $desktop.text(desktop);
             $('#modalSource').modal('open');
         });
     </script>
