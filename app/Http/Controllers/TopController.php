@@ -17,6 +17,80 @@ class TopController extends Controller
         return view('reports.products.top');
     }
 
+    public function sourceProducts(Request $request)
+    {
+        // input params
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+        $topLimit = $request->input('top') ?: 3;
+
+        // get all clicks
+        if ($start_date && $end_date) {
+            $clicks = Click::whereNotNull('product_id')->where('product_id', '<>', 0)
+                ->whereBetween('fecha', [$start_date, $end_date])
+                ->get();
+        } else {
+            $clicks = Click::whereNotNull('product_id')
+                ->where('product_id', '<>', 0)->get();
+        }
+
+        // initialize arrays
+        $productNames = [];
+        $productIds = [];
+        $deviceTypes = [];
+        $uniqueIds = [];
+        $topProducts = []; // product, quantity
+
+        // calc the tick percent
+        $nClicks = sizeof($clicks);
+        if ($nClicks > 0)
+            $tickPercent = 100 / $nClicks;
+        else
+            $tickPercent = 0;
+
+        // take the product ids and names
+        foreach ($clicks as $click) {
+            $productIds[] = $click->product->id_product;
+            $productNames[] = $click->product->name;
+
+            if ($click->dispositivo == 'desktop')
+                $deviceTypes[] = 'desktop';
+            else
+                $deviceTypes[] = 'mobile';
+        }
+
+        for ($i=0; $i<sizeof($productIds); ++$i) {
+
+            $j = $this->getPositionIn($productIds[$i], $uniqueIds);
+            if ($j == -1) {
+                $uniqueIds[] = $productIds[$i];
+
+                $newItem = [];
+                $newItem['product'] = $productNames[$i];
+                $newItem['quantity'] = 1;
+                if ($deviceTypes[$i] == 'desktop') {
+                    $newItem['desktop'] = 1;
+                    $newItem['mobile'] = 0;
+                } else {
+                    $newItem['desktop'] = 0;
+                    $newItem['mobile'] = 1;
+                }
+                $newItem['percent'] = $tickPercent;
+
+                $topProducts[] = $newItem;
+
+            } else {
+                $topProducts[$j]['quantity'] += 1;
+                $topProducts[$j]['percent'] += $tickPercent;
+            }
+        }
+
+        $orderedTop = $this->bubbleSortPairs($topProducts);
+        $data['products'] = array_slice($orderedTop, 0, $topLimit);
+
+        return $data;
+    }
+
     public function productTopData(Request $request)
     {
         $start_date = $request->input('start_date');

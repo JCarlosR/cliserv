@@ -24,7 +24,6 @@
                     <div class="product-price-and-shipping">
                         <span itemprop="price" class="price">19,81&nbsp;PEN</span>
                     </div>
-
                 </div>
 
 

@@ -44,16 +44,16 @@ function onSubmitFormReport() {
     $productsTable.hide();
 
     var params = $(this).serialize();
-    $.getJSON('/top/products/source', params, function(data) {
+    $.getJSON('/top/productos/data', params, function(data) {
         $loading.slideUp('slow');
 
         var htmlRows = '';
-        var products = data.products;
-        for (var i=0; i<products.length; ++i) {
+        var pairs = data.pairs;
+        for (var i=0; i<pairs.length; ++i) {
             htmlRows += '<tr>' +
-                '<td>'+products[i].product+'</td>' +
-                '<td data-mobile="'+products[i].mobile+'" data-desktop="'+products[i].desktop+'">'+products[i].quantity+'</td>' +
-                '<td>'+products[i].percent+'</td>' +
+                '<td>'+pairs[i].product+'</td>' +
+                '<td>'+pairs[i].quantity+'</td>' +
+                '<td>'+pairs[i].percent+'</td>' +
                 '</tr>';
         }
         $productsTop.html(htmlRows);

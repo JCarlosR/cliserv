@@ -73,9 +73,37 @@
             </div>
         </div>
     </div>
+
+    <div id="modalSource" class="modal bottom-sheet">
+        <div class="modal-content">
+            <h4>Fuente de las visitas</h4>
+            <p>De los <span id="spanTotal"></span> clics seleccionados:</p>
+            <ul>
+                <li><span id="spanMobile"></span> provienen desde dispositivos móviles.</li>
+                <li><span id="spanDesktop"></span> provienen desde computadoras de escritorio.</li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
     <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="/reports/products/top.js"></script>
+    <script>
+        var $total, $mobile, $desktop;
+        $(function () {
+            $total = $('#spanTotal');
+            $mobile = $('#spanMobile');
+            $desktop = $('#spanDesktop');
+        });
+        $(document).on('click', '[data-desktop]', function () {
+            $total = $(this).data('total');
+            $mobile = $(this).data('mobile');
+            $desktop = $(this).data('desktop');
+            $('#modalSource').modal('open');
+        });
+    </script>
 @endsection

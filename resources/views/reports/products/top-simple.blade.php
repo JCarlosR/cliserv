@@ -91,7 +91,7 @@
 <script src="/js/materialize.min.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-<script src="/reports/products/top.js"></script>
+<script src="/reports/products/top-simple.js"></script>
 
 </body>
 </html>
