@@ -22,7 +22,7 @@
                     </h1>
 
                     <div class="product-price-and-shipping">
-                        <span itemprop="price" class="price">19,81&nbsp;PEN</span>
+                        <span itemprop="price" class="price">{{ $product->price * 1.18 }}&nbsp;PEN</span>
                     </div>
                 </div>
 
