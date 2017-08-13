@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Click;
+use App\GeneralProduct;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,10 @@ class PrestashopController extends Controller
         $products = Product::whereIn('id_product', $productIds)
             ->where('id_lang', 1)
             ->get();
-        // dd($products);
+
+        foreach ($products as $product) {
+            $product->price = GeneralProduct::where('id_product', $product->id_product)->first()->price;
+        }
 
         return view('prestashop.index')->with(compact('customerName', 'products'));
     }
