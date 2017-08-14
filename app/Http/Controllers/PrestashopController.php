@@ -25,8 +25,11 @@ class PrestashopController extends Controller
             ->orderBy('total', 'desc')
             ->pluck('product_id');
 
+        $idsOrdered = implode(',', $productIds);
+
         $products = Product::whereIn('id_product', $productIds)
             ->where('id_lang', 1)
+            ->orderByRaw(DB::raw("FIELD(id, $idsOrdered)"))
             ->get();
 
         foreach ($products as $product) {
