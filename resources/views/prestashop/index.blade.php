@@ -1,6 +1,10 @@
 <section class="featured-products clearfix">
     <h1 class="h1 products-section-title text-uppercase">
-        Productos destacados para {{ $customerName }}
+        @if (isset($customerName))
+            Productos destacados para {{ $customerName }}
+        @else
+            Productos destacados para tu país ({{ $countryCode }})
+        @endif
     </h1>
     <div class="products">
 

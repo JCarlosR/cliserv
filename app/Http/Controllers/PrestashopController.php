@@ -14,16 +14,28 @@ class PrestashopController extends Controller
 {
     public function index(Request $request)
     {
+        $countryCode = $request->input('country');
         $customerId = $request->input('id');
         $customerName = $request->input('name');
 
-        // get the most viewed products for the specified user
-        $productIds = Click::select(['product_id', DB::raw('COUNT(1) as total')])
-            ->where('user_id', $customerId)
-            ->whereNotNull('product_id')->where('product_id','!=',0)
-            ->groupBy('product_id')
-            ->orderBy('total', 'desc')
-            ->pluck('product_id');
+        if ($countryCode) {
+            // get the most viewed products for the specified country
+            $productIds = Click::select(['product_id', DB::raw('COUNT(1) as total')])
+                ->where('country_code', $countryCode)
+                ->whereNotNull('product_id')->where('product_id','!=',0)
+                ->groupBy('product_id')
+                ->orderBy('total', 'desc')
+                ->pluck('product_id');
+        } else {
+            // authenticated user
+            // get the most viewed products for the specified user
+            $productIds = Click::select(['product_id', DB::raw('COUNT(1) as total')])
+                ->where('user_id', $customerId)
+                ->whereNotNull('product_id')->where('product_id','!=',0)
+                ->groupBy('product_id')
+                ->orderBy('total', 'desc')
+                ->pluck('product_id');
+        }
 
         $idsOrdered = implode(',', $productIds->toArray());
 
@@ -36,6 +48,6 @@ class PrestashopController extends Controller
             $product->price = GeneralProduct::where('id_product', $product->id_product)->first()->price;
         }
 
-        return view('prestashop.index')->with(compact('customerName', 'products'));
+        return view('prestashop.index')->with(compact('customerName', 'products', 'countryCode'));
     }
 }
