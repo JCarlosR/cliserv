@@ -25,7 +25,7 @@ class PrestashopController extends Controller
             ->orderBy('total', 'desc')
             ->pluck('product_id');
 
-        $idsOrdered = implode(',', $productIds);
+        $idsOrdered = implode(',', $productIds->toArray());
 
         $products = Product::whereIn('id_product', $productIds)
             ->where('id_lang', 1)
