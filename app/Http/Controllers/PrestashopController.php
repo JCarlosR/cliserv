@@ -29,7 +29,7 @@ class PrestashopController extends Controller
 
         $products = Product::whereIn('id_product', $productIds)
             ->where('id_lang', 1)
-            ->orderByRaw(DB::raw("FIELD(id, $idsOrdered)"))
+            ->orderByRaw(DB::raw("FIELD(id_product, $idsOrdered)"))
             ->get();
 
         foreach ($products as $product) {
