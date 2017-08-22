@@ -292,8 +292,13 @@ class TopController extends Controller
 
     public function byCountry(Request $request)
     {
+        $start = $request->input('start_date');
+        $end = $request->input('end_date');
+
         // SELECT DISTINCT country_code FROM `ps_clicks` WHERE country_code<>''
         $countries = Click::where('country_code', '<>', '')->distinct()->pluck('country_code');
-        return view('reports.country')->with(compact('countries'));
+        $query = Click::whereBetween('fecha', [$start, $end]);
+
+        return view('reports.country')->with(compact('countries', 'start', 'end', 'query'));
     }
 }

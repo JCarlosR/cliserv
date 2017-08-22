@@ -42,8 +42,10 @@
                     @foreach ($countries as $country)
                         <tr>
                             <td>{{ $country }}</td>
-                            <td></td>
-                            <td></td>
+                            @if (isset($start) && isset($end))
+                                <td>{{ $query->where('country_code', $country)->where('user_id', '<>', 0)->count() }}</td>
+                                <td>{{ $query->where('country_code', $country)->where('user_id', 0)->count() }}</td>
+                            @endif
                         </tr>
                     @endforeach
                     </tbody>
