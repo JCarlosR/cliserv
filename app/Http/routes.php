@@ -33,6 +33,8 @@ Route::get('top/horas/matriz', 'TopController@peakHoursMatrix');
 Route::get('reporte/horas','ClickController@hours');
 Route::get('reporte/trafico','ClickController@traffic');
 
+Route::get('top/paises','TopController@byCountry');
+
 // S
 Route::get('reporte-categorias','CategoryController@bestCategories');
 Route::get('month/{year}', 'CategoryController@months_year');

@@ -62,6 +62,11 @@
                 <span>Matriz de horas pico</span>
             </a>
         </li>
+        <li @yield('top-pais')>
+            <a href="{{ url('/top/paises') }}">
+                <span>Top por país</span>
+            </a>
+        </li>
         {{--<li @yield('page')>--}}
             {{--<a href="{{ url('metas') }}">--}}
                 {{--<span>Meta</span>--}}
