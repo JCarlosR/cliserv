@@ -43,8 +43,8 @@
                         <tr>
                             <td>{{ $country }}</td>
                             @if (isset($start) && isset($end))
-                                <td>{{ $query->where('country_code', $country)->where('user_id', '<>', 0)->count() }}</td>
-                                <td>{{ $query->where('country_code', $country)->where('user_id', 0)->count() }}</td>
+                                <td>{{ (clone $query)->where('country_code', $country)->where('user_id', '<>', 0)->count() }}</td>
+                                <td>{{ (clone $query)->where('country_code', $country)->where('user_id', 0)->count() }}</td>
                             @endif
                         </tr>
                     @endforeach
