@@ -52,5 +52,14 @@
         </div>
 
     </div>
+@endsection
 
+@section('scripts')
+    <script>
+        $('.datepicker').pickadate({
+            selectMonths: false, // Creates a dropdown to control month
+            selectYears: 3, // Creates a dropdown of 15 years to control year
+            format: 'yyyy-mm-dd'
+        });
+    </script>
 @endsection
