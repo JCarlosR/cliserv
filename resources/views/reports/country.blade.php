@@ -10,13 +10,13 @@
             <div class="row">
                 <div class="col s12 m4">
                     <div class="input-field">
-                        <input type="date" class="datepicker" name="start_date" required>
+                        <input type="date" class="datepicker" name="start_date" required value="{{ $start }}">
                         <label>Fecha inicio</label>
                     </div>
                 </div>
                 <div class="col s12 m4">
                     <div class="input-field">
-                        <input type="date" class="datepicker" name="end_date" required>
+                        <input type="date" class="datepicker" name="end_date" required value="{{ $end }}">
                         <label>Fecha fin</label>
                     </div>
                 </div>
