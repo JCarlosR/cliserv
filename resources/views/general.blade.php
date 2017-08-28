@@ -51,7 +51,7 @@
         {!! $clicks->render() !!}
     @else
         <div class="col s12">
-            <h3>Lamentablemente no se encontraron datos :(</h3>
+            <h3>Lamentablemente ya jalamos asi que es gg wp</h3>
         </div>
     @endif
 </div>
