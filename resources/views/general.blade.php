@@ -1,6 +1,6 @@
 @extends('panel')
 
-@section('title', 'Reporte general')
+@section('title', 'Reporte general de Productos')
 @section('general','activated')
 
 @section('content')
